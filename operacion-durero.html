@@ -10,7 +10,11 @@ body{padding:12px 0 26px}
 #rd-durero.rd-juego{margin:0 auto}
 </style>
 <style>
-.rd-juego{position:relative;box-sizing:border-box;max-width:880px;margin:14px auto;padding:0;overflow:hidden;color:#e9e2d0;font:16px/1.5 Georgia,"Times New Roman",serif;text-align:left;border:3px solid #3b3123;border-radius:14px;background:#0d1013 radial-gradient(ellipse at 50% 0%,#1d252d 0%,#0d1013 72%);box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 0 90px rgba(0,0,0,.7)}
+/* Georgia dibuja las cifras "de texto" (el 0 parece una «o»). Para las cifras se usa una fuente con cifras de altura de mayúscula. */
+@font-face{font-family:"RdCifras";font-style:normal;font-weight:400;unicode-range:U+0030-0039;size-adjust:104%;src:local("Times New Roman"),local("TimesNewRomanPSMT"),local("Liberation Serif"),local("Tinos"),local("Times")}
+@font-face{font-family:"RdCifras";font-style:normal;font-weight:700;unicode-range:U+0030-0039;size-adjust:104%;src:local("Times New Roman Bold"),local("TimesNewRomanPS-BoldMT"),local("Liberation Serif Bold"),local("Tinos Bold"),local("Times Bold"),local("Times-Bold")}
+@font-face{font-family:"RdCifras";font-style:italic;font-weight:400;unicode-range:U+0030-0039;size-adjust:104%;src:local("Times New Roman Italic"),local("TimesNewRomanPS-ItalicMT"),local("Liberation Serif Italic"),local("Tinos Italic"),local("Times Italic"),local("Times-Italic")}
+.rd-juego{position:relative;box-sizing:border-box;max-width:880px;margin:14px auto;padding:0;overflow:hidden;color:#e9e2d0;font:16px/1.5 "RdCifras",Georgia,"Times New Roman",serif;text-align:left;border:3px solid #3b3123;border-radius:14px;background:#0d1013 radial-gradient(ellipse at 50% 0%,#1d252d 0%,#0d1013 72%);box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 0 90px rgba(0,0,0,.7)}
 .rd-juego *{box-sizing:border-box}
 .rd-juego a{color:#ffd27a}
 .rd-juego p{margin:0 0 8px}
@@ -22,7 +26,7 @@ body{padding:12px 0 26px}
 .rd-juego .rd-lugar{margin:0 0 8px;font:700 .78rem/1.4 "Courier New",Courier,monospace;letter-spacing:.2em;text-transform:uppercase;color:#ffb347}
 .rd-juego .rd-t1{margin:6px 0 0;font:400 1.15rem/1 Impact,Haettenschweiler,"Arial Black","Arial Narrow Bold",sans-serif;letter-spacing:.55em;text-indent:.55em;text-transform:uppercase;color:#ffb347}
 .rd-juego .rd-t2{margin:2px 0 6px;font:400 3.5rem/1.05 Impact,Haettenschweiler,"Arial Black","Arial Narrow Bold",sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#f6ead0;text-shadow:0 3px 0 #5b1a12,0 0 30px rgba(255,150,50,.38)}
-.rd-juego .rd-sub{margin:0 0 6px;font:italic 1.2rem/1.35 Georgia,serif;color:#eadfc4}
+.rd-juego .rd-sub{margin:0 0 6px;font:italic 1.2rem/1.35 "RdCifras",Georgia,serif;color:#eadfc4}
 .rd-juego .rd-franja{height:8px;max-width:340px;margin:14px auto;border-radius:2px;background:repeating-linear-gradient(-45deg,#e0b84f 0 10px,#15181b 10px 20px);opacity:.85}
 .rd-juego .rd-foto{position:relative;width:100%;max-width:340px;margin:20px auto 22px;padding:10px;background:#000;border:1px solid #5c4b2a;box-shadow:0 0 0 4px #14171a,0 0 0 5px #5c4b2a,0 18px 36px rgba(0,0,0,.65),0 0 70px rgba(216,64,47,.2)}
 .rd-juego .rd-foto img{display:block;width:100%;height:auto;margin:0;border:0}
@@ -32,7 +36,7 @@ body{padding:12px 0 26px}
 .rd-juego .rd-e3{left:-9px;bottom:-9px;border-right:0;border-top:0}
 .rd-juego .rd-e4{right:-9px;bottom:-9px;border-left:0;border-top:0}
 .rd-juego .rd-objetivo{margin:-8px 0 0;font:700 .74rem "Courier New",Courier,monospace;letter-spacing:.2em;text-transform:uppercase;color:#d8c9a3}
-.rd-juego .rd-brief{max-width:620px;margin:14px auto 4px;font:1rem/1.55 Georgia,serif;color:#d9cfb6}
+.rd-juego .rd-brief{max-width:620px;margin:14px auto 4px;font:1rem/1.55 "RdCifras",Georgia,serif;color:#d9cfb6}
 .rd-juego .rd-equipo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 14px}
 .rd-juego .rd-carta{display:flex;gap:10px;align-items:flex-start;padding:12px;text-align:left;background:linear-gradient(#1d242b,#13171b);border:1px solid #4e4126;border-radius:8px}
 .rd-juego .rd-carta svg{flex:none;width:44px;height:44px}
@@ -73,7 +77,7 @@ body{padding:12px 0 26px}
 .rd-juego .rd-ficha{position:relative;margin:12px 12px 0;padding:16px 16px 14px;color:#241c10;background:linear-gradient(180deg,#f2e9d0,#e4d8ba);border-left:10px solid #8a2b20;border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,.5)}
 .rd-juego .rd-ficha-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;padding:0 0 6px;border-bottom:1px dashed #a7966b;font:700 .72rem "Courier New",Courier,monospace;letter-spacing:.13em;text-transform:uppercase;color:#6c5a36}
 .rd-juego .rd-pendiente{padding:0 7px;border:2px solid #b02d1f;color:#b02d1f;transform:rotate(-3deg)}
-.rd-juego .rd-enun{margin:0 0 12px;font:700 1.18rem/1.4 Georgia,serif;color:#1c150a}
+.rd-juego .rd-enun{margin:0 0 12px;font:700 1.18rem/1.4 "RdCifras",Georgia,serif;color:#1c150a}
 .rd-juego .rd-opcion{display:flex;gap:12px;align-items:flex-start;width:100%;margin:0 0 9px;padding:10px 12px;text-align:left;font:1rem/1.4 system-ui,"Segoe UI",Roboto,Arial,sans-serif;color:#241c10;background:#f8f1dd;border:2px solid #9b8756;border-radius:8px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
 .rd-juego .rd-opcion:hover:not(:disabled){transform:translateX(3px);border-color:#b8382a;background:#fff8e2}
 .rd-juego .rd-opcion:disabled{cursor:default}
@@ -82,7 +86,7 @@ body{padding:12px 0 26px}
 .rd-juego .rd-opcion.rd-bien{border-color:#1e8e4a;background:#d9f2df}
 .rd-juego .rd-opcion.rd-mal{border-color:#c0392b;background:#f9d9d3}
 .rd-juego .rd-opcion.rd-descartada{opacity:.4;text-decoration:line-through;background:#d9cfb4;border-style:dashed}
-.rd-juego .rd-charles{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px;padding:10px 12px;color:#efe5c8;background:#1a2027;border:2px solid #c9a24b;border-radius:10px;font:italic .98rem/1.45 Georgia,serif}
+.rd-juego .rd-charles{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px;padding:10px 12px;color:#efe5c8;background:#1a2027;border:2px solid #c9a24b;border-radius:10px;font:italic .98rem/1.45 "RdCifras",Georgia,serif}
 .rd-juego .rd-charles svg{flex:none;width:46px;height:46px}
 .rd-juego .rd-charles b{display:block;margin:0 0 2px;font:700 .72rem "Courier New",Courier,monospace;font-style:normal;letter-spacing:.13em;text-transform:uppercase;color:#ffb347}
 .rd-juego .rd-aviso{margin:12px 0 0;padding:12px 14px;border-left:6px solid;border-radius:8px;font:.98rem/1.5 system-ui,"Segoe UI",Roboto,Arial,sans-serif;animation:rdAviso .25s ease-out}
