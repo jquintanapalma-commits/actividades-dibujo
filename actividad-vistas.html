@@ -780,6 +780,102 @@ body{padding:12px 10px 28px}
 </script>
 
 <script>
+/* Dentro de un iframe más alto que la ventana, "fixed" se refiere a todo el marco y no a lo que se ve.
+   Este ajuste averigua qué parte del marco está a la vista (columna de centinelas con IntersectionObserver)
+   para centrar ahí las ventanas y colocar la bandeja flotante. Fuera de un iframe no hace nada. */
+(function () {
+  var enMarco = false;
+  try { enMarco = window.self !== window.top; } catch (e) { enMarco = true; }
+  if (!enMarco || !window.IntersectionObserver) { return; }
+  var PASO = 20, caja = null, io = null, estado = {}, ultimo = "", raiz = document.documentElement;
+  function resumir() {
+    var alto = window.innerHeight, t = null, b = null, k, i, vt, vb, clave;
+    for (k in estado) {
+      if (estado[k]) { i = +k; if (t === null || i < t) { t = i; } if (b === null || i > b) { b = i; } }
+    }
+    if (t === null) { return; }
+    /* se redondea hacia dentro: es preferible usar un poco menos de la zona visible que salirse de ella */
+    vt = (t === 0) ? 0 : (t + 1) * PASO;
+    vb = (b >= Math.ceil(alto / PASO) - 1) ? alto : b * PASO;
+    if (vb <= vt) { return; }
+    clave = vt + ":" + vb + ":" + alto;
+    if (clave === ultimo) { return; }
+    ultimo = clave;
+    window.__rdVt = vt;
+    raiz.style.setProperty("--rd-vt", vt + "px");
+    raiz.style.setProperty("--rd-fb", Math.max(0, alto - vb) + "px");
+    try { document.dispatchEvent(new Event("scroll")); } catch (e) {}
+  }
+  function montar() {
+    var alto = window.innerHeight, n = Math.ceil(alto / PASO), i, s;
+    if (io) { io.disconnect(); }
+    if (caja && caja.parentNode) { caja.parentNode.removeChild(caja); }
+    estado = {};
+    ultimo = "";
+    caja = document.createElement("div");
+    caja.setAttribute("aria-hidden", "true");
+    caja.style.cssText = "position:fixed;left:0;top:0;width:1px;height:100vh;pointer-events:none;visibility:hidden";
+    io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { estado[e.target.getAttribute("data-i")] = e.isIntersecting; });
+      resumir();
+    });
+    for (i = 0; i < n; i++) {
+      s = document.createElement("div");
+      s.setAttribute("data-i", i);
+      s.style.cssText = "position:absolute;left:0;top:" + (i * PASO) + "px;width:1px;height:" + PASO + "px";
+      caja.appendChild(s);
+      io.observe(s);
+    }
+    document.body.appendChild(caja);
+  }
+  montar();
+  window.addEventListener("resize", montar);
+})();
+</script>
+<style>
+/* Dentro de un iframe, "sticky" no sirve (el marco no se desplaza: lo desplaza la página que lo contiene).
+   Lo sustituye este seguimiento, que solo actúa dentro de un iframe (la clase la pone el script de abajo). */
+.rd-en-marco .vpx .vpx-aside{position:relative;top:auto;transform:translateY(var(--rd-seg,0px));transition:transform .2s ease-out}
+@media (prefers-reduced-motion:reduce){.rd-en-marco .vpx .vpx-aside{transition:none}}
+</style>
+<script>
+/* La pieza en isométrico (columna de la izquierda) baja con la persona que juega: se mantiene en la parte
+   visible del marco, sin salirse de su zona. Fuera de un iframe no hace nada (ahí ya funciona "sticky"). */
+(function () {
+  var enMarco = false;
+  try { enMarco = window.self !== window.top; } catch (e) { enMarco = true; }
+  if (!enMarco || !window.IntersectionObserver) { return; }
+  var raiz = document.documentElement, y = 0, espera = false, MARGEN = 8;
+  raiz.className += (raiz.className ? " " : "") + "rd-en-marco";
+  function poner(v) {
+    if (v === y) { return; }
+    y = v;
+    raiz.style.setProperty("--rd-seg", v + "px");
+  }
+  function actualizar() {
+    espera = false;
+    var aside = document.querySelector(".vpx-aside"), lay = document.querySelector(".vpx-layout");
+    if (!aside || !lay || !aside.offsetParent) { poner(0); return; }
+    var rl = lay.getBoundingClientRect(), vt = window.__rdVt || 0;
+    var libre = rl.height - aside.offsetHeight;
+    /* la posición natural de la columna es el borde superior de la rejilla */
+    var nuevo = Math.round(vt + MARGEN - rl.top);
+    poner(libre <= 0 ? 0 : Math.max(0, Math.min(nuevo, Math.floor(libre))));
+  }
+  function pedir() {
+    if (!espera) { espera = true; window.requestAnimationFrame(actualizar); }
+  }
+  document.addEventListener("scroll", pedir, true);
+  window.addEventListener("scroll", pedir);
+  window.addEventListener("resize", pedir);
+  if (window.ResizeObserver) { new window.ResizeObserver(pedir).observe(document.body); }
+  if (window.MutationObserver) { new window.MutationObserver(pedir).observe(document.body, { childList: true, subtree: true }); }
+  window.addEventListener("load", pedir);
+  window.setTimeout(pedir, 400);
+  window.setTimeout(pedir, 1500);
+})();
+</script>
+<script>
 /* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
    (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
 (function () {
