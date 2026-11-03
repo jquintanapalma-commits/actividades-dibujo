@@ -1057,6 +1057,65 @@ body{padding:12px 10px 28px}
 })();
 </script>
 
+<style>
+/* Solo tiene efecto dentro de un iframe: las variables las rellena el script de abajo.
+   Sin ellas (página abierta directamente) los valores son 0 y todo queda como en el original. */
+.vx-win,.dx-win,.bx-win,.qx-win,.dx-zoom{border-top:var(--rd-vt,0px) solid transparent;border-bottom:var(--rd-fb,0px) solid transparent}
+.vx-pool.vx-docked{margin-bottom:var(--rd-fb,0px)!important}
+</style>
+<script>
+/* Dentro de un iframe más alto que la ventana, "fixed" se refiere a todo el marco y no a lo que se ve.
+   Este ajuste averigua qué parte del marco está a la vista (columna de centinelas con IntersectionObserver)
+   para centrar ahí las ventanas y colocar la bandeja flotante. Fuera de un iframe no hace nada. */
+(function () {
+  var enMarco = false;
+  try { enMarco = window.self !== window.top; } catch (e) { enMarco = true; }
+  if (!enMarco || !window.IntersectionObserver) { return; }
+  var PASO = 20, caja = null, io = null, estado = {}, ultimo = "", raiz = document.documentElement;
+  function resumir() {
+    var alto = window.innerHeight, t = null, b = null, k, i, vt, vb, clave;
+    for (k in estado) {
+      if (estado[k]) { i = +k; if (t === null || i < t) { t = i; } if (b === null || i > b) { b = i; } }
+    }
+    if (t === null) { return; }
+    /* se redondea hacia dentro: es preferible usar un poco menos de la zona visible que salirse de ella */
+    vt = (t === 0) ? 0 : (t + 1) * PASO;
+    vb = (b >= Math.ceil(alto / PASO) - 1) ? alto : b * PASO;
+    if (vb <= vt) { return; }
+    clave = vt + ":" + vb + ":" + alto;
+    if (clave === ultimo) { return; }
+    ultimo = clave;
+    window.__rdVt = vt;
+    raiz.style.setProperty("--rd-vt", vt + "px");
+    raiz.style.setProperty("--rd-fb", Math.max(0, alto - vb) + "px");
+    try { document.dispatchEvent(new Event("scroll")); } catch (e) {}
+  }
+  function montar() {
+    var alto = window.innerHeight, n = Math.ceil(alto / PASO), i, s;
+    if (io) { io.disconnect(); }
+    if (caja && caja.parentNode) { caja.parentNode.removeChild(caja); }
+    estado = {};
+    ultimo = "";
+    caja = document.createElement("div");
+    caja.setAttribute("aria-hidden", "true");
+    caja.style.cssText = "position:fixed;left:0;top:0;width:1px;height:100vh;pointer-events:none;visibility:hidden";
+    io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { estado[e.target.getAttribute("data-i")] = e.isIntersecting; });
+      resumir();
+    });
+    for (i = 0; i < n; i++) {
+      s = document.createElement("div");
+      s.setAttribute("data-i", i);
+      s.style.cssText = "position:absolute;left:0;top:" + (i * PASO) + "px;width:1px;height:" + PASO + "px";
+      caja.appendChild(s);
+      io.observe(s);
+    }
+    document.body.appendChild(caja);
+  }
+  montar();
+  window.addEventListener("resize", montar);
+})();
+</script>
 <script>
 /* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
    (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
