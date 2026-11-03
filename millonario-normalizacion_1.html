@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Millonario de la normalización</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<div class="qm-embed-wrap" style="display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div id="qm-activity" class="qm-root">
+<style>
+#qm-activity{max-width:900px;margin:1.2em auto;font-family:"Trebuchet MS","Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.45;color:#fff;box-sizing:border-box}
+#qm-activity *{box-sizing:border-box}
+#qm-activity [hidden]{display:none!important}
+#qm-activity button{font:inherit;cursor:pointer}
+#qm-activity .qm-loading{margin:0;padding:18px;text-align:center;color:#555;font-size:14px}
+
+/* Marco del concurso */
+#qm-activity .qm-shell{position:relative;overflow:hidden;overflow:clip;border:3px solid #3b5bdb;border-radius:22px;color:#fff;background:radial-gradient(ellipse at 50% -10%,#3b3bd0 0%,#17197a 38%,#070a3d 72%,#030420 100%);box-shadow:0 0 0 2px #050a30,0 0 28px rgba(70,120,255,.55)}
+
+/* Portada */
+#qm-activity .qm-hero{position:relative;padding:2.2em 1.3em 2em;text-align:center;background:radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.5px) 0 0/46px 46px,radial-gradient(circle,rgba(160,200,255,.7) 0 1px,transparent 1.5px) 23px 23px/46px 46px}
+#qm-activity .qm-logo{position:relative;display:flex;align-items:center;justify-content:center;width:118px;height:118px;margin:0 auto 10px;border-radius:50%;color:#fff;background:radial-gradient(circle at 35% 28%,#7ab0ff 0%,#2a3fd0 45%,#0a1260 100%);border:4px solid #ffd978;box-shadow:0 0 0 5px #0a1260,0 0 36px rgba(255,200,80,.65),inset 0 0 22px rgba(0,0,0,.45);animation:qmGlow 2.6s ease-in-out infinite}
+#qm-activity .qm-logo b{font-size:78px;line-height:1;font-weight:900;color:#fff!important;text-shadow:0 3px 0 #0a1260,0 0 16px rgba(255,255,255,.6)}
+#qm-activity .qm-kick{display:inline-block;margin:0 0 8px;padding:5px 18px;border:1px solid rgba(255,214,120,.8);border-radius:999px;background:rgba(255,200,61,.12);font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#ffe08a!important}
+#qm-activity .qm-title{margin:2px 0 4px;padding:0;border:0;font-size:46px;font-weight:900;line-height:1.1;color:#ffe08a!important;background:linear-gradient(180deg,#fff7d6 0%,#ffd45e 45%,#ff9d00 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 3px 0 rgba(0,0,40,.7))}
+#qm-activity .qm-sub{max-width:36em;margin:6px auto 16px;font-size:17px;color:#dbe8ff!important}
+#qm-activity .qm-rules{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 20px}
+#qm-activity .qm-rule{padding:5px 15px;border:1px solid rgba(111,168,255,.7);border-radius:999px;background:rgba(20,38,127,.7);font-size:14.5px;color:#fff!important}
+#qm-activity .qm-play{display:inline-block;padding:13px 35px;border:3px solid #ffe9a8;border-radius:999px;background:linear-gradient(180deg,#ffd45e,#ff8a00);box-shadow:0 6px 0 #a85a00,0 0 26px rgba(255,170,0,.6);font-size:20px;font-weight:900;color:#2a1700!important;animation:qmPulse 2s ease-in-out infinite}
+#qm-activity .qm-play:hover{filter:brightness(1.1)}
+#qm-activity .qm-play:active{transform:translateY(3px);box-shadow:0 3px 0 #a85a00}
+#qm-activity .qm-credit{margin:24px 0 0;font-size:13.5px;color:#b9cdf5!important}
+#qm-activity .qm-credit a{color:#ffe08a!important;font-weight:800;text-decoration:underline}
+#qm-activity .qm-credit a:hover{color:#fff!important}
+
+/* Barra superior */
+#qm-activity .qm-bar{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;gap:8px 11px;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(180deg,rgba(5,10,48,.97),rgba(13,27,110,.95));border-bottom:2px solid #3b5bdb;box-shadow:0 6px 16px rgba(0,0,20,.55)}
+#qm-activity .qm-brand{font-size:14.5px;font-weight:900;letter-spacing:.02em;color:#ffe08a!important}
+#qm-activity .qm-prize{display:inline-flex;align-items:center;padding:4px 14px;border:2px solid #ffc83d;border-radius:999px;background:rgba(255,200,61,.14);font-weight:900;white-space:nowrap;color:#ffe08a!important}
+#qm-activity .qm-ll{display:flex;gap:7px}
+#qm-activity .qm-llc{display:flex;align-items:center;justify-content:center;min-width:48px;height:35px;padding:0 10px;border:2px solid #6fa8ff;border-radius:999px;background:rgba(20,38,127,.9);font-size:13.5px;font-weight:900;color:#fff!important}
+#qm-activity .qm-llc.used{opacity:.4;text-decoration:line-through;border-color:#8a8fb5}
+#qm-activity .qm-restart{padding:6px 16px;border:2px solid #9db7ff;border-radius:999px;background:transparent;font-size:13px;font-weight:800;color:#cfe0ff!important}
+#qm-activity .qm-restart:hover{background:rgba(255,255,255,.12)}
+#qm-activity button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#qm-activity .qm-cols{display:grid;grid-template-columns:minmax(0,1fr) 216px;gap:16px;align-items:start;padding:16px}
+#qm-activity .qm-main{min-width:0}
+
+/* Escalera de premios */
+#qm-activity .qm-ladder{position:sticky;top:74px;display:flex;flex-direction:column;gap:3px;padding:8px;border:2px solid #3b5bdb;border-radius:14px;background:rgba(5,10,48,.78)}
+#qm-activity .qm-lv{display:flex;justify-content:space-between;gap:10px;margin:0;padding:3px 11px;border-radius:8px;font-size:13.5px;font-weight:800;color:#ff9f1c!important;border:1px solid transparent}
+#qm-activity .qm-lv span{color:inherit!important}
+#qm-activity .qm-lv.safe{color:#fff!important}
+#qm-activity .qm-lv .n{opacity:.85}
+#qm-activity .qm-lv.cur{background:#ff8a00;color:#2a1700!important;animation:qmBlink 1.4s ease-in-out infinite}
+#qm-activity .qm-lv.still{animation:none}
+#qm-activity .qm-lv.done{background:rgba(24,169,87,.28);color:#9dffc4!important}
+#qm-activity .qm-lv.bad{background:#d6284a;color:#fff!important}
+
+/* Pregunta */
+#qm-activity .qm-fade{animation:qmSlide .45s ease}
+#qm-activity .qm-meta{display:flex;justify-content:space-between;gap:8px;margin:0 0 8px;font-size:14.5px;font-weight:800}
+#qm-activity .qm-qn{color:#9fc2ff!important}
+#qm-activity .qm-qv{color:#ffe08a!important}
+#qm-activity .qm-qt{position:relative;margin:0 0 14px;padding:16px 21px;border:3px solid #6fa8ff;border-radius:18px;background:linear-gradient(180deg,#1b2fa0 0%,#0a1260 100%);box-shadow:0 0 20px rgba(70,130,255,.5),inset 0 0 18px rgba(0,0,40,.5);font-size:19px;font-weight:700;line-height:1.35;text-align:center;color:#fff!important}
+#qm-activity .qm-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin:0 0 14px}
+#qm-activity .qm-tools.qm-off .qm-lf:not(.qm-hintb){pointer-events:none;opacity:.35}
+#qm-activity .qm-lf{display:inline-flex;align-items:center;gap:5px;margin:0;padding:6px 16px;border:2px solid #ffc83d;border-radius:999px;background:rgba(255,200,61,.12);font-size:14.5px;font-weight:900;color:#ffe08a!important;transition:background .15s}
+#qm-activity .qm-lf:hover{background:rgba(255,200,61,.3)}
+#qm-activity .qm-lf.qm-hintb{border-color:#7ee0a0;background:rgba(24,169,87,.15);color:#a8ffcb!important}
+#qm-activity .qm-lf.qm-hintb:hover{background:rgba(24,169,87,.32)}
+#qm-activity .qm-hintp{flex:1 1 100%;margin:2px 0 0;padding:11px 16px;border-left:5px solid #7ee0a0;border-radius:0 12px 12px 0;background:rgba(24,169,87,.18);color:#e9fff1!important;animation:qmSlide .3s ease}
+
+/* Opciones */
+#qm-activity .qm-opts{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 14px}
+#qm-activity .qm-opt{position:relative;display:flex;align-items:center;gap:10px;width:100%;margin:0;min-height:58px;padding:11px 21px;border:2px solid #6fa8ff;border-radius:999px;background:linear-gradient(180deg,#14267f 0%,#07104a 100%);box-shadow:0 0 0 1px #050a30,0 0 14px rgba(70,130,255,.4);font-weight:600;text-align:left;color:#fff!important;transition:background .15s,box-shadow .15s}
+#qm-activity .qm-opt:hover{background:linear-gradient(180deg,#ffb300,#ff8a00);border-color:#ffe08a;box-shadow:0 0 20px rgba(255,170,0,.65);color:#241400!important}
+#qm-activity .qm-opt .qm-l{flex:none;font-weight:900;color:#ffb300!important}
+#qm-activity .qm-opt:hover .qm-l{color:#241400!important}
+#qm-activity .qm-opt .qm-txt{flex:1;min-width:0;color:inherit!important}
+#qm-activity .qm-opt.qm-w{grid-column:1/-1;justify-content:center;min-height:0;padding:7px 19px;border-color:#8a8fb5;background:transparent;box-shadow:none;font-size:14px;color:#cfd6f5!important}
+#qm-activity .qm-opt.qm-w .qm-l{color:inherit!important}
+#qm-activity .qm-opt.is-gone{visibility:hidden}
+#qm-activity .qm-pct{display:none;flex:none;flex-direction:column;gap:2px;width:61px;font-size:13px;font-weight:900;text-align:right;color:#ffe08a!important}
+#qm-activity .qm-pct b{color:inherit!important}
+#qm-activity .qm-opts.show-pct .qm-pct{display:flex}
+#qm-activity .qm-pb{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden}
+#qm-activity .qm-pbi{display:block;height:100%;background:linear-gradient(90deg,#ffd45e,#ff8a00)}
+#qm-activity .qm-locked .qm-opt{pointer-events:none}
+#qm-activity .qm-opt.is-dim{opacity:.5}
+#qm-activity .qm-opt.is-right{opacity:1;border-color:#b6ffd3;background:linear-gradient(180deg,#26c971,#0e7a3f);box-shadow:0 0 24px rgba(40,220,120,.75);color:#fff!important;animation:qmPop .5s ease}
+#qm-activity .qm-opt.is-right .qm-l,#qm-activity .qm-opt.is-right .qm-pct{color:#fff!important}
+#qm-activity .qm-opt.is-wrong{opacity:1;border-color:#ffc0cc;background:linear-gradient(180deg,#e0405f,#8c1229);box-shadow:0 0 24px rgba(230,50,90,.75);color:#fff!important;animation:qmShake .5s ease}
+#qm-activity .qm-opt.is-wrong .qm-l{color:#fff!important}
+
+/* Retroalimentación */
+#qm-activity .qm-fb{margin-top:14px;padding:15px 19px;border-radius:16px}
+#qm-activity .qm-fb--ok{border:2px solid #7dffb0;background:rgba(24,169,87,.22);color:#eafff2!important}
+#qm-activity .qm-fb--bad{border:2px solid #ff9bb0;background:rgba(214,40,74,.25);color:#fff0f3!important}
+#qm-activity .qm-fb p{margin:0 0 4px;color:inherit!important}
+#qm-activity .qm-fb .qm-fb-h{margin:0 0 5px;font-size:17.5px;font-weight:900}
+#qm-activity .qm-fb--ok .qm-fb-h{color:#9dffc4!important}
+#qm-activity .qm-fb--bad .qm-fb-h{color:#ffc3cf!important}
+#qm-activity .qm-fb .qm-fb-right{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.55)}
+#qm-activity .qm-fb strong{color:inherit!important}
+
+/* Siguiente y finales */
+#qm-activity .qm-nextrow{margin-top:16px;text-align:center}
+#qm-activity .qm-next{display:inline-flex;align-items:center;gap:6px;margin:0;padding:11px 29px;border:3px solid #ffe9a8;border-radius:999px;background:linear-gradient(180deg,#ffd45e,#ff8a00);box-shadow:0 5px 0 #a85a00,0 0 20px rgba(255,170,0,.55);font-size:17.5px;font-weight:900;color:#2a1700!important;animation:qmPulse 1.8s ease-in-out infinite}
+#qm-activity .qm-next:hover{filter:brightness(1.1)}
+#qm-activity .qm-end{margin-top:18px;padding:19px 21px;border-radius:18px;text-align:center;animation:qmSlide .5s ease}
+#qm-activity .qm-end--over{border:3px solid #ff9bb0;background:linear-gradient(180deg,rgba(140,18,41,.55),rgba(60,5,20,.6))}
+#qm-activity .qm-end--walk{border:3px solid #ffc83d;background:linear-gradient(180deg,rgba(168,90,0,.5),rgba(70,35,0,.6))}
+#qm-activity .qm-end--win{border:4px solid #ffe08a;background:linear-gradient(180deg,rgba(24,169,87,.5),rgba(5,60,40,.7));box-shadow:0 0 34px rgba(255,214,90,.7)}
+#qm-activity .qm-end p{margin:6px 0;color:#fff!important}
+#qm-activity .qm-end .qm-end-t{margin:0 0 5px;font-size:24px;font-weight:900;color:#ffe08a!important}
+#qm-activity .qm-end .qm-end-a{margin:3px 0;font-size:19px;font-weight:900;color:#fff!important}
+#qm-activity .qm-end strong{color:#ffe08a!important}
+#qm-activity .qm-btn{margin-top:11px;padding:10px 29px;border:3px solid #ffe9a8;border-radius:999px;background:linear-gradient(180deg,#ffd45e,#ff8a00);box-shadow:0 5px 0 #a85a00;font-weight:900;color:#2a1700!important}
+#qm-activity .qm-btn:hover{filter:brightness(1.1)}
+#qm-activity .qm-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #a85a00}
+
+/* Confeti */
+#qm-activity .qm-confetti{position:absolute;left:0;right:0;top:0;bottom:0;z-index:40;overflow:hidden;pointer-events:none}
+#qm-activity .qm-cf{position:absolute;top:-20px;width:10px;height:16px;border-radius:2px;animation:qmFall linear infinite}
+
+@keyframes qmPop{0%{transform:scale(.97)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes qmShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@keyframes qmSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes qmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes qmBlink{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+@keyframes qmGlow{0%,100%{box-shadow:0 0 0 5px #0a1260,0 0 26px rgba(255,200,80,.5),inset 0 0 22px rgba(0,0,0,.45)}50%{box-shadow:0 0 0 5px #0a1260,0 0 48px rgba(255,200,80,.95),inset 0 0 22px rgba(0,0,0,.45)}}
+@keyframes qmFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(900px) rotate(700deg);opacity:1}}
+
+/* Adaptación al ancho real del contenedor (data-size lo calcula el script) */
+#qm-activity[data-size="s"] .qm-cols,#qm-activity[data-size="xs"] .qm-cols{grid-template-columns:1fr;padding:12px}
+#qm-activity[data-size="s"] .qm-ladder,#qm-activity[data-size="xs"] .qm-ladder{position:static;order:-1;flex-direction:row-reverse;flex-wrap:wrap-reverse;justify-content:center;gap:4px;padding:7px}
+#qm-activity[data-size="s"] .qm-lv,#qm-activity[data-size="xs"] .qm-lv{width:35px;height:35px;padding:0;justify-content:center;align-items:center;border-radius:50%;border:1px solid rgba(255,159,28,.6);font-size:13px}
+#qm-activity[data-size="s"] .qm-lv.safe,#qm-activity[data-size="xs"] .qm-lv.safe{border-color:#fff}
+#qm-activity[data-size="s"] .qm-lv .a,#qm-activity[data-size="xs"] .qm-lv .a{display:none}
+#qm-activity[data-size="s"] .qm-lv .n,#qm-activity[data-size="xs"] .qm-lv .n{opacity:1}
+#qm-activity[data-size="s"] .qm-opts,#qm-activity[data-size="xs"] .qm-opts{grid-template-columns:1fr}
+#qm-activity[data-size="s"] .qm-qt,#qm-activity[data-size="xs"] .qm-qt{font-size:17px}
+#qm-activity[data-size="s"] .qm-brand,#qm-activity[data-size="xs"] .qm-brand{display:none}
+#qm-activity[data-size="s"] .qm-title{font-size:36px}
+#qm-activity[data-size="xs"] .qm-title{font-size:28px}
+#qm-activity[data-size="xs"] .qm-hero{padding:26px 14px 24px}
+#qm-activity[data-size="xs"] .qm-logo{width:96px;height:96px}
+#qm-activity[data-size="xs"] .qm-logo b{font-size:62px}
+#qm-activity[data-size="xs"] .qm-opt{padding:10px 16px}
+#qm-activity[data-size="xs"] .qm-end .qm-end-t{font-size:20px}
+
+@media (prefers-reduced-motion:reduce){#qm-activity *{animation:none!important;transition:none!important}#qm-activity .qm-confetti{display:none!important}}
+</style>
+<p class="qm-loading">Cargando la actividad… Si este mensaje no desaparece, abre la Vista previa de eXeLearning o exporta el contenido: los scripts no se ejecutan en todas las vistas del editor.</p>
+<script>
+(function () {
+  var LINK = 'https://claude.ai/login';
+  var LAD = [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000];
+  var QS = [
+ {
+  "q": "¿Cuál de estos documentos técnicos es de obligado cumplimiento?",
+  "h": "Lo dicta la autoridad legal competente, por ejemplo en materia de seguridad industrial.",
+  "o": [
+   {
+    "t": "Una norma UNE",
+    "p": 9,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Un reglamento",
+    "p": 82,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Una norma ISO",
+    "p": 6,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Un croquis",
+    "p": 3,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "Las normas se elaboran por consenso y su aplicación es voluntaria, salvo que un mandato legal explícito las haga obligatorias.",
+    "r": "Un reglamento. Los reglamentos son normativas de obligado cumplimiento dictadas por la autoridad legal competente (por ejemplo, en seguridad industrial)."
+   },
+   "B": {
+    "k": 1,
+    "h": "✔ ¡Correcto! Sumas 100 €",
+    "b": "Los reglamentos son normativas de obligado cumplimiento dictadas por la autoridad legal competente (por ejemplo, en seguridad industrial).",
+    "r": ""
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "Las normas ISO son normas internacionales de aplicación voluntaria: no las dicta una autoridad legal.",
+    "r": "Un reglamento. Los reglamentos son normativas de obligado cumplimiento dictadas por la autoridad legal competente (por ejemplo, en seguridad industrial)."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "El croquis es un dibujo preliminar a mano alzada para estudiar y comunicar ideas; no es un documento normativo.",
+    "r": "Un reglamento. Los reglamentos son normativas de obligado cumplimiento dictadas por la autoridad legal competente (por ejemplo, en seguridad industrial)."
+   }
+  },
+  "tp": "la diferencia entre normas, reglamentos y especificaciones técnicas"
+ },
+ {
+  "q": "¿Cuáles son los tres objetivos principales de la normalización?",
+  "h": "Fíjate en el último: se trata de reducir la variedad innecesaria de piezas y procesos.",
+  "o": [
+   {
+    "t": "Definir, ampliar y diversificar",
+    "p": 12,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Diseñar, fabricar y vender",
+    "p": 6,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Medir, pesar y calcular",
+    "p": 4,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Definir, tipificar y simplificar",
+    "p": 78,
+    "k": 1,
+    "r": 0
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "La normalización busca justo lo contrario de diversificar: simplificar, reduciendo la variedad innecesaria de piezas y procesos para optimizar costes y recursos.",
+    "r": "Definir, tipificar y simplificar. Definir (dimensiones y tolerancias sin ambigüedades), tipificar (modelos de referencia que aseguran la compatibilidad) y simplificar (menos variedad innecesaria, menos costes)."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Son fases de la actividad industrial, no los objetivos de la normalización.",
+    "r": "Definir, tipificar y simplificar. Definir (dimensiones y tolerancias sin ambigüedades), tipificar (modelos de referencia que aseguran la compatibilidad) y simplificar (menos variedad innecesaria, menos costes)."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Son operaciones técnicas habituales, pero no los objetivos principales de normalizar.",
+    "r": "Definir, tipificar y simplificar. Definir (dimensiones y tolerancias sin ambigüedades), tipificar (modelos de referencia que aseguran la compatibilidad) y simplificar (menos variedad innecesaria, menos costes)."
+   },
+   "D": {
+    "k": 1,
+    "h": "✔ ¡Eso es! Sumas 200 €",
+    "b": "Definir (dimensiones y tolerancias sin ambigüedades), tipificar (modelos de referencia que aseguran la compatibilidad) y simplificar (menos variedad innecesaria, menos costes).",
+    "r": ""
+   }
+  },
+  "tp": "los objetivos principales de la normalización",
+  "wa": "Definir, tipificar y simplificar",
+  "we": "Definir (dimensiones y tolerancias sin ambigüedades), tipificar (modelos de referencia que aseguran la compatibilidad) y simplificar (menos variedad innecesaria, menos costes)."
+ },
+ {
+  "q": "¿Qué sigla corresponde a una norma de ámbito regional (europeo)?",
+  "h": "Las elaboran los organismos CEN y CENELEC.",
+  "o": [
+   {
+    "t": "EN",
+    "p": 72,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "UNE",
+    "p": 14,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "ISO",
+    "p": 9,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "IEC",
+    "p": 5,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 1,
+    "h": "✔ ¡Bien! Sumas 300 €",
+    "b": "Las normas EN son de ámbito regional (supranacional, en Europa) y las elabora el CEN/CENELEC.",
+    "r": ""
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "UNE identifica las normas nacionales editadas en España.",
+    "r": "EN. Las normas EN son de ámbito regional (supranacional, en Europa) y las elabora el CEN/CENELEC."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "ISO es el organismo de ámbito internacional (global), no regional.",
+    "r": "EN. Las normas EN son de ámbito regional (supranacional, en Europa) y las elabora el CEN/CENELEC."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "IEC también es de ámbito internacional (global), no regional.",
+    "r": "EN. Las normas EN son de ámbito regional (supranacional, en Europa) y las elabora el CEN/CENELEC."
+   }
+  },
+  "tp": "la clasificación de las normas por su ámbito geográfico",
+  "wa": "EN",
+  "we": "Las normas EN son de ámbito regional (supranacional, en Europa) y las elabora el CEN/CENELEC."
+ },
+ {
+  "q": "En la designación «UNE-EN ISO 5456-3:2000», ¿qué indica «2000»?",
+  "h": "Mira cómo termina la designación: lo que va detrás de los dos puntos.",
+  "o": [
+   {
+    "t": "La parte específica de la norma",
+    "p": 18,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "El número de la norma general",
+    "p": 9,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "El año de publicación de esa edición",
+    "p": 68,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "El número de páginas del documento",
+    "p": 5,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "Eso lo indica el «-3» (en este caso, la parte dedicada a las representaciones axonométricas).",
+    "r": "El año de publicación de esa edición. Tras los dos puntos se indica el año en que se publicó esa edición de la norma."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "El número de la norma general es 5456.",
+    "r": "El año de publicación de esa edición. Tras los dos puntos se indica el año en que se publicó esa edición de la norma."
+   },
+   "C": {
+    "k": 1,
+    "h": "✔ ¡Exacto! Sumas 500 €",
+    "b": "Tras los dos puntos se indica el año en que se publicó esa edición de la norma.",
+    "r": ""
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "La designación no informa del número de páginas: indica origen (UNE-EN ISO), número y parte, y año de edición.",
+    "r": "El año de publicación de esa edición. Tras los dos puntos se indica el año en que se publicó esa edición de la norma."
+   }
+  },
+  "tp": "la estructura de codificación de las normas",
+  "wa": "El año de publicación de esa edición",
+  "we": "Tras los dos puntos se indica el año en que se publicó esa edición de la norma."
+ },
+ {
+  "q": "En la serie A de formatos, ¿qué superficie tiene el A0 y qué proporción guardan sus lados?",
+  "h": "Al dividir un formato por su lado menor se obtienen dos del tamaño inferior: el área se reduce a la mitad.",
+  "o": [
+   {
+    "t": "1 m² y proporción 2",
+    "p": 17,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "1 m² y proporción √2",
+    "p": 62,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "2 m² y proporción √2",
+    "p": 13,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "0,5 m² y proporción 3/2",
+    "p": 8,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "La superficie es correcta, pero la proporción entre lados es √2 (≈ 1,41), no 2: así se mantiene la semejanza al doblar.",
+    "r": "1 m² y proporción √2. El A0 mide 1 m² y todos los formatos de la serie A son semejantes, con una proporción entre lados de √2. Al doblar, el área se reduce a la mitad."
+   },
+   "B": {
+    "k": 1,
+    "h": "✔ ¡Muy bien! Sumas 1.000 €",
+    "b": "El A0 mide 1 m² y todos los formatos de la serie A son semejantes, con una proporción entre lados de √2. Al doblar, el área se reduce a la mitad. ¡Primer nivel seguro: 1.000 €!",
+    "r": ""
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "La proporción es correcta, pero el A0 mide 1 m², no 2 m².",
+    "r": "1 m² y proporción √2. El A0 mide 1 m² y todos los formatos de la serie A son semejantes, con una proporción entre lados de √2. Al doblar, el área se reduce a la mitad."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "El A0 parte de 1 m² (0,5 m² sería ya el A1) y la proporción entre lados es √2, no 3/2.",
+    "r": "1 m² y proporción √2. El A0 mide 1 m² y todos los formatos de la serie A son semejantes, con una proporción entre lados de √2. Al doblar, el área se reduce a la mitad."
+   }
+  },
+  "tp": "los formatos de papel de la serie A",
+  "wa": "1 m² y proporción √2",
+  "we": "El A0 mide 1 m² y todos los formatos de la serie A son semejantes, con una proporción entre lados de √2. Al doblar, el área se reduce a la mitad."
+ },
+ {
+  "q": "En dibujo mecánico, ¿qué proporción de grosor se mantiene entre las líneas finas y las gruesas?",
+  "h": "Las gruesas (contornos y aristas visibles) son justo el doble de anchas que las finas (cotas, ejes y rayados).",
+  "o": [
+   {
+    "t": "1 : 3",
+    "p": 22,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "1 : 1",
+    "p": 12,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "2 : 3",
+    "p": 8,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "1 : 2",
+    "p": 58,
+    "k": 1,
+    "r": 0
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Te acercas, pero la gruesa es exactamente el doble de la fina: 1 : 2.",
+    "r": "1 : 2. La proporción 1 : 2 permite distinguir a simple vista las líneas finas (cotas, ejes, rayados) de las gruesas (contornos y aristas visibles)."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Con el mismo grosor no se distinguiría un contorno de una cota o un eje: por eso hay dos anchuras diferenciadas.",
+    "r": "1 : 2. La proporción 1 : 2 permite distinguir a simple vista las líneas finas (cotas, ejes, rayados) de las gruesas (contornos y aristas visibles)."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Esa relación no es la normalizada: la proporción entre fina y gruesa es de 1 : 2.",
+    "r": "1 : 2. La proporción 1 : 2 permite distinguir a simple vista las líneas finas (cotas, ejes, rayados) de las gruesas (contornos y aristas visibles)."
+   },
+   "D": {
+    "k": 1,
+    "h": "✔ ¡Correcto! Sumas 2.000 €",
+    "b": "La proporción 1 : 2 permite distinguir a simple vista las líneas finas (cotas, ejes, rayados) de las gruesas (contornos y aristas visibles).",
+    "r": ""
+   }
+  },
+  "tp": "las líneas normalizadas",
+  "wa": "1 : 2",
+  "we": "La proporción 1 : 2 permite distinguir a simple vista las líneas finas (cotas, ejes, rayados) de las gruesas (contornos y aristas visibles)."
+ },
+ {
+  "q": "Según la serie ISO 3098, ¿qué tipo de letra es el más utilizado en la industria y cuál es el grosor de su trazo (d) en función de la altura (h)?",
+  "h": "El tipo B es el de trazo grueso; el tipo A es el fino (h/14).",
+  "o": [
+   {
+    "t": "Tipo B, con d = h/14",
+    "p": 25,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Tipo A, con d = h/14",
+    "p": 12,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Tipo B, con d = h/10",
+    "p": 55,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Tipo A, con d = h/10",
+    "p": 8,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "El tipo B sí es el más utilizado, pero su trazo es grueso: d = h/10. El valor h/14 corresponde al tipo A.",
+    "r": "Tipo B, con d = h/10. El tipo B, de trazo grueso (d = h/10), es el más utilizado en la industria."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "Ese es el tipo A, de trazo fino. El más utilizado en la industria es el tipo B.",
+    "r": "Tipo B, con d = h/10. El tipo B, de trazo grueso (d = h/10), es el más utilizado en la industria."
+   },
+   "C": {
+    "k": 1,
+    "h": "✔ ¡Muy bien! Sumas 4.000 €",
+    "b": "El tipo B, de trazo grueso (d = h/10), es el más utilizado en la industria.",
+    "r": ""
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "Has cruzado los datos: h/10 es el grosor del tipo B (el más utilizado); el tipo A usa h/14.",
+    "r": "Tipo B, con d = h/10. El tipo B, de trazo grueso (d = h/10), es el más utilizado en la industria."
+   }
+  },
+  "tp": "la escritura normalizada (rotulación)",
+  "wa": "Tipo B, con d = h/10",
+  "we": "El tipo B, de trazo grueso (d = h/10), es el más utilizado en la industria."
+ },
+ {
+  "q": "¿Dónde se sitúa el cajetín y qué margen se deja en el lado izquierdo para el archivado?",
+  "h": "El margen más ancho está en el lado de la encuadernación; el cajetín se coloca abajo, en la esquina contraria.",
+  "o": [
+   {
+    "t": "Esquina inferior derecha y 20 mm de margen izquierdo",
+    "p": 51,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Esquina inferior derecha y 10 mm de margen izquierdo",
+    "p": 26,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Esquina superior izquierda y 20 mm de margen izquierdo",
+    "p": 14,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Esquina inferior izquierda y 5 mm de margen izquierdo",
+    "p": 9,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 1,
+    "h": "✔ ¡Correcto! Sumas 8.000 €",
+    "b": "El cajetín (máximo 180 mm de ancho) va en la esquina inferior derecha, y se dejan 20 mm a la izquierda para archivar.",
+    "r": ""
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "El cajetín está bien ubicado, pero a la izquierda se dejan 20 mm para el archivado; los 10-20 mm son para el resto de lados.",
+    "r": "Esquina inferior derecha y 20 mm de margen izquierdo. El cajetín (máximo 180 mm de ancho) va en la esquina inferior derecha, y se dejan 20 mm a la izquierda para archivar."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "El margen es correcto, pero el cajetín se coloca en la esquina inferior derecha.",
+    "r": "Esquina inferior derecha y 20 mm de margen izquierdo. El cajetín (máximo 180 mm de ancho) va en la esquina inferior derecha, y se dejan 20 mm a la izquierda para archivar."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "Ni la ubicación ni el margen son correctos: cajetín abajo a la derecha y 20 mm de margen izquierdo.",
+    "r": "Esquina inferior derecha y 20 mm de margen izquierdo. El cajetín (máximo 180 mm de ancho) va en la esquina inferior derecha, y se dejan 20 mm a la izquierda para archivar."
+   }
+  },
+  "tp": "los márgenes y el cajetín",
+  "wa": "Esquina inferior derecha y 20 mm de margen izquierdo",
+  "we": "El cajetín (máximo 180 mm de ancho) va en la esquina inferior derecha, y se dejan 20 mm a la izquierda para archivar."
+ },
+ {
+  "q": "Según la norma UNE 1027:1995, ¿cómo debe quedar un plano de formato superior al A4 una vez plegado?",
+  "h": "Todos se pliegan hasta un tamaño único y, lo primero que debe verse es la identificación del plano.",
+  "o": [
+   {
+    "t": "Con tamaño A4, pero el cajetín puede quedar en cualquier parte",
+    "p": 24,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Con tamaño A3 (297 × 420 mm) y el cajetín visible en la portada",
+    "p": 18,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Sin plegar: los planos grandes se enrollan",
+    "p": 10,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Con tamaño A4 (210 × 297 mm) y el cajetín visible en la portada",
+    "p": 48,
+    "k": 1,
+    "r": 0
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "El tamaño es correcto, pero el requisito fundamental es que el cajetín quede siempre visible en la portada del plano plegado.",
+    "r": "Con tamaño A4 (210 × 297 mm) y el cajetín visible en la portada. Se pliega hasta A4 y el cajetín debe quedar siempre visible en la portada, para identificar el plano sin abrirlo."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "La visibilidad del cajetín es correcta, pero el tamaño final del plegado es A4 (210 × 297 mm).",
+    "r": "Con tamaño A4 (210 × 297 mm) y el cajetín visible en la portada. Se pliega hasta A4 y el cajetín debe quedar siempre visible en la portada, para identificar el plano sin abrirlo."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "La norma UNE 1027 establece que todo formato superior se dobla hasta las dimensiones de un A4.",
+    "r": "Con tamaño A4 (210 × 297 mm) y el cajetín visible en la portada. Se pliega hasta A4 y el cajetín debe quedar siempre visible en la portada, para identificar el plano sin abrirlo."
+   },
+   "D": {
+    "k": 1,
+    "h": "✔ ¡Exacto! Sumas 16.000 €",
+    "b": "Se pliega hasta A4 y el cajetín debe quedar siempre visible en la portada, para identificar el plano sin abrirlo.",
+    "r": ""
+   }
+  },
+  "tp": "el plegado de planos (UNE 1027:1995)",
+  "wa": "Con tamaño A4 (210 × 297 mm) y el cajetín visible en la portada",
+  "we": "Se pliega hasta A4 y el cajetín debe quedar siempre visible en la portada, para identificar el plano sin abrirlo."
+ },
+ {
+  "q": "En el sistema europeo (primer diedro), ¿cómo se colocan la planta y el perfil izquierdo respecto al alzado?",
+  "h": "En el sistema europeo, las vistas se dibujan en el lado opuesto desde el que se miran.",
+  "o": [
+   {
+    "t": "La planta encima del alzado y el perfil izquierdo a la izquierda",
+    "p": 28,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "La planta debajo del alzado y el perfil izquierdo a la derecha",
+    "p": 46,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "La planta debajo del alzado y el perfil izquierdo a la izquierda",
+    "p": 16,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "La planta encima del alzado y el perfil izquierdo a la derecha",
+    "p": 10,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Esa es la disposición del sistema americano (tercer diedro), donde las vistas se colocan en el mismo lado desde el que se miran.",
+    "r": "La planta debajo del alzado y el perfil izquierdo a la derecha. En el sistema europeo el objeto está entre el observador y el plano, así que las vistas se colocan en el lado opuesto al que se miran."
+   },
+   "B": {
+    "k": 1,
+    "h": "✔ ¡Perfecto! Sumas 32.000 €",
+    "b": "En el sistema europeo el objeto está entre el observador y el plano, así que las vistas se colocan en el lado opuesto al que se miran. ¡Segundo nivel seguro: 32.000 €!",
+    "r": ""
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "La planta sí va debajo, pero el perfil izquierdo se dibuja a la derecha del alzado (lado opuesto al que se mira).",
+    "r": "La planta debajo del alzado y el perfil izquierdo a la derecha. En el sistema europeo el objeto está entre el observador y el plano, así que las vistas se colocan en el lado opuesto al que se miran."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Mezclas los dos sistemas: en el europeo la planta va debajo del alzado y el perfil izquierdo, a la derecha.",
+    "r": "La planta debajo del alzado y el perfil izquierdo a la derecha. En el sistema europeo el objeto está entre el observador y el plano, así que las vistas se colocan en el lado opuesto al que se miran."
+   }
+  },
+  "tp": "los sistemas de vistas (europeo y americano)",
+  "wa": "La planta debajo del alzado y el perfil izquierdo a la derecha",
+  "we": "En el sistema europeo el objeto está entre el observador y el plano, así que las vistas se colocan en el lado opuesto al que se miran."
+ },
+ {
+  "q": "Quieres representar un cilindro macizo sencillo. Según los criterios de selección de vistas, ¿qué es suficiente?",
+  "h": "No se trata de dibujar todas las caras, sino de definir la pieza sin ambigüedades ni redundancias. Un símbolo de acotación puede aportar la tercera dimensión.",
+  "o": [
+   {
+    "t": "Una sola vista, apoyada con el símbolo de diámetro (Ø)",
+    "p": 43,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Una sola vista, sin ningún símbolo",
+    "p": 30,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Tres vistas: alzado, planta y perfil",
+    "p": 17,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Las seis vistas principales",
+    "p": 10,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 1,
+    "h": "✔ ¡Muy bien! Sumas 64.000 €",
+    "b": "En piezas simples, una sola vista basta si se apoya con símbolos de acotación como el diámetro (Ø).",
+    "r": ""
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "Una única vista no basta por sí sola: hace falta el símbolo Ø para que quede claro que la pieza es cilíndrica.",
+    "r": "Una sola vista, apoyada con el símbolo de diámetro (Ø). En piezas simples, una sola vista basta si se apoya con símbolos de acotación como el diámetro (Ø)."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "Sobran vistas: solo se dibujan las estrictamente necesarias, y en una pieza tan simple basta una.",
+    "r": "Una sola vista, apoyada con el símbolo de diámetro (Ø). En piezas simples, una sola vista basta si se apoya con símbolos de acotación como el diámetro (Ø)."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "El objetivo no es dibujar todas las caras, sino definir la pieza con claridad y sin redundancias.",
+    "r": "Una sola vista, apoyada con el símbolo de diámetro (Ø). En piezas simples, una sola vista basta si se apoya con símbolos de acotación como el diámetro (Ø)."
+   }
+  },
+  "tp": "los criterios para seleccionar las vistas",
+  "wa": "Una sola vista, apoyada con el símbolo de diámetro (Ø)",
+  "we": "En piezas simples, una sola vista basta si se apoya con símbolos de acotación como el diámetro (Ø)."
+ },
+ {
+  "q": "¿Qué tipo de cotas se escriben siempre entre paréntesis?",
+  "h": "Dan información complementaria que no es imprescindible para fabricar la pieza.",
+  "o": [
+   {
+    "t": "Las cotas funcionales",
+    "p": 27,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Las cotas no funcionales de situación",
+    "p": 20,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Las cotas auxiliares",
+    "p": 41,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Las cotas no funcionales de dimensión",
+    "p": 12,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "Las funcionales son esenciales para el funcionamiento y el ensamblaje de la pieza: no van entre paréntesis.",
+    "r": "Las cotas auxiliares. Las cotas auxiliares dan información complementaria, no son imprescindibles para la fabricación y siempre se escriben entre paréntesis."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "Indican la ubicación de un elemento respecto a unas referencias; no se escriben entre paréntesis.",
+    "r": "Las cotas auxiliares. Las cotas auxiliares dan información complementaria, no son imprescindibles para la fabricación y siempre se escriben entre paréntesis."
+   },
+   "C": {
+    "k": 1,
+    "h": "✔ ¡Correcto! Sumas 125.000 €",
+    "b": "Las cotas auxiliares dan información complementaria, no son imprescindibles para la fabricación y siempre se escriben entre paréntesis.",
+    "r": ""
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ No es esa: ¡mira por qué!",
+    "b": "Indican el tamaño de un elemento; tampoco se escriben entre paréntesis.",
+    "r": "Las cotas auxiliares. Las cotas auxiliares dan información complementaria, no son imprescindibles para la fabricación y siempre se escriben entre paréntesis."
+   }
+  },
+  "tp": "los tipos de cotas",
+  "wa": "Las cotas auxiliares",
+  "we": "Las cotas auxiliares dan información complementaria, no son imprescindibles para la fabricación y siempre se escriben entre paréntesis."
+ },
+ {
+  "q": "¿Qué sistema de disposición de cotas es el ideal para los procesos de mecanizado automatizado?",
+  "h": "Define los puntos mediante sus distancias a dos ejes ortogonales, X e Y.",
+  "o": [
+   {
+    "t": "En paralelo",
+    "p": 30,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "En serie (cadena)",
+    "p": 20,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Progresiva (acumulada)",
+    "p": 10,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Por coordenadas",
+    "p": 40,
+    "k": 1,
+    "r": 0
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "En paralelo, todas las cotas parten de un mismo elemento de referencia y se evita que los errores de fabricación se acumulen; pero el ideal para el mecanizado automatizado es por coordenadas.",
+    "r": "Por coordenadas. La acotación por coordenadas define puntos mediante distancias a los ejes ortogonales (X, Y) y es ideal para el mecanizado automatizado."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "En serie las cotas se colocan una tras otra; se usa cuando es vital la distancia entre elementos consecutivos.",
+    "r": "Por coordenadas. La acotación por coordenadas define puntos mediante distancias a los ejes ortogonales (X, Y) y es ideal para el mecanizado automatizado."
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Casi…",
+    "b": "La progresiva simplifica el sistema en paralelo en una sola línea, con un origen (0) y medidas acumuladas; no es el método ideal para el mecanizado automatizado.",
+    "r": "Por coordenadas. La acotación por coordenadas define puntos mediante distancias a los ejes ortogonales (X, Y) y es ideal para el mecanizado automatizado."
+   },
+   "D": {
+    "k": 1,
+    "h": "✔ ¡Brillante! Sumas 250.000 €",
+    "b": "La acotación por coordenadas define puntos mediante distancias a los ejes ortogonales (X, Y) y es ideal para el mecanizado automatizado.",
+    "r": ""
+   }
+  },
+  "tp": "los sistemas de disposición de cotas",
+  "wa": "Por coordenadas",
+  "we": "La acotación por coordenadas define puntos mediante distancias a los ejes ortogonales (X, Y) y es ideal para el mecanizado automatizado."
+ },
+ {
+  "q": "¿Qué diferencia hay entre un corte y una sección?",
+  "h": "Piensa en lo que hay detrás del plano de corte: ¿se dibuja o se omite?",
+  "o": [
+   {
+    "t": "La sección incluye lo que queda detrás del plano y el corte solo la superficie cortada",
+    "p": 32,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "El corte incluye también los contornos visibles tras el plano; la sección solo representa la superficie de contacto con el plano",
+    "p": 38,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "El corte siempre es total y la sección siempre es parcial",
+    "p": 18,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "No hay diferencia: son dos nombres para lo mismo",
+    "p": 12,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Lo has invertido: es el corte el que añade los contornos visibles tras el plano; la sección solo muestra la superficie de contacto.",
+    "r": "El corte incluye también los contornos visibles tras el plano; la sección solo representa la superficie de contacto con el plano. El corte representa la superficie cortada y además los contornos y aristas que quedan visibles detrás del plano; la sección representa únicamente la superficie de contacto, omitiendo todo lo de detrás."
+   },
+   "B": {
+    "k": 1,
+    "h": "✔ ¡Excelente! Sumas 500.000 €",
+    "b": "El corte representa la superficie cortada y además los contornos y aristas que quedan visibles detrás del plano; la sección representa únicamente la superficie de contacto, omitiendo todo lo de detrás.",
+    "r": ""
+   },
+   "C": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Los cortes pueden ser totales, por planos paralelos, sucesivos, concurrentes, medios cortes o locales; la diferencia está en qué se representa, no en si es total o parcial.",
+    "r": "El corte incluye también los contornos visibles tras el plano; la sección solo representa la superficie de contacto con el plano. El corte representa la superficie cortada y además los contornos y aristas que quedan visibles detrás del plano; la sección representa únicamente la superficie de contacto, omitiendo todo lo de detrás."
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Esta vez no, ¡pero aprendes!",
+    "b": "Son representaciones distintas: el corte muestra además lo que queda detrás del plano; la sección, no.",
+    "r": "El corte incluye también los contornos visibles tras el plano; la sección solo representa la superficie de contacto con el plano. El corte representa la superficie cortada y además los contornos y aristas que quedan visibles detrás del plano; la sección representa únicamente la superficie de contacto, omitiendo todo lo de detrás."
+   }
+  },
+  "tp": "cortes, secciones y roturas",
+  "wa": "El corte incluye también los contornos visibles tras el plano; la sección solo representa la superficie de contacto con el plano",
+  "we": "El corte representa la superficie cortada y además los contornos y aristas que quedan visibles detrás del plano; la sección representa únicamente la superficie de contacto, omitiendo todo lo de detrás."
+ },
+ {
+  "q": "Un plano de corte longitudinal atraviesa un nervio y un tornillo de la pieza. ¿Cómo se representan en el corte?",
+  "h": "Rayarlos daría una falsa impresión de su solidez estructural. Piensa en nervios, ejes, tornillería y radios de ruedas.",
+  "o": [
+   {
+    "t": "Rayados a 45° igual que el resto de la superficie cortada",
+    "p": 30,
+    "k": 0,
+    "r": 0
+   },
+   {
+    "t": "Con el rayado en dirección invertida",
+    "p": 22,
+    "k": 0,
+    "r": 1
+   },
+   {
+    "t": "Sin seccionar ni rayar, para no dar una falsa impresión de su solidez",
+    "p": 36,
+    "k": 1,
+    "r": 0
+   },
+   {
+    "t": "Con una línea gruesa de trazo y punto en todo su contorno",
+    "p": 12,
+    "k": 0,
+    "r": 1
+   }
+  ],
+  "fb": {
+   "A": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "El rayado (líneas finas, continuas y paralelas, generalmente a 45°) identifica la superficie maciza cortada, pero nervios, ejes y tornillería son excepciones en los cortes longitudinales.",
+    "r": "Sin seccionar ni rayar, para no dar una falsa impresión de su solidez. En cortes longitudinales, los nervios, ejes, tornillería y radios de ruedas no se seccionan ni se rayan, para no dar una falsa impresión sobre su solidez estructural."
+   },
+   "B": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "Invertir la dirección o alterar la separación del rayado sirve para diferenciar piezas contiguas ensambladas, no para estos elementos.",
+    "r": "Sin seccionar ni rayar, para no dar una falsa impresión de su solidez. En cortes longitudinales, los nervios, ejes, tornillería y radios de ruedas no se seccionan ni se rayan, para no dar una falsa impresión sobre su solidez estructural."
+   },
+   "C": {
+    "k": 1,
+    "h": "✔ ¡MILLONARIO! Sumas 1.000.000 €",
+    "b": "En cortes longitudinales, los nervios, ejes, tornillería y radios de ruedas no se seccionan ni se rayan, para no dar una falsa impresión sobre su solidez estructural.",
+    "r": ""
+   },
+   "D": {
+    "k": 0,
+    "h": "✖ Ups, no era esa",
+    "b": "La línea gruesa de trazo y punto se usa para indicar el plano de corte, no para representar nervios o tornillos.",
+    "r": "Sin seccionar ni rayar, para no dar una falsa impresión de su solidez. En cortes longitudinales, los nervios, ejes, tornillería y radios de ruedas no se seccionan ni se rayan, para no dar una falsa impresión sobre su solidez estructural."
+   }
+  },
+  "tp": "las normas de representación de cortes (excepciones del rayado)",
+  "wa": "Sin seccionar ni rayar, para no dar una falsa impresión de su solidez",
+  "we": "En cortes longitudinales, los nervios, ejes, tornillería y radios de ruedas no se seccionan ni se rayan, para no dar una falsa impresión sobre su solidez estructural."
+ }
+];
+  var N = QS.length;
+  var LET = 'ABCD';
+  var CONF = ['#ff8a00', '#6fa8ff', '#18a957', '#ff5c8a', '#ffffff', '#ffd45e'];
+
+  /* ---------- utilidades DOM (sin cadenas HTML) ---------- */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text !== undefined) { e.textContent = text; }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function fmt(n) {
+    var s = String(n), out = '', c = 0, i;
+    for (i = s.length - 1; i !== -1; i--) {
+      out = s.charAt(i) + out; c++;
+      if (c === 3) { if (i !== 0) { out = '.' + out; } c = 0; }
+    }
+    return out + ' \u20AC';
+  }
+  function rich(tag, cls, parts) {
+    var p = el(tag, cls), i;
+    for (i = 0; i !== parts.length; i++) {
+      if (typeof parts[i] === 'string') { p.appendChild(document.createTextNode(parts[i])); }
+      else { p.appendChild(el('strong', '', parts[i].b)); }
+    }
+    return p;
+  }
+
+  /* ---------- construcción de la actividad ---------- */
+  function build(root) {
+    if (root.qmReady) { return; }
+    root.qmReady = true;
+    var kids = root.childNodes, n, i;
+    for (i = kids.length - 1; i !== -1; i--) {
+      n = kids[i];
+      if (n.nodeName !== 'STYLE') { if (n.nodeName !== 'SCRIPT') { root.removeChild(n); } }
+    }
+    var qi = 0, cleared = 0, used50 = false, usedPub = false, answered = false, inGame = false;
+    var ui = {}, lad = [];
+
+    var shell = el('div', 'qm-shell');
+    root.appendChild(shell);
+
+    function fit() {
+      var w = root.clientWidth, s = 'l';
+      if (w !== 0) {
+        if (720 > w) { s = 's'; }
+        if (480 > w) { s = 'xs'; }
+      }
+      if (root.getAttribute('data-size') !== s) { root.setAttribute('data-size', s); }
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (window.ResizeObserver) { new ResizeObserver(fit).observe(root); }
+    else { setInterval(fit, 1000); }
+    setTimeout(fit, 300);
+    setTimeout(fit, 1500);
+
+    function clearConfetti() {
+      var old = shell.querySelectorAll('.qm-confetti'), k;
+      for (k = 0; k !== old.length; k++) { old[k].parentNode.removeChild(old[k]); }
+    }
+    function confetti() {
+      var layer = el('div', 'qm-confetti'), k, s;
+      layer.setAttribute('aria-hidden', 'true');
+      for (k = 0; k !== 40; k++) {
+        s = el('span', 'qm-cf');
+        s.setAttribute('style', 'left:' + Math.floor(Math.random() * 100) + '%;background:' + CONF[k % CONF.length] + ';animation-duration:' + (3 + Math.random() * 2.5).toFixed(2) + 's;animation-delay:' + (Math.random() * 2.5).toFixed(2) + 's');
+        layer.appendChild(s);
+      }
+      shell.appendChild(layer);
+    }
+
+    /* ---------- portada ---------- */
+    function intro() {
+      inGame = false; clearConfetti(); clear(shell);
+      var hero = el('div', 'qm-hero qm-fade');
+      var logo = el('div', 'qm-logo'); logo.setAttribute('aria-hidden', 'true'); logo.appendChild(el('b', '', '?'));
+      hero.appendChild(logo);
+      hero.appendChild(el('p', 'qm-kick', '\uD83D\uDCD0 El concurso de dibujo técnico'));
+      var t = el('div', 'qm-title', '¿Quieres dominar la normalización?'); t.setAttribute('role', 'heading'); t.setAttribute('aria-level', '2');
+      hero.appendChild(t);
+      hero.appendChild(el('p', 'qm-sub', 'Sube los ' + N + ' peldaños de la escalera de premios respondiendo preguntas sobre normas, formatos, vistas, acotación, cortes y secciones. ¡Cada acierto te acerca al millón!'));
+      var rules = el('div', 'qm-rules'), rt = ['\uD83C\uDFAF ' + N + ' preguntas', '\uD83D\uDD20 4 respuestas, 1 correcta', '\uD83D\uDCA1 Pista en cada pregunta', '\uD83D\uDEDF Comodines: 50:50 y público', '\u2B50 Niveles seguros: 1.000 € y 32.000 €', '\uD83D\uDEAA Puedes plantarte'], k;
+      for (k = 0; k !== rt.length; k++) { rules.appendChild(el('span', 'qm-rule', rt[k])); }
+      hero.appendChild(rules);
+      var go = el('button', 'qm-play', '\u25B6 ¡Jugar!'); go.type = 'button';
+      go.addEventListener('click', start);
+      hero.appendChild(go);
+      var cr = el('p', 'qm-credit');
+      cr.appendChild(document.createTextNode('Actividad de creación propia generada con '));
+      var a = el('a', '', 'Claude'); a.setAttribute('href', LINK); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener noreferrer');
+      cr.appendChild(a);
+      hero.appendChild(cr);
+      shell.appendChild(hero);
+    }
+
+    /* ---------- partida ---------- */
+    function start() {
+      qi = 0; cleared = 0; used50 = false; usedPub = false; answered = false; inGame = true;
+      clearConfetti(); clear(shell);
+      var game = el('div', 'qm-game');
+      var bar = el('div', 'qm-bar'); bar.setAttribute('role', 'status'); bar.setAttribute('aria-label', 'Marcador');
+      bar.appendChild(el('span', 'qm-brand', '¿Quieres dominar la normalización?'));
+      ui.prize = el('span', 'qm-prize');
+      bar.appendChild(ui.prize);
+      var ll = el('span', 'qm-ll'); ll.setAttribute('aria-label', 'Comodines');
+      ui.h50 = el('span', 'qm-llc', '50:50'); ui.hpub = el('span', 'qm-llc', '\uD83D\uDC65');
+      ll.appendChild(ui.h50); ll.appendChild(ui.hpub);
+      bar.appendChild(ll);
+      var rs = el('button', 'qm-restart', '\u21BA Reiniciar'); rs.type = 'button';
+      rs.addEventListener('click', intro);
+      bar.appendChild(rs);
+      game.appendChild(bar);
+      var cols = el('div', 'qm-cols');
+      ui.main = el('div', 'qm-main');
+      var ladder = el('div', 'qm-ladder'); ladder.setAttribute('aria-label', 'Escalera de premios');
+      lad = [];
+      var lv, row;
+      for (lv = N; lv !== 0; lv--) {
+        row = el('div', 'qm-lv' + ((lv === 5 || lv === 10) ? ' safe' : ''));
+        row.appendChild(el('span', 'n', String(lv)));
+        row.appendChild(el('span', 'a', fmt(LAD[lv - 1]) + ((lv === 5 || lv === 10) ? ' \u2B50' : '')));
+        lad[lv] = row;
+        ladder.appendChild(row);
+      }
+      cols.appendChild(ui.main); cols.appendChild(ladder);
+      game.appendChild(cols);
+      shell.appendChild(game);
+      hud(); paint(0, false);
+      showQuestion();
+    }
+    function hud() {
+      ui.prize.textContent = '\uD83D\uDCB0 Llevas: ' + (cleared === 0 ? '0 \u20AC' : fmt(LAD[cleared - 1]));
+      ui.h50.className = 'qm-llc' + (used50 ? ' used' : '');
+      ui.hpub.className = 'qm-llc' + (usedPub ? ' used' : '');
+    }
+    function paint(failed, still) {
+      var lv, cls;
+      for (lv = 1; lv !== N + 1; lv++) {
+        cls = 'qm-lv' + ((lv === 5 || lv === 10) ? ' safe' : '');
+        if (failed === lv) { cls += ' bad'; }
+        else if (cleared >= lv) { cls += ' done'; }
+        else if (lv === cleared + 1) { if (failed === 0) { cls += ' cur' + (still ? ' still' : ''); } }
+        lad[lv].className = cls;
+      }
+    }
+
+    function showQuestion() {
+      clear(ui.main); answered = false;
+      var d = QS[qi], num = qi + 1, k;
+      var sec = el('div', 'qm-q qm-fade');
+      var meta = el('div', 'qm-meta');
+      meta.appendChild(el('span', 'qm-qn', 'Pregunta ' + num + ' de ' + N));
+      meta.appendChild(el('span', 'qm-qv', '\uD83D\uDCB6 Por ' + fmt(LAD[qi])));
+      sec.appendChild(meta);
+      sec.appendChild(el('p', 'qm-qt', d.q));
+
+      var tools = el('div', 'qm-tools');
+      var b50 = null, bPub = null;
+      if (!used50) { b50 = el('button', 'qm-lf', '\uD83D\uDEDF 50:50'); b50.type = 'button'; tools.appendChild(b50); }
+      if (!usedPub) { bPub = el('button', 'qm-lf', '\uD83D\uDC65 Preguntar al público'); bPub.type = 'button'; tools.appendChild(bPub); }
+      var bHint = el('button', 'qm-lf qm-hintb', '\uD83D\uDCA1 Pista del profe'); bHint.type = 'button';
+      bHint.setAttribute('aria-expanded', 'false');
+      tools.appendChild(bHint);
+      var hintP = el('p', 'qm-hintp', d.h); hintP.hidden = true;
+      tools.appendChild(hintP);
+      sec.appendChild(tools);
+
+      var opts = el('div', 'qm-opts'), btns = [], b, o, pc, bar2, fill, wb = null;
+      opts.setAttribute('role', 'group'); opts.setAttribute('aria-label', 'Respuestas');
+      for (k = 0; k !== 4; k++) {
+        o = d.o[k];
+        b = el('button', 'qm-opt'); b.type = 'button';
+        b.appendChild(el('span', 'qm-l', LET.charAt(k) + ':'));
+        b.appendChild(el('span', 'qm-txt', o.t));
+        pc = el('span', 'qm-pct'); pc.appendChild(el('b', '', o.p + '%'));
+        bar2 = el('span', 'qm-pb'); fill = el('span', 'qm-pbi'); fill.setAttribute('style', 'width:' + o.p + '%'); bar2.appendChild(fill);
+        pc.appendChild(bar2); b.appendChild(pc);
+        btns.push(b); opts.appendChild(b);
+      }
+      if (qi > 0) {
+        wb = el('button', 'qm-opt qm-w'); wb.type = 'button';
+        wb.appendChild(el('span', 'qm-txt', '\uD83D\uDEAA Plantarme y quedarme con ' + fmt(LAD[qi - 1])));
+        opts.appendChild(wb);
+      }
+      sec.appendChild(opts);
+      var fbBox = el('div', 'qm-fbbox'), nextRow = el('div', 'qm-nextrow');
+      sec.appendChild(fbBox); sec.appendChild(nextRow);
+      ui.main.appendChild(sec);
+
+      function lockAll() {
+        tools.className = 'qm-tools qm-off';
+        opts.className = opts.className + ' qm-locked';
+      }
+      function end(kind) {
+        var card = el('div', 'qm-end qm-end--' + kind), t, bt;
+        card.setAttribute('aria-live', 'polite');
+        if (kind === 'over') {
+          card.appendChild(el('p', 'qm-end-t', '\uD83D\uDE2E ¡Oh, no! Esta vez no ha podido ser'));
+          card.appendChild(el('p', 'qm-end-a', 6 > num ? 'Te vas con las manos vacías… pero con mucho aprendido.' : 'Te llevas ' + (11 > num ? fmt(1000) : fmt(32000)) + ' del último nivel seguro.'));
+          card.appendChild(rich('p', '', ['Has llegado hasta la pregunta ' + num + '. Repasa: ', { b: d.tp }, '.']));
+          card.appendChild(el('p', '', 'Lee la explicación de arriba y vuelve a intentarlo: ¡los millonarios también fallan!'));
+        } else if (kind === 'walk') {
+          card.appendChild(el('p', 'qm-end-t', '\uD83D\uDEAA ¡Te plantas!'));
+          card.appendChild(el('p', 'qm-end-a', 'Te llevas ' + fmt(LAD[qi - 1])));
+          card.appendChild(rich('p', '', ['Decisión prudente. La respuesta correcta era: ', { b: d.wa }, '. ' + d.we]));
+          card.appendChild(rich('p', '', ['Repasa: ', { b: d.tp }, '.']));
+        } else {
+          card.appendChild(el('p', 'qm-end-t', '\uD83C\uDFC6 ¡MILLONARIO DE LA NORMALIZACIÓN! \uD83C\uDFC6'));
+          card.appendChild(el('p', 'qm-end-a', N + ' de ' + N + ' · 1.000.000 € de gloria'));
+          card.appendChild(el('p', '', 'Dominas las normas, los formatos, las vistas, la acotación y los cortes. ¡Ya puedes presentar tus planos con total confianza!'));
+        }
+        bt = el('button', 'qm-btn', '\uD83D\uDD01 Jugar de nuevo'); bt.type = 'button';
+        bt.addEventListener('click', intro);
+        card.appendChild(bt);
+        ui.main.appendChild(card);
+        if (card.scrollIntoView) { try { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) { } }
+      }
+      function choose(i) {
+        if (answered) { return; }
+        answered = true; lockAll();
+        var right = 0, j, f = d.fb[LET.charAt(i)], fb, p;
+        for (j = 0; j !== 4; j++) { if (d.o[j].k) { right = j; } }
+        for (j = 0; j !== 4; j++) {
+          if (j === right) { btns[j].className += ' is-right'; }
+          else if (j === i) { btns[j].className += ' is-wrong'; }
+          else { btns[j].className += ' is-dim'; }
+        }
+        if (wb) { wb.className += ' is-dim'; }
+        fb = el('div', 'qm-fb qm-fade ' + (f.k ? 'qm-fb--ok' : 'qm-fb--bad')); fb.setAttribute('aria-live', 'polite');
+        fb.appendChild(el('p', 'qm-fb-h', f.h));
+        if (f.b) { fb.appendChild(el('p', '', f.b)); }
+        if (!f.k) {
+          p = el('p', 'qm-fb-right'); p.appendChild(el('strong', '', 'Respuesta correcta:')); p.appendChild(document.createTextNode(' ' + f.r));
+          fb.appendChild(p);
+        }
+        fbBox.appendChild(fb);
+        if (f.k) {
+          cleared = num; hud(); paint(0, false);
+          if (num === N) { paint(0, true); end('win'); confetti(); }
+          else {
+            var nx = el('button', 'qm-next', 'Siguiente pregunta \u279C'); nx.type = 'button';
+            nx.addEventListener('click', function () { qi++; showQuestion(); });
+            nextRow.appendChild(nx);
+          }
+        } else {
+          paint(num, true); end('over');
+        }
+        if (f.k) { if (fb.scrollIntoView) { try { fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err2) { } } }
+      }
+      function walk() {
+        if (answered) { return; }
+        answered = true; lockAll();
+        var j;
+        for (j = 0; j !== 4; j++) { btns[j].className += ' is-dim'; }
+        wb.className += ' is-dim';
+        paint(0, true);
+        end('walk');
+      }
+      function makePick(idx) { return function () { choose(idx); }; }
+      for (k = 0; k !== 4; k++) { btns[k].addEventListener('click', makePick(k)); }
+      if (wb) { wb.addEventListener('click', walk); }
+      if (b50) {
+        b50.addEventListener('click', function () {
+          var j;
+          if (answered) { return; }
+          used50 = true; hud();
+          for (j = 0; j !== 4; j++) { if (d.o[j].r) { btns[j].className += ' is-gone'; btns[j].setAttribute('aria-hidden', 'true'); } }
+          b50.hidden = true;
+        });
+      }
+      if (bPub) {
+        bPub.addEventListener('click', function () {
+          if (answered) { return; }
+          usedPub = true; hud();
+          opts.className = opts.className + ' show-pct';
+          bPub.hidden = true;
+        });
+      }
+      bHint.addEventListener('click', function () {
+        hintP.hidden = !hintP.hidden;
+        bHint.setAttribute('aria-expanded', hintP.hidden ? 'false' : 'true');
+      });
+      ui.pick = function (idx) { if (!btns[idx].className.match('is-gone')) { choose(idx); } };
+    }
+
+    root.addEventListener('keydown', function (e) {
+      var idx;
+      if (!inGame) { return; }
+      if (answered) { return; }
+      if (!e.key) { return; }
+      idx = LET.indexOf(e.key.toUpperCase());
+      if (e.key.length === 1) { if (idx !== -1) { if (ui.pick) { ui.pick(idx); } } }
+    });
+
+    intro();
+  }
+
+  /* ---------- arranque tolerante a eXeLearning ---------- */
+  function boot() {
+    var roots = document.querySelectorAll('.qm-root'), i;
+    for (i = 0; i !== roots.length; i++) {
+      try { build(roots[i]); } catch (err) {
+        roots[i].appendChild(el('p', 'qm-loading', 'Error al cargar la actividad: ' + err.message));
+      }
+    }
+  }
+  boot();
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', boot);
+    window.addEventListener('load', boot);
+  }
+  setTimeout(boot, 400);
+  setTimeout(boot, 1500);
+})();
+</script>
+</div>
+</div>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

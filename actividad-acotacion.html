@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misión Acotación</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<style>
+.acx{--ink:#1b2440;--navy:#141c47;--violet:#6d28d9;--pink:#d11a8c;--ok:#0b7a5c;--okbg:#e8f8f1;--bad:#b42318;--badbg:#fff1ee;--gold:#ffc933;--line:#d6ddf5;font-family:"Segoe UI","Helvetica Neue",Arial,system-ui,sans-serif;font-size:16px;line-height:1.45;color:var(--ink);max-width:900px;margin:0 auto;position:relative;box-sizing:border-box;text-align:left}
+.acx *,.acx *::before,.acx *::after{box-sizing:border-box}
+.acx [hidden]{display:none!important}
+.acx.acx-fs0{font-size:14px}.acx.acx-fs2{font-size:18px}.acx.acx-fs3{font-size:20px}
+.acx p,.acx ul,.acx ol,.acx li{margin:0;padding:0;list-style:none}
+.acx button{font-family:inherit;font-size:1em;line-height:1.2;margin:0}
+
+/* Barra de ajustes (DUA) */
+.acx .acx-tools{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin:0 0 10px}
+.acx .acx-tool{background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.85em;cursor:pointer}
+.acx .acx-tool:hover{border-color:var(--violet)}
+.acx .acx-tool[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.acx button:focus-visible,.acx a:focus-visible,.acx .acx-h:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+
+/* Portada */
+.acx .acx-cover{position:relative;overflow:hidden;border-radius:28px;color:#fff;text-align:center;padding:46px 26px 28px;background:linear-gradient(135deg,#0f1747 0%,#3b1e8f 52%,#c4177f 100%);box-shadow:0 18px 40px rgba(20,28,71,.35)}
+.acx .acx-cover::before{content:"";position:absolute;left:0;top:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:28px 28px}
+.acx .acx-deco{position:absolute;left:0;top:0;width:100%;height:100%;opacity:.9}
+.acx .acx-cover-in{position:relative;z-index:1}
+.acx .acx-kicker{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.78em;color:#fff}
+.acx .acx-title{font-size:3em;font-weight:900;line-height:1.05;margin:16px 0 6px;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+.acx .acx-title span{color:var(--gold)}
+.acx .acx-tag{font-size:1.25em;font-weight:700;color:#ffe3f4;margin:0 0 18px}
+.acx .acx-lead{max-width:600px;margin:0 auto 20px;font-size:1.05em;color:#fff}
+.acx .acx-feats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 26px}
+.acx .acx-feats li{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:9px 14px;font-weight:700;font-size:.92em;color:#fff}
+.acx .acx-feats li b{display:block;font-size:1.5em;line-height:1.1}
+.acx .acx-btn{display:inline-block;border:0;border-radius:999px;padding:14px 30px;font-weight:900;font-size:1.1em;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.acx .acx-go{background:var(--gold);color:var(--ink);box-shadow:0 6px 0 #c99500,0 12px 24px rgba(0,0,0,.25)}
+.acx .acx-go:hover{transform:translateY(-3px) scale(1.03)}
+.acx .acx-go:active{transform:translateY(2px);box-shadow:0 2px 0 #c99500}
+.acx .acx-credit{margin-top:26px;font-size:.92em;color:#fff}
+.acx .acx-credit a{color:var(--gold)!important;font-weight:800;text-decoration:underline}
+
+/* Juego */
+.acx .acx-game,.acx .acx-end{position:relative;background:#fff;border:3px solid var(--line);border-radius:28px;padding:18px 18px 22px;box-shadow:0 10px 30px rgba(20,28,71,.12);overflow:hidden}
+.acx .acx-hud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.acx .acx-prog{display:flex;gap:6px}
+.acx .acx-dot{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85em;background:#eef1fb;color:#5b6490;border:2px solid var(--line)}
+.acx .acx-dot.acx-cur{background:var(--violet);color:#fff;border-color:var(--violet);box-shadow:0 0 0 4px rgba(109,40,217,.2)}
+.acx .acx-dot.acx-done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.acx .acx-stats{display:flex;gap:8px;flex-wrap:wrap}
+.acx .acx-chip{background:#fff7d6;border:2px solid #f3d36a;color:#5c4400;border-radius:999px;padding:4px 12px;font-weight:700;font-size:.9em}
+.acx .acx-chip.acx-streak{background:#ffe9f6;border-color:#f3a6d4;color:#7a0f52}
+.acx .acx-chip.acx-bump{animation:acxBump .5s}
+.acx .acx-head{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.acx .acx-badge{background:var(--navy);color:#fff;border-radius:10px;padding:3px 12px;font-weight:800;font-size:.85em}
+.acx .acx-topic{color:var(--pink);font-weight:800;font-size:.9em;text-transform:uppercase;letter-spacing:.05em}
+.acx .acx-q{font-size:1.45em;font-weight:900;color:var(--navy);margin:2px 0 4px}
+.acx .acx-sub{color:#4a5380;margin-bottom:14px;font-size:.95em}
+.acx .acx-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.acx .acx-opt{position:relative;display:flex;flex-direction:column;gap:8px;padding:12px;background:#fff;color:var(--ink);border:3px solid var(--line);border-radius:22px;cursor:pointer;text-align:left;box-shadow:0 4px 0 #cfd7f3;transition:transform .15s,box-shadow .15s,border-color .15s,background .15s}
+.acx .acx-opt:hover{transform:translateY(-3px);border-color:var(--violet);box-shadow:0 8px 0 #c9bff0}
+.acx .acx-opt[aria-disabled="true"],.acx .acx-opt.acx-lock{cursor:default}
+.acx .acx-opt[aria-disabled="true"]:hover,.acx .acx-opt.acx-lock:hover{transform:none}
+.acx .acx-letter{position:absolute;left:10px;top:10px;z-index:2;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.acx .acx-fig{display:block;border-radius:14px;background-color:#f7f9ff;background-image:linear-gradient(#e6ebfb 1px,transparent 1px),linear-gradient(90deg,#e6ebfb 1px,transparent 1px);background-size:16px 16px;padding:4px}
+.acx .acx-fig svg{display:block;width:100%;height:auto}
+.acx .acx-desc{display:none;font-size:.85em;color:#39426b;background:#f1f4ff;border-radius:10px;padding:6px 10px}
+.acx.acx-showdesc .acx-desc{display:block}
+.acx .acx-verdict{display:none;font-weight:800;font-size:.88em;padding:2px 4px}
+.acx .acx-opt.acx-bad{border-color:#e5484d;background:var(--badbg);box-shadow:0 4px 0 #f1b3ab;animation:acxShake .4s}
+.acx .acx-opt.acx-bad .acx-fig{opacity:.6}
+.acx .acx-opt.acx-bad .acx-verdict,.acx .acx-opt.acx-rev .acx-verdict{display:block;color:var(--bad)}
+.acx .acx-opt.acx-ok{border-color:#12b886;background:var(--okbg);box-shadow:0 4px 0 #8ddcc0;animation:acxPop .5s}
+.acx .acx-opt.acx-ok .acx-verdict{display:block;color:var(--ok)}
+.acx .acx-opt.acx-rev .acx-fig{opacity:.75}
+.acx .acx-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+.acx .acx-hintbtn{background:#fff3c4;color:#5c4400;border:3px solid #f3d36a;box-shadow:0 4px 0 #e0bb43;padding:10px 20px;font-size:1em}
+.acx .acx-hintbtn:disabled{opacity:.55;cursor:default}
+.acx .acx-hintbtn.acx-pulse{animation:acxPulse 1.2s 2}
+.acx .acx-next{background:var(--violet);color:#fff;box-shadow:0 6px 0 #4c1d95;padding:12px 26px}
+.acx .acx-next:hover{transform:translateY(-2px)}
+.acx .acx-hintbox{margin-top:14px;background:#fff9de;border-left:6px solid var(--gold);border-radius:12px;padding:10px 14px;color:#4a3800}
+.acx .acx-hintbox p+p{margin-top:6px}
+.acx .acx-fb{margin-top:14px}
+.acx .acx-fbbox{display:flex;gap:14px;border-radius:18px;padding:14px 16px;border:3px solid;animation:acxPop .4s}
+.acx .acx-fbbox.acx-fb-ok{background:var(--okbg);border-color:#12b886;color:#06483a}
+.acx .acx-fbbox.acx-fb-bad{background:var(--badbg);border-color:#f0a79e;color:#6b140c}
+.acx .acx-fbico{font-size:2.2em;line-height:1}
+.acx .acx-fbtitle{font-weight:900;font-size:1.1em;margin-bottom:3px}
+.acx .acx-fbtitle small{font-weight:700;font-size:.8em;margin-left:6px}
+.acx .acx-fbtxt{font-size:.97em}
+.acx .acx-norm{margin-top:8px;font-size:.82em;font-weight:700;opacity:.85}
+.acx .acx-confetti{position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:5}
+.acx .acx-confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:acxFall 1.6s ease-in forwards}
+
+/* Final */
+.acx .acx-end{text-align:center}
+.acx .acx-medal{font-size:4.2em;line-height:1;animation:acxPop .7s}
+.acx .acx-stars{font-size:2em;letter-spacing:.1em;color:var(--gold);text-shadow:0 2px 0 #b58900}
+.acx .acx-stars .acx-off{color:#d9deef;text-shadow:none}
+.acx .acx-endt{font-size:1.8em;font-weight:900;color:var(--navy);margin:6px 0 2px}
+.acx .acx-total{display:inline-block;margin:8px 0 16px;background:var(--navy);color:#fff;border-radius:999px;padding:6px 22px;font-weight:900;font-size:1.3em}
+.acx .acx-sum{text-align:left;margin:0 auto 18px;max-width:640px}
+.acx .acx-sum li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 12px;border-radius:12px;background:#f4f6ff;margin-bottom:6px;font-size:.93em}
+.acx .acx-sum li b{white-space:nowrap}
+.acx .acx-rules{text-align:left;max-width:640px;margin:0 auto 20px;background:#fff9de;border:3px solid #f3d36a;border-radius:18px;padding:14px 18px;color:#4a3800}
+.acx .acx-rules .acx-rt{font-weight:900;margin-bottom:6px}
+.acx .acx-rules li{list-style:none;padding-left:26px;position:relative;margin-bottom:5px;font-size:.93em}
+.acx .acx-rules li::before{content:"\2713";position:absolute;left:4px;color:var(--ok);font-weight:900}
+.acx .acx-endbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.acx .acx-sec{background:#fff;color:var(--navy);border:3px solid var(--navy);padding:10px 22px}
+
+@keyframes acxPop{0%{transform:scale(.94)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes acxShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes acxBump{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes acxPulse{0%,100%{box-shadow:0 4px 0 #e0bb43}50%{box-shadow:0 0 0 8px rgba(255,201,51,.45),0 4px 0 #e0bb43}}
+@keyframes acxFall{to{transform:translateY(640px) rotate(540deg);opacity:0}}
+@media (max-width:520px){
+ .acx .acx-deco{display:none}
+ .acx .acx-title{font-size:2.1em}
+ .acx .acx-cover{padding:36px 16px 22px}
+ .acx .acx-grid{gap:10px}
+ .acx .acx-opt{padding:8px;border-radius:16px}
+ .acx .acx-q{font-size:1.2em}
+ .acx .acx-dot{width:26px;height:26px}
+}
+@media (max-width:420px){.acx .acx-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.acx *{animation:none!important;transition:none!important}}
+</style>
+
+<div class="acx" lang="es">
+
+ <div class="acx-tools" role="group" aria-label="Ajustes de accesibilidad">
+  <button type="button" class="acx-tool" data-act="fsm" aria-label="Reducir el tamaño del texto">A&minus;</button>
+  <button type="button" class="acx-tool" data-act="fsp" aria-label="Aumentar el tamaño del texto">A+</button>
+  <button type="button" class="acx-tool" data-act="desc" aria-pressed="false">&#128221; Describir las figuras</button>
+ </div>
+
+ <!-- PORTADA -->
+ <section class="acx-cover" data-screen="cover" aria-label="Portada">
+  <svg class="acx-deco" viewBox="0 0 900 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+   <g fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3">
+    <rect x="18" y="370" width="120" height="70"/>
+    <path d="M770 440H860V350A90 90 0 0 0 770 440Z"/>
+   </g>
+   <g stroke="#ff8fd2" stroke-width="2.5" stroke-opacity=".9" fill="#ff8fd2" fill-opacity=".9">
+    <line x1="18" y1="352" x2="138" y2="352"/><polygon points="18,352 30,347 30,357" stroke="none"/><polygon points="138,352 126,347 126,357" stroke="none"/>
+    <line x1="18" y1="346" x2="18" y2="370"/><line x1="138" y1="346" x2="138" y2="370"/>
+    <text x="78" y="342" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" stroke="none">28</text>
+    <line x1="860" y1="440" x2="806" y2="398"/><polygon points="806,398 818,400 811,408" stroke="none"/>
+    <text x="826" y="436" font-family="Arial,sans-serif" font-size="20" font-weight="700" stroke="none" transform="rotate(-35 826 436)">R 20</text>
+   </g>
+  </svg>
+  <div class="acx-cover-in">
+   <span class="acx-kicker">Dibujo t&eacute;cnico &middot; Acotaci&oacute;n</span>
+   <div class="acx-title" role="heading" aria-level="1">Misi&oacute;n <span>Acotaci&oacute;n</span></div>
+   <p class="acx-tag">&iquest;Sabes reconocer una figura bien acotada?</p>
+   <p class="acx-lead">Te esperan <b>6 retos</b>. En cada uno ver&aacute;s <b>4 figuras casi iguales</b>, pero solo una est&aacute; acotada correctamente seg&uacute;n la norma <b>UNE-EN ISO 129-1:2019</b>. &iexcl;Abre bien los ojos!</p>
+   <ul class="acx-feats">
+    <li><b>&#128070;</b>Elige la figura</li>
+    <li><b>&#128161;</b>Usa las pistas</li>
+    <li><b>&#128293;</b>Encadena rachas</li>
+    <li><b>&#127941;</b>Gana medallas</li>
+   </ul>
+   <button type="button" class="acx-btn acx-go" data-act="start">&iexcl;Empezar el reto! &rarr;</button>
+   <p class="acx-credit">Actividad de elaboraci&oacute;n propia generada con <a href="https://claude.ai/login" target="_blank" rel="noopener noreferrer">Claude</a></p>
+  </div>
+ </section>
+
+ <!-- JUEGO -->
+ <section class="acx-game" data-screen="game" aria-label="Retos de acotación" hidden>
+  <div class="acx-hud">
+   <div class="acx-prog" data-r="prog" role="group" aria-label="Progreso de los retos"></div>
+   <div class="acx-stats">
+    <span class="acx-chip">&#11088; <b data-r="score">0</b> pts</span>
+    <span class="acx-chip acx-streak">&#128293; Racha <b data-r="streak">0</b></span>
+   </div>
+  </div>
+  <div class="acx-head"><span class="acx-badge" data-r="num"></span><span class="acx-topic" data-r="topic"></span></div>
+  <div class="acx-h acx-q" role="heading" aria-level="2" tabindex="-1" data-r="q">Rodea la figura que est&eacute; bien acotada:</div>
+  <p class="acx-sub">&#128070; Pulsa sobre la figura que creas correcta. Empiezas cada reto con 100 puntos: cada fallo resta 25 y cada pista 10.</p>
+  <div class="acx-grid" data-r="grid"></div>
+  <div class="acx-actions">
+   <button type="button" class="acx-btn acx-hintbtn" data-act="hint">&#128161; Pista (&minus;10 pts)</button>
+   <button type="button" class="acx-btn acx-next" data-act="next" hidden>Siguiente reto &rarr;</button>
+  </div>
+  <div class="acx-hintbox" data-r="hint" hidden></div>
+  <div class="acx-fb" data-r="fb" aria-live="polite"></div>
+  <div class="acx-confetti" data-r="confetti" aria-hidden="true"></div>
+ </section>
+
+ <!-- FINAL -->
+ <section class="acx-end" data-screen="end" aria-label="Resultados" hidden>
+  <div class="acx-medal" data-r="medal"></div>
+  <div class="acx-stars" data-r="stars" aria-hidden="true"></div>
+  <div class="acx-h acx-endt" role="heading" aria-level="2" tabindex="-1" data-r="endt"></div>
+  <div class="acx-total" data-r="total"></div>
+  <p data-r="endmsg" style="margin-bottom:14px"></p>
+  <ul class="acx-sum" data-r="sum"></ul>
+  <div class="acx-rules"><div class="acx-rt">&#128216; Reglas de oro de la acotaci&oacute;n (UNE-EN ISO 129-1:2019)</div><ul data-r="rules"></ul></div>
+  <div class="acx-endbtns">
+   <button type="button" class="acx-btn acx-go" data-act="again">&#128260; Volver a jugar</button>
+   <button type="button" class="acx-btn acx-sec" data-act="cover">Ir a la portada</button>
+  </div>
+ </section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+var cs=document.currentScript,root=null;
+if(cs&&cs.previousElementSibling&&cs.previousElementSibling.classList&&cs.previousElementSibling.classList.contains('acx'))root=cs.previousElementSibling;
+if(!root)root=document.querySelector('.acx');
+if(!root)return;
+/* ---------- Dibujo de figuras (SVG) ---------- */
+var INK='#1b2440',DIM='#d11a8c',FILL='#dbe7ff';
+function f(n){return Math.round(n*10)/10;}
+function L(x1,y1,x2,y2){return '<line x1="'+f(x1)+'" y1="'+f(y1)+'" x2="'+f(x2)+'" y2="'+f(y2)+'" stroke="'+DIM+'" stroke-width="1.4"/>';}
+function AR(x,y,a){
+ var len=9,w=2.8,ca=Math.cos(a),sa=Math.sin(a),bx=x-len*ca,by=y-len*sa;
+ return '<polygon points="'+f(x)+','+f(y)+' '+f(bx-w*sa)+','+f(by+w*ca)+' '+f(bx+w*sa)+','+f(by-w*ca)+'" fill="'+DIM+'"/>';
+}
+function DL(x1,y1,x2,y2,a1,a2){
+ var ang=Math.atan2(y2-y1,x2-x1),s=L(x1,y1,x2,y2);
+ if(a1!==false)s+=AR(x1,y1,ang+Math.PI);
+ if(a2!==false)s+=AR(x2,y2,ang);
+ return s;
+}
+function T(x,y,s,rot){
+ return '<text x="'+f(x)+'" y="'+f(y)+'" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="'+DIM+'"'+(rot?' transform="rotate('+rot+' '+f(x)+' '+f(y)+')"':'')+'>'+s+'</text>';
+}
+function POLY(pts){
+ var p=pts.map(function(q){return f(q[0])+','+f(q[1]);}).join(' ');
+ return '<polygon points="'+p+'" fill="'+FILL+'" stroke="'+INK+'" stroke-width="2.4" stroke-linejoin="miter"/>';
+}
+function SVG(inner){
+ return '<svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true" preserveAspectRatio="xMidYMid meet">'+inner+'</svg>';
+}
+
+/* Reto 1: rectángulo, cota horizontal 28 */
+function e9(v){
+ var x0=55,x1=205,y0=84,y1=186,yl=58,tx=130,ty=52,s=POLY([[x0,y0],[x1,y0],[x1,y1],[x0,y1]]);
+ if(v==='off')tx=92;
+ if(v==='cross')ty=63;
+ if(v==='below')ty=78;
+ s+=L(x0,y0,x0,yl-6)+L(x1,y0,x1,yl-6)+DL(x0,yl,x1,yl)+T(tx,ty,'28');
+ return s;
+}
+
+/* Reto 2: cuadrado, cota vertical 17 */
+function e10(v){
+ var x0=45,x1=145,y0=50,y1=150,xd=185,s=POLY([[x0,y0],[x1,y0],[x1,y1],[x0,y1]]);
+ s+=L(x1,y0,xd+8,y0)+L(x1,y1,xd+8,y1)+DL(xd,y0,xd,y1);
+ if(v==='ok')s+=T(xd-6,100,'17',-90);
+ if(v==='cw')s+=T(xd+6,100,'17',90);
+ if(v==='hTouch')s+=T(177,105,'17');
+ if(v==='h')s+=T(207,105,'17');
+ return s;
+}
+
+/* Reto 3: triángulo, cota inclinada 29 */
+function e11(v){
+ var P1=[75,180],P2=[205,180],P3=[205,50],n=[-0.70711,-0.70711],d=36,s=POLY([P1,P2,P3]);
+ function off(p,k){return [p[0]+n[0]*k,p[1]+n[1]*k];}
+ var a,b,e1,e2;
+ if(v==='oneH'){
+  a=off(P1,d);b=[a[0]+(a[1]-50),50];
+  e1=off(P1,d+6);
+  s+=L(P1[0],P1[1],e1[0],e1[1])+L(P3[0],P3[1],b[0]-6,50);
+ }else if(v==='bothH'){
+  var sh=d*Math.SQRT2;
+  a=[P1[0]-sh,180];b=[P3[0]-sh,50];
+  s+=L(P1[0],P1[1],a[0]-6,180)+L(P3[0],P3[1],b[0]-6,50);
+ }else{
+  a=off(P1,d);b=off(P3,d);
+  e1=off(P1,d+6);e2=off(P3,d+6);
+  s+=L(P1[0],P1[1],e1[0],e1[1])+L(P3[0],P3[1],e2[0],e2[1]);
+ }
+ var mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],tc;
+ if(v==='cross')tc=[mid[0]-5.35*n[0],mid[1]-5.35*n[1]];
+ else tc=[mid[0]+6*n[0],mid[1]+6*n[1]];
+ s+=DL(a[0],a[1],b[0],b[1])+T(tc[0],tc[1],'29',-45);
+ return s;
+}
+
+/* Reto 4: pieza en L */
+function e12(v){
+ var X0=70,X1=190,XL=154,Y0=45,YB=103,Y1=154,s=POLY([[X0,Y0],[X1,Y0],[X1,Y1],[XL,Y1],[XL,YB],[X0,YB]]);
+ var left=L(X0,Y0,42,Y0)+L(X0,YB,42,YB)+DL(47,Y0,47,YB);
+ if(v==='ok'){
+  s+=L(X0,Y0,X0,19)+L(X1,Y0,X1,19)+DL(X0,24,X1,24);
+  s+=left;
+  s+=L(X1,Y0,218,Y0)+L(X1,Y1,218,Y1)+DL(213,Y0,213,Y1);
+  s+=L(XL,Y1,XL,183)+L(X1,Y1,X1,183)+DL(XL,178,X1,178);
+ }
+ if(v==='tl'){
+  s+=left;
+  s+=L(XL,YB,104,YB)+L(XL,Y1,104,Y1)+DL(110,YB,110,Y1);
+  s+=L(X0,YB,X0,183)+L(XL,YB,XL,183)+DL(X0,178,XL,178);
+ }
+ if(v==='tr'){
+  s+=L(X0,Y0,118,Y0)+L(X0,YB,118,YB)+DL(112,Y0,112,YB);
+  s+=L(156,YB,179,YB)+L(156,Y1,179,Y1)+DL(172,YB,172,Y1);
+  s+=L(X0,YB,X0,183)+L(XL,YB,XL,183)+L(X1,Y1,X1,183)+DL(X0,178,XL,178)+DL(XL,178,X1,178);
+ }
+ if(v==='bl'){
+  s+=left;
+  s+=L(XL,YB,XL,78)+DL(X0,85,XL,85);
+  s+=L(XL,YB,125,YB)+L(XL,Y1,125,Y1)+DL(130,YB,130,Y1);
+  s+=L(XL,Y1,XL,183)+L(X1,Y1,X1,183)+DL(XL,178,X1,178);
+ }
+ return s;
+}
+
+/* Reto 5: escalera, cotas en serie */
+function e13(v){
+ var X=[30,98,166,234],T0=125,T1=100,T2=58,B=192,i,s=POLY([[X[0],B],[X[0],T0],[X[1],T0],[X[1],T1],[X[2],T1],[X[2],T2],[X[3],T2],[X[3],B]]);
+ if(v==='ok'){
+  var st=[T0,T0,T1,T2];
+  for(i=0;i<4;i++)s+=L(X[i],st[i],X[i],24);
+  for(i=0;i<3;i++)s+=DL(X[i],30,X[i+1],30);
+ }
+ if(v==='stair'){
+  s+=L(X[0],T0,X[0],84)+L(X[1],T1,X[1],42)+L(X[2],T2,X[2],16)+L(X[3],T2,X[3],16);
+  s+=DL(X[0],90,X[1],90)+DL(X[1],48,X[2],48)+DL(X[2],22,X[3],22);
+ }
+ if(v==='low1'){
+  s+=L(X[0],T0,X[0],107)+L(X[1],T1,X[1],24)+L(X[2],T2,X[2],24)+L(X[3],T2,X[3],24);
+  s+=DL(X[0],113,X[1],113)+DL(X[1],30,X[2],30)+DL(X[2],30,X[3],30);
+ }
+ if(v==='inside'){
+  s+=L(X[0],T0,X[0],150)+L(X[1],72,X[1],150)+L(X[2],32,X[2],T1)+L(X[3],32,X[3],T2);
+  s+=DL(X[0],144,X[1],144)+DL(X[1],78,X[2],78)+DL(X[2],38,X[3],38);
+ }
+ return s;
+}
+
+/* Reto 6: sector circular, radio R 20 (solo polygon, line y text, como el resto de figuras) */
+var SECTOR=[[75,170],[205,170],[205,40],[200.7,40.1],[196.5,40.3],[192.3,40.6],[188,41.1],[183.8,41.7],[179.6,42.5],[175.5,43.4],[171.4,44.4],[167.3,45.6],[163.2,46.9],[159.2,48.3],[155.3,49.9],[151.3,51.6],[147.5,53.4],[143.7,55.4],[140,57.4],[136.4,59.6],[132.8,61.9],[129.3,64.3],[125.9,66.9],[122.5,69.5],[119.3,72.3],[116.1,75.1],[113.1,78.1],[110.1,81.1],[107.3,84.3],[104.5,87.5],[101.9,90.9],[99.3,94.3],[96.9,97.8],[94.6,101.4],[92.4,105],[90.4,108.7],[88.4,112.5],[86.6,116.3],[84.9,120.3],[83.3,124.2],[81.9,128.2],[80.6,132.3],[79.4,136.4],[78.4,140.5],[77.5,144.6],[76.7,148.8],[76.1,153],[75.6,157.3],[75.3,161.5],[75.1,165.7]];
+function e14(v){
+ var Cx=205,Cy=170,Ex=94.8,Ey=101.1,
+  atCenter=(v==='double'||v==='center'),atArc=(v!=='center'),s=POLY(SECTOR);
+ s+=DL(Cx,Cy,Ex,Ey,atCenter,atArc);
+ s+=T(159.4,135,(v==='after'?'20 R':'R 20'),32);
+ return s;
+}
+
+/* ---------- Contenido de los 6 retos ---------- */
+var N='UNE-EN ISO 129-1:2019';
+var CH=[
+ {topic:'Cota horizontal',fig:e9,
+  hints:['Las cuatro figuras tienen la misma cota (28). Lo único que cambia es dónde está escrita la cifra respecto a la línea de cota.',
+         'La cifra va encima de la línea de cota, hacia su centro y sin que la línea la toque ni la atraviese.'],
+  opts:[
+   {k:'ok',ok:1,tag:'Cifra centrada y encima de la línea',
+    desc:'Rectángulo con la cota 28 en su parte superior. La cifra está centrada, encima de la línea de cota y sin tocarla.',
+    fb:'La cifra 28 está encima de la línea de cota, en su zona central y sin tocarla. Además, las líneas auxiliares sobresalen ligeramente de la línea de cota y las flechas la limitan por dentro. Es lo que establece la norma '+N+': el valor de la cota se escribe paralelo a la línea de cota, preferentemente hacia su centro y por encima de ella.'},
+   {k:'off',tag:'Cifra descentrada',
+    desc:'Rectángulo con la cota 28 en su parte superior. La cifra está encima de la línea de cota, pero desplazada hacia la izquierda.',
+    fb:'La cifra está encima de la línea de cota, pero desplazada hacia un extremo. La norma '+N+' indica que el valor se coloca, preferentemente, hacia el centro de la línea de cota; solo se desplaza cuando no hay espacio suficiente.'},
+   {k:'cross',tag:'La línea atraviesa la cifra',
+    desc:'Rectángulo con la cota 28 en su parte superior. La cifra queda justo sobre la línea de cota y esta la atraviesa.',
+    fb:'La línea de cota atraviesa la cifra, que queda tachada y es difícil de leer. Según la norma '+N+', el valor se escribe encima de la línea de cota y sin tocarla.'},
+   {k:'below',tag:'Cifra debajo de la línea',
+    desc:'Rectángulo con la cota 28 en su parte superior. La cifra está debajo de la línea de cota, entre la línea y el rectángulo.',
+    fb:'La cifra está debajo de la línea de cota. La norma '+N+' establece que el valor se coloca por encima de la línea de cota (paralelo a ella y sin tocarla).'}
+  ]},
+ {topic:'Cota vertical',fig:e10,
+  hints:['Ahora la cota es vertical. Imagina que giras la hoja: ¿desde qué lado se leería cada cifra? Fíjate también en si va paralela a la línea de cota.',
+         'Las cifras se escriben paralelas a la línea de cota y deben poder leerse desde la parte inferior o desde el lado derecho del dibujo.'],
+  opts:[
+   {k:'ok',ok:1,tag:'Cifra paralela, legible desde la derecha',
+    desc:'Cuadrado con una cota vertical 17 a su derecha. La cifra está girada, se lee de abajo hacia arriba y está a la izquierda de la línea de cota, sin tocarla.',
+    fb:'La cifra 17 es paralela a la línea de cota, está junto a ella sin tocarla y se lee de abajo hacia arriba, es decir, desde el lado derecho del dibujo. La norma '+N+' pide que las cifras puedan leerse desde la parte inferior o desde el lado derecho del dibujo.'},
+   {k:'cw',tag:'Cifra legible desde la izquierda',
+    desc:'Cuadrado con una cota vertical 17 a su derecha. La cifra está girada, se lee de arriba hacia abajo y está a la derecha de la línea de cota.',
+    fb:'La cifra está girada al revés: se lee de arriba hacia abajo y habría que inclinar la cabeza hacia la izquierda para leerla. Según la norma '+N+', las cifras deben poder leerse desde la parte inferior o desde el lado derecho del dibujo.'},
+   {k:'hTouch',tag:'Cifra horizontal y tocando la línea',
+    desc:'Cuadrado con una cota vertical 17 a su derecha. La cifra está en horizontal y la línea de cota la toca.',
+    fb:'La cifra está escrita en horizontal, así que no es paralela a la línea de cota, y además la línea la toca. La norma '+N+' pide el valor paralelo a la línea de cota, a su lado y sin tocarla.'},
+   {k:'h',tag:'Cifra horizontal, no paralela',
+    desc:'Cuadrado con una cota vertical 17 a su derecha. La cifra está en horizontal, a la derecha de la línea de cota.',
+    fb:'La cifra está en horizontal junto a la línea de cota. En este sistema de acotación (cifras alineadas), la norma '+N+' indica que el valor se escribe paralelo a su línea de cota, también cuando esta es vertical.'}
+  ]},
+ {topic:'Elemento inclinado',fig:e11,
+  hints:['Aquí se acota la longitud del lado inclinado. Observa cómo salen las líneas auxiliares desde los vértices y por dónde pasa la línea de cota.',
+         'Las líneas auxiliares son perpendiculares a lo que se acota (aquí, el lado inclinado) y la cifra va encima de la línea de cota, sin cortarla.'],
+  opts:[
+   {k:'ok',ok:1,tag:'Auxiliares perpendiculares y cifra encima',
+    desc:'Triángulo rectángulo con la cota 29 en el lado inclinado. Las dos líneas auxiliares son perpendiculares a ese lado y la cifra está encima de la línea de cota.',
+    fb:'La línea de cota es paralela al lado inclinado, las dos líneas auxiliares salen perpendiculares a ese lado y sobresalen ligeramente, y la cifra 29 está encima de la línea de cota, paralela a ella y legible desde abajo. Así lo indica la norma '+N+' para acotar un elemento inclinado.'},
+   {k:'cross',tag:'La línea de cota corta la cifra',
+    desc:'Triángulo rectángulo con la cota 29 en el lado inclinado. Las líneas auxiliares son perpendiculares a ese lado, pero la línea de cota atraviesa la cifra.',
+    fb:'La línea de cota atraviesa la cifra 29. Aunque las líneas auxiliares están bien, la norma '+N+' pide escribir el valor encima de la línea de cota, paralelo a ella y sin cortarla.'},
+   {k:'oneH',tag:'Una auxiliar es horizontal',
+    desc:'Triángulo rectángulo con la cota 29 en el lado inclinado. La línea auxiliar superior es horizontal y la inferior es perpendicular al lado inclinado.',
+    fb:'La línea auxiliar de arriba es horizontal y la de abajo es perpendicular, así que ni son paralelas entre sí ni perpendiculares a lo que se acota. Por eso la línea de cota queda más corta que el lado real. La norma '+N+' indica que las líneas auxiliares se trazan perpendiculares al elemento acotado (solo se admiten oblicuas, siempre paralelas entre sí, cuando hace falta claridad).'},
+   {k:'bothH',tag:'Las dos auxiliares son horizontales',
+    desc:'Triángulo rectángulo con la cota 29 en el lado inclinado. Las dos líneas auxiliares son horizontales.',
+    fb:'Las dos líneas auxiliares son horizontales, no perpendiculares al lado inclinado. La norma '+N+' indica que se trazan perpendiculares al elemento que se acota; solo se admiten oblicuas, siempre paralelas entre sí, cuando es necesario para mayor claridad, y aquí no hay ningún motivo.'}
+  ]},
+ {topic:'Colocación de las cotas',fig:e12,
+  hints:['Mira dónde está dibujada cada línea de cota: ¿dentro o fuera de la pieza? ¿Cruzan el contorno?',
+         'Las líneas de cota se colocan fuera de la pieza, con líneas auxiliares que salen de los vértices. Comprueba también que se acotan todas las dimensiones necesarias.'],
+  opts:[
+   {k:'ok',ok:1,tag:'Todas las cotas fuera de la pieza',
+    desc:'Pieza en forma de L con cuatro cotas, todas fuera de la pieza: el ancho total arriba, el grosor de la barra a la izquierda, el alto total a la derecha y el ancho de la pata abajo.',
+    fb:'Todas las líneas de cota están fuera de la pieza, no cruzan el contorno y las líneas auxiliares salen de los vértices sobresaliendo ligeramente. Con cuatro cotas (ancho total, alto total, grosor de la barra y ancho de la pata) la pieza queda completamente definida. Es lo que recomienda la norma '+N+': líneas de cota fuera de la pieza y sin cruzarse con otras líneas.'},
+   {k:'tl',tag:'Cota en el hueco y cota que falta',
+    desc:'Pieza en forma de L con tres cotas: el grosor de la barra a la izquierda, una cota vertical dentro del hueco de la pieza y una cota horizontal inferior que llega hasta el lateral de la pata.',
+    fb:'Hay una línea de cota (la vertical del centro) dibujada dentro del recuadro de la pieza, en el hueco, y la cota inferior solo llega hasta la pata: no se indica ni el ancho de la pata ni el ancho total, así que la pieza queda sin definir del todo. La norma '+N+' recomienda colocar las líneas de cota fuera de la pieza y acotar todas las dimensiones necesarias.'},
+   {k:'tr',tag:'Cotas atravesando el material',
+    desc:'Pieza en forma de L con una cota vertical dentro de la barra superior, otra vertical dentro de la pata y dos cotas horizontales encadenadas debajo.',
+    fb:'Dos líneas de cota (la vertical de la barra superior y la vertical de la derecha) están dibujadas dentro de la pieza, sobre el material. Según la norma '+N+', las líneas de cota se colocan fuera de la pieza, con líneas auxiliares que salen de los vértices, y no deben cortar otras líneas.'},
+   {k:'bl',tag:'Cotas dentro de la pieza',
+    desc:'Pieza en forma de L con una cota horizontal dentro de la barra superior, una vertical en el hueco interior, una vertical exterior a la izquierda y una horizontal debajo de la pata.',
+    fb:'La cota horizontal central está dibujada dentro de la pieza, sobre el material, y otra vertical queda encajada en el hueco interior. La norma '+N+' indica que las líneas de cota deben colocarse fuera de la pieza para no confundirlas con el dibujo ni cruzar su contorno.'}
+  ]},
+ {topic:'Cotas en serie',fig:e13,
+  hints:['Son tres cotas seguidas, como una cadena. Fíjate en la altura a la que está dibujada cada línea de cota.',
+         'En una cadena de cotas las líneas de cota se colocan alineadas, fuera de la pieza, y las líneas auxiliares llegan hasta esa línea común.'],
+  opts:[
+   {k:'ok',ok:1,tag:'Líneas de cota alineadas',
+    desc:'Pieza escalonada con tres cotas horizontales en serie, alineadas en una misma línea sobre la pieza.',
+    fb:'Las tres cotas forman una cadena (acotación en serie): sus líneas de cota están alineadas en una misma línea, fuera de la pieza, y las líneas auxiliares llegan hasta ella sobresaliendo ligeramente. La norma '+N+' indica que en la acotación en serie las líneas de cota se colocan alineadas.'},
+   {k:'stair',tag:'Líneas de cota escalonadas',
+    desc:'Pieza escalonada con tres cotas horizontales escalonadas, cada una a distinta altura sobre su escalón.',
+    fb:'Las líneas de cota están escalonadas, cada una a una altura distinta siguiendo la forma de la pieza. Como son cotas en serie, la norma '+N+' pide que sus líneas de cota estén alineadas.'},
+   {k:'low1',tag:'La primera cota está desalineada',
+    desc:'Pieza escalonada con tres cotas horizontales: las dos de la derecha están alineadas arriba y la de la izquierda está más abajo.',
+    fb:'Dos cotas están alineadas, pero la primera está dibujada a otra altura. En una cadena de cotas todas las líneas de cota deben estar alineadas, tal como indica la norma '+N+'.'},
+   {k:'inside',tag:'Escalonadas y una dentro de la pieza',
+    desc:'Pieza escalonada con tres cotas horizontales escalonadas, y la primera está dibujada dentro de la pieza.',
+    fb:'Las líneas de cota están escalonadas y la primera está dentro de la pieza, cruzando su contorno con una línea auxiliar muy larga. Según la norma '+N+', deben ir alineadas y fuera de la pieza, sin cruzar otras líneas.'}
+  ]},
+ {topic:'Acotación de radios',fig:e14,
+  hints:['Es una cota de radio. Fíjate en el símbolo que acompaña al 20 y en cuántas flechas lleva la línea de cota.',
+         'El símbolo R va delante de la cifra, y la línea de cota parte del centro del arco y lleva una única flecha, que toca el arco.'],
+  opts:[
+   {k:'ok',ok:1,tag:'R delante y una sola flecha en el arco',
+    desc:'Sector de un cuarto de círculo con la cota R 20, con el símbolo R delante de la cifra y una sola flecha que toca el arco.',
+    fb:'Está escrito «R 20» (el símbolo R va delante de la cifra) y la línea de cota parte del centro del arco y lleva una sola flecha, que toca el arco. Así lo establece la norma '+N+' para acotar radios.'},
+   {k:'double',tag:'Flechas en los dos extremos',
+    desc:'Sector de un cuarto de círculo con la cota R 20 y flechas en los dos extremos de la línea de cota.',
+    fb:'La línea de cota tiene flecha en los dos extremos, como si fuese un diámetro. En un radio solo lleva flecha el extremo que toca el arco; el otro parte del centro. Así lo indica la norma '+N+'.'},
+   {k:'after',tag:'R detrás de la cifra',
+    desc:'Sector de un cuarto de círculo con la cota 20 R, con el símbolo detrás de la cifra y una flecha en el arco.',
+    fb:'Está escrito «20 R»: el símbolo del radio debe ir delante de la cifra, «R 20». Es la forma que fija la norma '+N+'.'},
+   {k:'center',tag:'Flecha en el centro, no en el arco',
+    desc:'Sector de un cuarto de círculo con la cota R 20 y la flecha en el extremo del centro, sin flecha en el arco.',
+    fb:'La flecha está en el extremo del centro y no toca el arco. En un radio la flecha va en contacto con el arco y la línea parte del centro sin flecha, según la norma '+N+'.'}
+  ]}
+];
+var RULES=[
+ 'Las líneas auxiliares son perpendiculares a lo que se acota y sobresalen ligeramente de la línea de cota.',
+ 'La cifra va encima de la línea de cota, paralela a ella, hacia su centro y sin que la línea la corte.',
+ 'Las cifras deben poder leerse desde la parte inferior o desde el lado derecho del dibujo.',
+ 'Las líneas de cota se colocan fuera de la pieza y no se cruzan con otras líneas.',
+ 'En una cadena de cotas (acotación en serie), las líneas de cota van alineadas.',
+ 'En un radio, la R va delante de la cifra y la línea de cota lleva una sola flecha, en contacto con el arco.'
+];
+var PRAISE=['¡Ojo de águila!','¡Así se acota!','¡Medidas perfectas!','¡Pulso de delineante!','¡Norma cumplida!','¡Imparable!'];
+var TRY=['¡Casi!','¡Buen intento!','Mira con más calma…','¡No te rindas!'];
+
+/* ---------- Lógica de la actividad ---------- */
+var S,cur,fs=1,reduced=false;
+try{reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+function q(sel){return root.querySelector(sel);}
+function R(name){return root.querySelector('[data-r="'+name+'"]');}
+function show(name){
+ ['cover','game','end'].forEach(function(n){
+  var el=root.querySelector('[data-screen="'+n+'"]');
+  if(el)el.hidden=(n!==name);
+ });
+}
+function shuffle(a){
+ var i,j,t;a=a.slice();
+ for(i=a.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=a[i];a[i]=a[j];a[j]=t;}
+ return a;
+}
+function pickOne(a){return a[Math.floor(Math.random()*a.length)];}
+function newState(){S={i:0,score:0,streak:0,res:[]};}
+
+function updHud(bump){
+ var prog=R('prog'),h='',i,c;
+ for(i=0;i<CH.length;i++){
+  c=i<S.i?'acx-dot acx-done':(i===S.i?'acx-dot acx-cur':'acx-dot');
+  h+='<span class="'+c+'" aria-label="Reto '+(i+1)+(i<S.i?' superado':(i===S.i?' actual':' pendiente'))+'">'+(i<S.i?'&#10003;':(i+1))+'</span>';
+ }
+ prog.innerHTML=h;
+ R('score').textContent=S.score;
+ R('streak').textContent=S.streak;
+ if(bump){
+  var chip=R('score').parentNode;
+  chip.classList.remove('acx-bump');void chip.offsetWidth;chip.classList.add('acx-bump');
+ }
+}
+
+function loadChallenge(){
+ var ch=CH[S.i];
+ cur={ch:ch,wrong:0,hints:0,solved:false,
+  order:shuffle(ch.opts.map(function(o){return {k:o.k,ok:!!o.ok,desc:o.desc,fb:o.fb,tag:o.tag,svg:SVG(ch.fig(o.k))};}))};
+ R('num').textContent='Reto '+(S.i+1)+' de '+CH.length;
+ R('topic').textContent=ch.topic;
+ R('hint').hidden=true;R('hint').innerHTML='';
+ R('fb').innerHTML='';R('confetti').innerHTML='';
+ var hb=q('[data-act="hint"]');hb.disabled=false;hb.innerHTML='&#128161; Pista (&minus;10 pts)';hb.hidden=false;hb.classList.remove('acx-pulse');
+ q('[data-act="next"]').hidden=true;
+ var g=R('grid');g.innerHTML='';
+ cur.order.forEach(function(o,idx){
+  var b=document.createElement('button'),L='ABCD'.charAt(idx);
+  b.type='button';b.className='acx-opt';b.setAttribute('data-k',o.k);
+  b.setAttribute('aria-label','Opción '+L+'. '+o.desc);
+  b.innerHTML='<span class="acx-letter" aria-hidden="true">'+L+'</span><span class="acx-fig">'+o.svg+'</span><span class="acx-desc">'+o.desc+'</span><span class="acx-verdict" aria-hidden="true"></span>';
+  b.addEventListener('click',function(){pick(o,b);});
+  g.appendChild(b);
+ });
+ updHud(false);
+}
+
+function setVerdict(b,txt){var v=b.querySelector('.acx-verdict');if(v)v.textContent=txt;}
+
+function pick(o,b){
+ if(cur.solved||b.getAttribute('aria-disabled')==='true')return;
+ var fb=R('fb'),hb=q('[data-act="hint"]');
+ if(o.ok){
+  cur.solved=true;
+  var pts=Math.max(10,100-25*cur.wrong-10*cur.hints);
+  S.score+=pts;
+  if(cur.wrong===0)S.streak++;
+  S.res[S.i]={wrong:cur.wrong,hints:cur.hints,pts:pts};
+  b.classList.add('acx-ok');setVerdict(b,'✓ Correcta: '+o.tag);
+  Array.prototype.forEach.call(R('grid').children,function(c){
+   c.classList.add('acx-lock');
+   if(c!==b){
+    var oo=cur.order.filter(function(x){return x.k===c.getAttribute('data-k');})[0];
+    if(!c.classList.contains('acx-bad'))c.classList.add('acx-rev');
+    setVerdict(c,'✗ '+oo.tag);
+   }
+  });
+  var extra=(cur.wrong===0&&cur.hints===0)?'¡A la primera y sin pistas!':(cur.wrong===0?'¡A la primera!':'');
+  if(cur.wrong===0&&S.streak>=2)extra+=' &#128293; Racha de '+S.streak+' aciertos seguidos.';
+  fb.innerHTML='<div class="acx-fbbox acx-fb-ok"><div class="acx-fbico" aria-hidden="true">&#127881;</div><div><div class="acx-fbtitle">¡Correcto! +'+pts+' puntos <small>'+pickOne(PRAISE)+' '+extra+'</small></div><p class="acx-fbtxt">'+o.fb+'</p><p class="acx-norm">&#128216; Norma de referencia: '+N+'. Debajo de cada figura tienes el análisis de las cuatro opciones.</p></div></div>';
+  hb.hidden=true;
+  var nx=q('[data-act="next"]');
+  nx.innerHTML=(S.i<CH.length-1)?'Siguiente reto &rarr;':'Ver mis resultados &#127942;';
+  nx.hidden=false;
+  updHud(true);
+  confetti();
+  try{nx.focus({preventScroll:true});}catch(e){}
+ }else{
+  cur.wrong++;S.streak=0;
+  b.classList.add('acx-bad');b.setAttribute('aria-disabled','true');
+  setVerdict(b,'✗ '+o.tag);
+  var left=CH[S.i].opts.length-cur.wrong;
+  fb.innerHTML='<div class="acx-fbbox acx-fb-bad"><div class="acx-fbico" aria-hidden="true">&#129300;</div><div><div class="acx-fbtitle">'+pickOne(TRY)+' <small>−25 puntos</small></div><p class="acx-fbtxt">'+o.fb+'</p><p class="acx-norm">&#128216; Norma de referencia: '+N+'. Esta opción queda descartada: te quedan '+left+'. '+(cur.hints<2?'¿Necesitas una pista?':'')+'</p></div></div>';
+  if(cur.hints<2){hb.classList.remove('acx-pulse');void hb.offsetWidth;hb.classList.add('acx-pulse');}
+  updHud(false);
+ }
+}
+
+function hint(){
+ if(cur.solved||cur.hints>=2)return;
+ var box=R('hint'),hb=q('[data-act="hint"]'),h='',i;
+ cur.hints++;
+ for(i=0;i<cur.hints;i++)h+='<p><b>&#128161; Pista '+(i+1)+':</b> '+cur.ch.hints[i]+'</p>';
+ box.innerHTML=h;box.hidden=false;
+ if(cur.hints>=2){hb.disabled=true;hb.innerHTML='&#128161; No quedan más pistas';}
+ else hb.innerHTML='&#128161; Otra pista (&minus;10 pts)';
+ hb.classList.remove('acx-pulse');
+}
+
+function confetti(){
+ if(reduced)return;
+ var box=R('confetti'),cols=['#d11a8c','#6d28d9','#ffc933','#12b886','#2f80ed'],i,p;
+ box.innerHTML='';
+ for(i=0;i<30;i++){
+  p=document.createElement('i');
+  p.style.left=(Math.random()*100)+'%';
+  p.style.background=cols[i%cols.length];
+  p.style.animationDelay=(Math.random()*0.3)+'s';
+  p.style.transform='rotate('+Math.round(Math.random()*180)+'deg)';
+  box.appendChild(p);
+ }
+ setTimeout(function(){box.innerHTML='';},2200);
+}
+
+function next(){
+ if(!cur||!cur.solved)return;
+ if(S.i<CH.length-1){
+  S.i++;loadChallenge();
+  var h=R('q');
+  try{h.focus({preventScroll:true});}catch(e){}
+  try{root.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});}catch(e){}
+ }else{
+  try{finish();}catch(err){
+   try{if(window.console&&console.error)console.error('Acotacion (finish):',err);}catch(e2){}
+   show('end');
+  }
+ }
+}
+
+function finish(){
+ var total=S.score,max=CH.length*100,medal,stars,title,msg;
+ if(total>=540){medal='&#127942;';stars=3;title='¡Maestro/a de la acotación!';msg='Impecable: casi no has dejado escapar ni un detalle de la norma.';}
+ else if(total>=420){medal='&#129351;';stars=3;title='¡Delineante experto/a!';msg='Muy buen trabajo. Repasa los detalles que se te han escapado y llegarás al oro.';}
+ else if(total>=300){medal='&#129352;';stars=2;title='¡Aprendiz avanzado/a!';msg='Vas por buen camino. Lee las reglas de oro y vuelve a intentarlo para mejorar tu marca.';}
+ else{medal='&#129353;';stars=1;title='¡Buen comienzo!';msg='Cada fallo enseña algo. Repasa las reglas de oro y repite el reto: ¡seguro que mejoras!';}
+ S.i=CH.length;
+ /* Primero se muestra la pantalla final; después se rellena cada bloque por separado */
+ show('end');
+ function put(name,fn){
+  try{fn(R(name));}catch(err){try{if(window.console&&console.error)console.error('Acotacion ('+name+'):',err);}catch(e2){}}
+ }
+ put('medal',function(el){el.innerHTML=medal;});
+ put('stars',function(el){
+  var on='',off='',k;
+  for(k=0;k<3;k++){if(k<stars)on+='&#9733;';else off+='&#9733;';}
+  el.innerHTML='<span>'+on+'</span><span class="acx-off">'+off+'</span>';
+ });
+ put('endt',function(el){el.textContent=title;});
+ put('total',function(el){el.textContent=total+' / '+max+' puntos';});
+ put('endmsg',function(el){el.textContent=msg;});
+ put('sum',function(el){
+  var h='',i,r,d;
+  for(i=0;i<CH.length;i++){
+   r=S.res[i]||{wrong:0,hints:0,pts:0};
+   d=(r.wrong===0?'&#9989; A la primera':'&#128257; '+(r.wrong+1)+' intentos')+(r.hints?' &middot; &#128161; '+r.hints+(r.hints>1?' pistas':' pista'):'');
+   h+='<li><span>Reto '+(i+1)+' &middot; '+CH[i].topic+' &mdash; '+d+'</span><b>'+r.pts+' pts</b></li>';
+  }
+  el.innerHTML=h;
+ });
+ put('rules',function(el){
+  var h='',i;
+  for(i=0;i<RULES.length;i++)h+='<li>'+RULES[i]+'</li>';
+  el.innerHTML=h;
+ });
+ try{R('endt').focus({preventScroll:true});}catch(e){}
+ try{root.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});}catch(e){}
+}
+
+function start(){
+ newState();show('game');loadChallenge();
+ try{R('q').focus({preventScroll:true});}catch(e){}
+}
+
+function setFs(d){
+ fs=Math.max(0,Math.min(3,fs+d));
+ root.classList.remove('acx-fs0','acx-fs2','acx-fs3');
+ if(fs!==1)root.classList.add('acx-fs'+fs);
+}
+
+root.addEventListener('click',function(e){
+ var t=e.target;
+ while(t&&t!==root&&!(t.getAttribute&&t.getAttribute('data-act')))t=t.parentNode;
+ if(!t||t===root)return;
+ var a=t.getAttribute('data-act');
+ if(a==='start'||a==='again')start();
+ else if(a==='cover')show('cover');
+ else if(a==='hint')hint();
+ else if(a==='next')next();
+ else if(a==='fsm')setFs(-1);
+ else if(a==='fsp')setFs(1);
+ else if(a==='desc'){
+  var on=!root.classList.contains('acx-showdesc');
+  root.classList.toggle('acx-showdesc',on);
+  t.setAttribute('aria-pressed',on?'true':'false');
+ }
+});
+
+newState();
+show('cover');
+})();
+</script>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

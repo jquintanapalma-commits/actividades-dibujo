@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crucigrama del proyecto</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<div class="cw-embed-wrap" style="display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div id="cw-activity" class="cw-root">
+<style>
+#cw-activity{--cs:36px;font-family:"Trebuchet MS","Segoe UI",Verdana,Arial,sans-serif;color:#fff;width:100%;min-width:0;max-width:1180px;margin:0 auto;font-size:16px;line-height:1.45;box-sizing:border-box}
+#cw-activity *{box-sizing:border-box}
+#cw-activity [hidden]{display:none!important}
+#cw-activity button{font:inherit;cursor:pointer}
+#cw-activity .cw-loading{margin:0;padding:18px;text-align:center;color:#555;font-size:14px}
+
+/* Marco: papel de plano azul con cuadrícula */
+#cw-activity .cw-shell{position:relative;overflow:hidden;border-radius:24px;border:2px solid #2d62c9;box-shadow:0 14px 38px rgba(4,20,60,.5);background-color:#0b3a96;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(circle at 18% 0%,#2a6ee0,transparent 55%),linear-gradient(160deg,#0a2d78,#0d3f9f 55%,#08245f);background-size:120px 120px,120px 120px,24px 24px,24px 24px,100% 100%,100% 100%}
+#cw-activity .cw-header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:4px double rgba(255,255,255,.55);background:rgba(4,22,64,.35)}
+#cw-activity .cw-logo{flex:none;width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#ffd23f;box-shadow:0 4px 0 #b88f00}
+#cw-activity .cw-head-text{flex:1;min-width:0}
+#cw-activity .cw-title{margin:0;padding:0;border:0;font-size:27px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;line-height:1.1;color:#fff!important;background:none}
+#cw-activity .cw-subtitle{margin-top:4px;font-family:"Courier New",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#bfe3ff!important}
+#cw-activity .cw-block{flex:none;display:grid;grid-template-columns:auto auto;border:1.5px solid rgba(255,255,255,.75);font-family:"Courier New",monospace;font-size:11px;letter-spacing:.05em;color:#fff}
+#cw-activity .cw-block span{padding:3px 9px;border-right:1px solid rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.5);color:#fff!important}
+#cw-activity .cw-block .cw-bk{color:#9fd3ff!important;background:rgba(255,255,255,.08)}
+#cw-activity .cw-main{padding:20px 22px 16px}
+
+/* Animaciones */
+@keyframes cwFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes cwDraw{to{stroke-dashoffset:0}}
+@keyframes cwShake{0%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}100%{transform:translateX(0)}}
+@keyframes cwPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+@keyframes cwPulse{0%{box-shadow:0 5px 0 #b86a00,0 0 0 0 rgba(255,159,28,.65)}70%{box-shadow:0 5px 0 #b86a00,0 0 0 16px rgba(255,159,28,0)}100%{box-shadow:0 5px 0 #b86a00,0 0 0 0 rgba(255,159,28,0)}}
+@keyframes cwBob{0%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}100%{transform:translateY(0) rotate(-3deg)}}
+@keyframes cwRise{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-34px);opacity:0}}
+@keyframes cwFall{0%{transform:translateY(-30px) rotate(0deg);opacity:1}100%{transform:translateY(680px) rotate(600deg);opacity:0}}
+@keyframes cwStamp{0%{transform:rotate(-12deg) scale(2.4);opacity:0}60%{transform:rotate(-12deg) scale(.92);opacity:1}100%{transform:rotate(-12deg) scale(1);opacity:1}}
+#cw-activity .cw-fade{animation:cwFade .5s ease both}
+#cw-activity .cw-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:cwDraw 2.6s ease forwards}
+
+/* Botones */
+#cw-activity .cw-primary{border:0;border-radius:999px;padding:13px 28px;font-size:17px;font-weight:900;color:#3b2200!important;background:linear-gradient(180deg,#ffc15e,#ff9f1c);box-shadow:0 5px 0 #b86a00;transition:transform .12s,filter .12s}
+#cw-activity .cw-primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
+#cw-activity .cw-primary:active{transform:translateY(4px);box-shadow:0 1px 0 #b86a00}
+#cw-activity .cw-start{margin-top:18px;animation:cwPulse 2.2s infinite}
+#cw-activity .cw-btn{border:1.5px solid rgba(255,255,255,.75);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:800;color:#fff!important;background:rgba(255,255,255,.12);transition:background .12s,transform .12s}
+#cw-activity .cw-btn:hover{background:rgba(255,255,255,.26);transform:translateY(-1px)}
+#cw-activity .cw-btn:disabled{opacity:.4;cursor:default;transform:none}
+#cw-activity .cw-btn-hint{border-color:#ffd23f;background:rgba(255,210,63,.18);color:#ffe58a!important}
+#cw-activity .cw-btn-ok{border-color:#35d07f;background:rgba(53,208,127,.2);color:#bdf5d6!important}
+#cw-activity .cw-btn-give{border-color:#ff8a9a;background:rgba(255,93,115,.2);color:#ffd0d6!important}
+#cw-activity button:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+
+/* Portada */
+#cw-activity .cw-hero{display:grid;grid-template-columns:minmax(260px,.95fr) minmax(0,1.25fr);gap:26px;align-items:center;min-height:380px}
+#cw-activity .cw-art{border-radius:20px;padding:10px;background:rgba(4,22,64,.4);border:1.5px dashed rgba(255,255,255,.5)}
+#cw-activity .cw-art svg{display:block;width:100%;height:auto}
+#cw-activity .cw-kicker{display:inline-block;margin:0 0 10px;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#3b2200!important;background:#ffd23f}
+#cw-activity .cw-h2{margin:0 0 10px;padding:0;border:0;font-size:34px;line-height:1.12;font-weight:900;color:#fff!important;background:none;text-shadow:0 3px 0 rgba(4,22,64,.5)}
+#cw-activity .cw-text{margin:8px 0;color:#e6f1ff!important;max-width:660px}
+#cw-activity .cw-facts{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+#cw-activity .cw-fact{min-width:104px;padding:9px 14px;border-radius:14px;text-align:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3)}
+#cw-activity .cw-fact b{display:block;font-size:26px;line-height:1.1;color:#ffd23f!important}
+#cw-activity .cw-fact span{font-size:12px;color:#dcebff!important}
+#cw-activity .cw-steps{display:grid;gap:8px;margin:14px 0 0;max-width:660px}
+#cw-activity .cw-step{display:flex;align-items:center;gap:12px;padding:8px 13px;border-radius:13px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
+#cw-activity .cw-step .cw-sn{flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#3b2200!important;background:#ffd23f}
+#cw-activity .cw-step .cw-st{color:#fff!important;font-size:15px}
+#cw-activity .cw-rules{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+#cw-activity .cw-rule{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:800;color:#fff!important;background:rgba(4,22,64,.45);border:1px solid rgba(255,255,255,.35)}
+
+/* HUD y progreso */
+#cw-activity .cw-hud{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+#cw-activity .cw-ruler{flex:1;min-width:170px}
+#cw-activity .cw-ruler-top{display:flex;justify-content:space-between;font-family:"Courier New",monospace;font-size:12px;letter-spacing:.06em;color:#bfe3ff!important;margin-bottom:3px}
+#cw-activity .cw-ruler-track{position:relative;height:18px;border-radius:5px;background:#f6f9ff;border:2px solid #fff;overflow:hidden}
+#cw-activity .cw-ruler-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#35d07f,#7ee8a8);transition:width .5s ease}
+#cw-activity .cw-ruler-ticks{position:absolute;left:0;right:0;top:0;bottom:0;background-image:repeating-linear-gradient(90deg,#0b2a63 0,#0b2a63 1.5px,transparent 1.5px,transparent 10px);opacity:.55;-webkit-mask-image:linear-gradient(180deg,#000 0,#000 45%,transparent 45%);mask-image:linear-gradient(180deg,#000 0,#000 45%,transparent 45%)}
+#cw-activity .cw-chip{position:relative;padding:7px 14px;border-radius:999px;font-size:14px;font-weight:900;white-space:nowrap;color:#fff!important;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4)}
+#cw-activity .cw-chip-pts{color:#ffe58a!important;border-color:#ffd23f}
+#cw-activity .cw-chip-streak{color:#ffc4a1!important;border-color:#ff9f1c}
+#cw-activity .cw-float{position:absolute;right:8px;top:-8px;font-weight:900;color:#7ee8a8!important;text-shadow:0 0 8px rgba(53,208,127,.9);animation:cwRise 1.3s ease-out forwards;pointer-events:none}
+
+/* Definición activa */
+#cw-activity .cw-active{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;margin-bottom:14px;border-radius:18px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);border-left:8px solid #ffd23f}
+#cw-activity .cw-active-text{flex:1;min-width:220px}
+#cw-activity .cw-anum{margin:0 0 2px;font-family:"Courier New",monospace;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#ffe58a!important}
+#cw-activity .cw-aclue{margin:0;font-size:17px;font-weight:700;color:#fff!important}
+#cw-activity .cw-active-btns{display:flex;flex-wrap:wrap;gap:8px}
+
+/* Rejilla y definiciones */
+#cw-activity .cw-layout{display:grid;grid-template-columns:auto minmax(250px,1fr);gap:16px;align-items:start}
+#cw-activity .cw-card{min-width:0;border-radius:20px;background:rgba(4,22,64,.38);border:1.5px solid rgba(255,255,255,.3);box-shadow:0 8px 22px rgba(3,16,50,.35)}
+#cw-activity .cw-gridcard{padding:12px;overflow-x:auto}
+#cw-activity .cw-grid{display:grid;gap:2px}
+#cw-activity .cw-blank{width:var(--cs);height:var(--cs)}
+#cw-activity .cw-cell{position:relative;width:var(--cs);height:var(--cs);border-radius:5px;background:#f6f9ff;border:1px solid #7aa2ee}
+#cw-activity .cw-cell.is-word{background:#fff2a8;border-color:#e0b72c}
+#cw-activity .cw-cell.is-solved{background:#c9f6de;border-color:#35d07f}
+#cw-activity .cw-cell.is-bad{background:#ffd6dc;border-color:#ff5d73;animation:cwShake .4s ease}
+#cw-activity .cw-cell.is-cur{background:#ffd23f;border-color:#ff9f1c;box-shadow:0 0 0 3px #ff9f1c,0 0 14px rgba(255,159,28,.8);z-index:2}
+#cw-activity .cw-cell.is-pop{animation:cwPop .45s ease}
+#cw-activity .cw-in{display:block;width:100%;height:100%;margin:0;padding:0;border:0;border-radius:5px;background:transparent!important;box-shadow:none;outline:none;text-align:center;text-transform:uppercase;font-family:"Trebuchet MS",Arial,sans-serif;font-weight:900;font-size:calc(var(--cs) * .55);line-height:1;color:#0b2a63!important;caret-color:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+#cw-activity .cw-cell.is-solved .cw-in{color:#0a7a45!important}
+#cw-activity .cw-num{position:absolute;left:3px;top:1px;font-family:Arial,sans-serif;font-size:9px;font-weight:800;line-height:1;color:#2f56a8!important;pointer-events:none}
+#cw-activity .cw-cluecard{padding:12px;max-height:calc(var(--cs) * 15 + 40px);overflow-y:auto}
+#cw-activity .cw-cluehead{margin:2px 0 8px;font-family:"Courier New",monospace;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ffe58a!important}
+#cw-activity .cw-clue{display:flex;gap:9px;align-items:flex-start;width:100%;margin:0 0 6px;padding:7px 10px;text-align:left;border-radius:12px;color:#fff!important;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);transition:background .15s,border-color .15s}
+#cw-activity .cw-clue:hover{background:rgba(255,255,255,.18)}
+#cw-activity .cw-clue.is-active{background:rgba(255,210,63,.25);border-color:#ffd23f}
+#cw-activity .cw-clue.is-solved{background:rgba(53,208,127,.16);border-color:rgba(53,208,127,.7)}
+#cw-activity .cw-cn{flex:none;min-width:26px;height:26px;padding:0 4px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#3b2200!important;background:#ffd23f}
+#cw-activity .cw-clue.is-solved .cw-cn{background:#35d07f;color:#04301b!important}
+#cw-activity .cw-ct{flex:1;min-width:0;font-size:13.5px;line-height:1.35;color:#fff!important}
+#cw-activity .cw-clue.is-solved .cw-ct{color:#d4f7e4!important}
+#cw-activity .cw-cs{flex:none;font-weight:900;color:#7ee8a8!important}
+
+/* Lápiz y mensajes */
+#cw-activity .cw-coach{display:flex;gap:14px;align-items:flex-start;margin-top:16px}
+#cw-activity .cw-mascot{flex:none;width:84px;animation:cwBob 3.4s ease-in-out infinite}
+#cw-activity .cw-mascot svg{display:block;width:84px;height:92px;filter:drop-shadow(0 4px 6px rgba(3,16,50,.5))}
+#cw-activity .cw-bubble{position:relative;flex:1;min-width:0;padding:13px 18px;border-radius:18px;background:rgba(246,249,255,.96);border:3px solid #7fd8ff;box-shadow:0 6px 18px rgba(3,16,50,.35)}
+#cw-activity .cw-bubble:before{content:"";position:absolute;left:-11px;top:28px;width:16px;height:16px;transform:rotate(45deg);background:#f6f9ff;border-left:3px solid #7fd8ff;border-bottom:3px solid #7fd8ff}
+#cw-activity .cw-bubble.cw-hint{border-color:#ffd23f}
+#cw-activity .cw-bubble.cw-hint:before{border-color:#ffd23f}
+#cw-activity .cw-bubble.cw-good{border-color:#35d07f}
+#cw-activity .cw-bubble.cw-good:before{border-color:#35d07f}
+#cw-activity .cw-bubble.cw-bad{border-color:#ff5d73}
+#cw-activity .cw-bubble.cw-bad:before{border-color:#ff5d73}
+#cw-activity .cw-bt{margin:0 0 3px;padding:0;border:0;font-size:18px;font-weight:900;color:#0b2a63!important;background:none}
+#cw-activity .cw-bubble.cw-good .cw-bt{color:#0a7a45!important}
+#cw-activity .cw-bubble.cw-bad .cw-bt{color:#b3263a!important}
+#cw-activity .cw-bubble.cw-hint .cw-bt{color:#8a5a00!important}
+#cw-activity .cw-bx{margin:0;font-size:14.5px;color:#1c3566!important}
+
+/* Pantalla final */
+#cw-activity .cw-end{position:relative;max-width:820px;margin:0 auto;text-align:center;padding:6px 10px 18px}
+#cw-activity .cw-stamp{display:block;width:210px;height:150px;margin:0 auto 4px;animation:cwStamp .8s ease both;transform:rotate(-12deg)}
+#cw-activity .cw-stars{display:flex;justify-content:center;gap:8px;margin:2px 0}
+#cw-activity .cw-star{font-size:48px;line-height:1;color:rgba(255,255,255,.28)!important;animation:cwPop .5s ease both}
+#cw-activity .cw-star.on{color:#ffd23f!important;text-shadow:0 0 18px rgba(255,210,63,.9)}
+#cw-activity .cw-rank{margin:2px 0 4px;padding:0;border:0;font-size:31px;font-weight:900;color:#fff!important;background:none;text-shadow:0 3px 0 rgba(4,22,64,.5)}
+#cw-activity .cw-bigscore{font-size:42px;font-weight:900;color:#ffd23f!important;text-shadow:0 0 20px rgba(255,210,63,.6)}
+#cw-activity .cw-bigscore small{font-size:16px;color:#dcebff!important;text-shadow:none}
+#cw-activity .cw-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+#cw-activity .cw-stat{padding:11px 6px;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3)}
+#cw-activity .cw-stat b{display:block;font-size:26px;color:#fff!important}
+#cw-activity .cw-stat span{font-size:12px;color:#cfe4ff!important}
+#cw-activity .cw-end .cw-text{margin-left:auto;margin-right:auto}
+#cw-activity .cw-endbtns{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:12px}
+#cw-activity .cw-review{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px;text-align:left}
+#cw-activity .cw-rev{padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25)}
+#cw-activity .cw-rev b{display:block;font-size:14px;letter-spacing:.04em;color:#ffe58a!important}
+#cw-activity .cw-rev span{font-size:12.5px;line-height:1.35;color:#e6f1ff!important}
+#cw-activity .cw-confetti{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:6}
+#cw-activity .cw-confetti span{position:absolute;top:0;width:10px;height:16px;border-radius:2px;opacity:0;animation:cwFall 3s ease-in forwards}
+
+/* Pie */
+#cw-activity .cw-footnote{padding:11px 16px 15px;text-align:center;font-size:12px;color:#cfe4ff!important;border-top:1px solid rgba(255,255,255,.28);background:rgba(4,22,64,.5)}
+#cw-activity .cw-footnote a{color:#ffd23f!important;font-weight:800;text-decoration:underline}
+
+/* Adaptación al ancho real del contenedor (data-size lo calcula el script) */
+#cw-activity[data-size="m"] .cw-main{padding:16px}
+#cw-activity[data-size="m"] .cw-header{padding:12px 16px;gap:12px}
+#cw-activity[data-size="m"] .cw-logo{width:46px;height:46px}
+#cw-activity[data-size="m"] .cw-title{font-size:22px}
+#cw-activity[data-size="m"] .cw-hero{grid-template-columns:minmax(230px,.9fr) minmax(0,1.3fr);gap:18px}
+#cw-activity[data-size="m"] .cw-h2{font-size:28px}
+#cw-activity[data-size="m"] .cw-layout{gap:12px}
+#cw-activity[data-size="m"] .cw-mascot,#cw-activity[data-size="m"] .cw-mascot svg{width:70px}
+#cw-activity[data-size="m"] .cw-mascot svg{height:78px}
+
+#cw-activity[data-size="s"] .cw-main,#cw-activity[data-size="xs"] .cw-main{padding:12px}
+#cw-activity[data-size="s"] .cw-header,#cw-activity[data-size="xs"] .cw-header{padding:10px 12px;gap:10px}
+#cw-activity[data-size="s"] .cw-logo,#cw-activity[data-size="xs"] .cw-logo{width:40px;height:40px}
+#cw-activity[data-size="s"] .cw-title{font-size:20px}
+#cw-activity[data-size="s"] .cw-block,#cw-activity[data-size="xs"] .cw-block{display:none}
+#cw-activity[data-size="s"] .cw-hero,#cw-activity[data-size="xs"] .cw-hero{grid-template-columns:1fr;gap:14px;min-height:0}
+#cw-activity[data-size="s"] .cw-h2,#cw-activity[data-size="xs"] .cw-h2{font-size:25px}
+#cw-activity[data-size="s"] .cw-layout,#cw-activity[data-size="xs"] .cw-layout{grid-template-columns:1fr;gap:12px}
+#cw-activity[data-size="s"] .cw-cluecard,#cw-activity[data-size="xs"] .cw-cluecard{max-height:340px}
+#cw-activity[data-size="s"] .cw-stats,#cw-activity[data-size="xs"] .cw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+#cw-activity[data-size="s"] .cw-mascot,#cw-activity[data-size="s"] .cw-mascot svg,#cw-activity[data-size="xs"] .cw-mascot,#cw-activity[data-size="xs"] .cw-mascot svg{width:60px}
+#cw-activity[data-size="s"] .cw-mascot svg,#cw-activity[data-size="xs"] .cw-mascot svg{height:66px}
+
+#cw-activity[data-size="xs"] .cw-title{font-size:16px}
+#cw-activity[data-size="xs"] .cw-subtitle{font-size:10px}
+#cw-activity[data-size="xs"] .cw-aclue{font-size:15px}
+#cw-activity[data-size="xs"] .cw-coach{flex-direction:column;align-items:stretch}
+#cw-activity[data-size="xs"] .cw-bubble:before{display:none}
+#cw-activity[data-size="xs"] .cw-review{grid-template-columns:1fr}
+#cw-activity[data-size="xs"] .cw-bigscore{font-size:34px}
+#cw-activity[data-size="xs"] .cw-rank{font-size:24px}
+
+@media (prefers-reduced-motion:reduce){#cw-activity *{animation:none!important;transition:none!important}#cw-activity .cw-draw{stroke-dasharray:none!important;stroke-dashoffset:0!important}}
+</style>
+<p class="cw-loading">Cargando la actividad… Si este mensaje no desaparece, abre la Vista previa de eXeLearning o exporta el contenido: los scripts no se ejecutan en todas las vistas del editor.</p>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var LINK = 'https://claude.ai/login';
+  var ROWS = 15, COLS = 15;
+  var WORDS = [
+    { w: 'FORMATOS', s: 'FORMATOS', r: 0, c: 1, d: 'A',
+      clue: 'Tamaños de papel estandarizados que se emplean para presentar los planos.',
+      hint: 'Se normalizan junto con el cajetín. Tiene 8 letras, empieza por F y termina en S.',
+      ok: 'Los formatos estandarizan el tamaño del papel. Junto con el cajetín garantizan que cualquier profesional reciba los planos con las mismas dimensiones y la misma organización.',
+      ko: 'No es esa. Piensa en lo que se estandariza respecto al tamaño del papel, no en lo que se dibuja sobre él.' },
+    { w: 'CAD', s: 'CAD', r: 2, c: 0, d: 'A',
+      clue: 'Siglas del tipo de software con el que se suele presentar la documentación final del proyecto.',
+      hint: 'En inglés, Computer-Aided Design (diseño asistido por ordenador). Solo tiene 3 letras.',
+      ok: 'El software CAD es la herramienta habitual para presentar la documentación final, que es el último paso de la hoja de ruta del proyecto gráfico.',
+      ko: 'No es esa. Son tres letras: las siglas de un programa de diseño asistido por ordenador.' },
+    { w: 'COTAS', s: 'COTAS', r: 2, c: 8, d: 'A',
+      clue: 'Medidas escritas sobre el dibujo que lo dimensionan; sin ellas el plano no estaría correctamente acotado.',
+      hint: 'Se aplican junto con las escalas al seguir la normativa gráfica. Empieza por C.',
+      ok: 'Las cotas expresan las medidas exactas del objeto. Se aplican junto con las escalas al seguir la normativa gráfica y hacen que el plano esté correctamente acotado.',
+      ko: 'No es esa. Busca la palabra que designa a las medidas que se anotan sobre el dibujo (cinco letras).' },
+    { w: 'NORMALIZACION', s: 'NORMALIZACIÓN', r: 4, c: 2, d: 'A',
+      clue: 'Uso de normas comunes (formatos, escalas, tipos de línea, símbolos…) para que cualquier profesional interprete un plano.',
+      hint: 'Viene de «norma». Tiene 13 letras, empieza por N y es la palabra más larga del crucigrama.',
+      ok: 'La normalización asegura que cualquier profesional pueda interpretar los documentos: formatos y cajetín, escalas, tipos de línea, acotación y tolerancias, y símbolos.',
+      ko: 'No es esa. Piensa en el conjunto de normas que hace que un plano se entienda igual en cualquier lugar (13 letras).' },
+    { w: 'VISTAS', s: 'VISTAS', r: 10, c: 3, d: 'A',
+      clue: 'Junto con las plantas, representaciones que muestran la disposición direccional de un objeto.',
+      hint: 'El alzado es una de ellas. Tiene 6 letras y empieza por V.',
+      ok: 'Las vistas y plantas describen la disposición direccional de la pieza. En proyectos de ingeniería, definen la configuración de máquinas, piezas o estructuras.',
+      ko: 'No es esa. Busca la palabra que agrupa a las distintas representaciones del objeto según la dirección desde la que se mira.' },
+    { w: 'LINEA', s: 'LÍNEA', r: 12, c: 0, d: 'A',
+      clue: 'Los distintos tipos de ... diferencian los contornos, los ejes y las aristas ocultas.',
+      hint: 'Puede ser continua, discontinua o de trazo y punto. Tiene 5 letras y empieza por L.',
+      ok: 'Los tipos de línea diferencian contornos, ejes y aristas ocultas, de modo que un mismo dibujo pueda leerse sin confusión.',
+      ko: 'No es esa. Piensa en el trazo que se dibuja con distinto grosor y estilo para distinguir contornos, ejes y aristas ocultas.' },
+    { w: 'CAJETIN', s: 'CAJETÍN', r: 12, c: 6, d: 'A',
+      clue: 'Recuadro normalizado del plano que identifica el proyecto: título, autor y escala.',
+      hint: 'Suele estar en la esquina inferior derecha de la hoja. Tiene 7 letras y empieza por C.',
+      ok: 'El cajetín identifica el proyecto (título, autor, escala…) y, junto con los formatos, estandariza la presentación de cada plano.',
+      ko: 'No es esa. Es el recuadro donde se anotan título, autor y escala de un plano (7 letras).' },
+    { w: 'TOLERANCIAS', s: 'TOLERANCIAS', r: 14, c: 3, d: 'A',
+      clue: 'Márgenes de error aceptables en las medidas para que las piezas puedan ensamblarse.',
+      hint: 'Se definen junto con la acotación. Tiene 11 letras y empieza por T.',
+      ok: 'Las tolerancias fijan los márgenes de error admisibles; junto con la acotación aseguran que las piezas encajen en el ensamblaje.',
+      ko: 'No es esa. Piensa en cuánto se puede desviar una medida real de la ideal sin que la pieza deje de encajar.' },
+    { w: 'ORDENADO', s: 'ORDENADO', r: 0, c: 2, d: 'D',
+      clue: 'Cualidad de un plano en el que las vistas y las notas están bien distribuidas en la hoja.',
+      hint: 'Es lo contrario de «desordenado». Tiene 8 letras y empieza por O.',
+      ok: 'Un plano ordenado distribuye bien las vistas y las notas, de forma que se lea con facilidad. Es una de las cualidades de todo plano técnico, junto a claro, legible, acotado, coherente y autoexplicativo.',
+      ko: 'No es esa. Busca el adjetivo que describe un plano con vistas y notas bien colocadas.' },
+    { w: 'SECCION', s: 'SECCIÓN', r: 0, c: 8, d: 'D',
+      clue: 'Corte vertical u horizontal que se dibuja para mostrar el interior de un objeto o de un edificio.',
+      hint: 'Se representa «cortando» el objeto imaginariamente. Tiene 7 letras y empieza por S.',
+      ok: 'Las secciones son cortes verticales u horizontales que permiten ver el interior. Las vistas exteriores no enseñan lo que hay dentro; las secciones sí.',
+      ko: 'No es esa. Piensa en lo que se dibuja al cortar un objeto para ver su interior.' },
+    { w: 'DESPIECE', s: 'DESPIECE', r: 0, c: 12, d: 'D',
+      clue: 'En proyectos de ingeniería, dibujo que muestra por separado las piezas de una máquina o de un conjunto.',
+      hint: 'Es como «des-piezar»: separar un conjunto en sus piezas. Tiene 8 letras y empieza por D.',
+      ok: 'Los despieces se usan en los proyectos ingenieriles junto con las vistas y los conjuntos para definir la configuración y la relación entre los componentes.',
+      ko: 'No es esa. Busca el dibujo que separa un mecanismo en cada una de sus piezas (8 letras).' },
+    { w: 'CIMENTACION', s: 'CIMENTACIÓN', r: 0, c: 14, d: 'D',
+      clue: 'Plano arquitectónico que define la base estructural del edificio.',
+      hint: 'Es lo primero que se construye: lo que sostiene todo lo demás. Tiene 11 letras y empieza por C.',
+      ok: 'El plano de cimentación define la base estructural de la construcción. Es uno de los planos arquitectónicos con una función específica dentro de la obra.',
+      ko: 'No es esa. Piensa en el plano de la base que sostiene la estructura del edificio.' },
+    { w: 'PERSPECTIVA', s: 'PERSPECTIVA', r: 2, c: 4, d: 'D',
+      clue: 'Plano arquitectónico que ofrece una visualización en 3D del resultado final.',
+      hint: 'Da una imagen «realista» del aspecto final de la obra. Tiene 11 letras y empieza por P.',
+      ok: 'Las perspectivas permiten visualizar en 3D el resultado final del proyecto, algo que las plantas o los alzados por sí solos no muestran con tanta claridad.',
+      ko: 'No es esa. Busca el plano que enseña la obra terminada como si fuera una imagen en tres dimensiones.' },
+    { w: 'PLANO', s: 'PLANO', r: 2, c: 6, d: 'D',
+      clue: 'Documento gráfico técnico que debe ser claro, legible, acotado y coherente.',
+      hint: 'Es el documento por excelencia del proyecto. Tiene 5 letras, empieza por P y termina en O.',
+      ok: 'Un plano técnico debe ser claro y legible, estar correctamente acotado, ser coherente, autoexplicativo y ordenado, para que cualquier técnico lo interprete sin ambigüedad.',
+      ko: 'No es esa. Es el documento gráfico en el que se representa el proyecto (5 letras).' },
+    { w: 'ALZADO', s: 'ALZADO', r: 4, c: 10, d: 'D',
+      clue: 'Vista frontal que representa el volumen exterior de un edificio u objeto.',
+      hint: 'No es la planta: se ve «de frente». Tiene 6 letras y empieza por A.',
+      ok: 'El alzado muestra el volumen exterior visto de frente. Se completa con la planta, que da la distribución interior, y con las secciones.',
+      ko: 'No es esa. Busca la vista que enseña el aspecto exterior del edificio visto de frente.' },
+    { w: 'SIMBOLOS', s: 'SÍMBOLOS', r: 7, c: 0, d: 'D',
+      clue: 'Signos gráficos normalizados que identifican materiales o características específicas.',
+      hint: 'Un dibujo convenido sustituye a una larga explicación. Tiene 8 letras y empieza por S.',
+      ok: 'Los símbolos identifican materiales o características específicas con un lenguaje gráfico común, sin saturar el plano de texto.',
+      ko: 'No es esa. Piensa en los signos gráficos acordados que representan materiales o características concretas.' },
+    { w: 'ESCALA', s: 'ESCALA', r: 7, c: 7, d: 'D',
+      clue: 'Relación que adapta el tamaño real del objeto al tamaño del papel, facilitando la lectura.',
+      hint: 'Se anota en el cajetín, por ejemplo 1:50. Tiene 6 letras y empieza por E.',
+      ok: 'Las escalas adaptan el tamaño real al papel. Se indican en el cajetín para que cualquier técnico sepa cómo interpretar las medidas del dibujo.',
+      ko: 'No es esa. Piensa en la proporción que permite dibujar en una hoja un edificio enorme o una pieza diminuta.' },
+    { w: 'PLANTA', s: 'PLANTA', r: 9, c: 12, d: 'D',
+      clue: 'Plano que muestra la distribución interior de un edificio.',
+      hint: 'Es la vista «desde arriba». Tiene 6 letras y empieza por P.',
+      ok: 'La planta muestra la distribución interior. En los proyectos arquitectónicos es, junto con alzados y secciones, uno de los planos básicos.',
+      ko: 'No es esa. Busca el plano que enseña cómo se reparten las estancias en el interior de un edificio.' }
+  ];
+  var CHEERS = ['¡Bien trazado!', '¡Línea perfecta!', '¡Clavado!', '¡Qué precisión!', '¡Plano aprobado!', '¡Medida exacta!'];
+  var NUDGES = ['Casi, ajusta la medida', 'Revisa el trazo', 'Todavía no cuadra', 'Vuelve a comprobar las cotas'];
+  var CONF_COLORS = ['#ffd23f', '#35d07f', '#7fd8ff', '#ff9f1c', '#ffffff', '#ff8a9a'];
+  var N = WORDS.length;
+
+  /* ---------- utilidades DOM (sin cadenas HTML) ---------- */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text !== undefined) { e.textContent = text; }
+    return e;
+  }
+  function sv(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag), k;
+    for (k in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, k)) { e.setAttribute(k, attrs[k]); }
+    }
+    if (parent) { parent.appendChild(e); }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function norm(s) {
+    var t = String(s).toUpperCase();
+    if (t.normalize) { t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    return t;
+  }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  /* ---------- dibujos ---------- */
+  function logoSvg() {
+    var s = sv('svg', { viewBox: '0 0 40 40', width: '34', height: '34', 'aria-hidden': 'true' });
+    sv('polygon', { points: '5,35 35,35 5,5', fill: '#fff3b0', stroke: '#3b2200', 'stroke-width': '2.2', 'stroke-linejoin': 'round' }, s);
+    sv('polygon', { points: '11,30 28,30 11,13', fill: '#ffd23f', stroke: '#3b2200', 'stroke-width': '1.6', 'stroke-linejoin': 'round' }, s);
+    sv('path', { d: 'M5 14 L8 14 M5 20 L9 20 M5 26 L8 26 M14 35 L14 32 M20 35 L20 31 M26 35 L26 32', stroke: '#3b2200', 'stroke-width': '1.6', fill: 'none' }, s);
+    return s;
+  }
+  function heroSvg() {
+    var s = sv('svg', { viewBox: '0 0 360 300', role: 'img', 'aria-label': 'Dibujo de un alzado de casa con cotas sobre papel de plano' });
+    var d = 0;
+    function line(dd, w, col, delay) {
+      sv('path', { d: dd, pathLength: '1000', 'class': 'cw-draw', fill: 'none', stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'animation-delay:' + delay + 's' }, s);
+    }
+    line('M12 12 L348 12 L348 288 L12 288 Z', '1.5', '#9fd3ff', 0);
+    line('M40 224 L320 224', '2', '#ffffff', 0.2);
+    line('M90 224 L90 130 L270 130 L270 224', '3', '#ffffff', 0.5);
+    line('M72 130 L180 66 L288 130 Z', '3', '#ffffff', 0.9);
+    line('M228 98 L228 70 L246 70 L246 112', '3', '#ffffff', 1.2);
+    line('M162 224 L162 170 L198 170 L198 224', '3', '#ffd23f', 1.4);
+    line('M108 148 L148 148 L148 182 L108 182 Z M128 148 L128 182 M108 165 L148 165', '2.4', '#7fd8ff', 1.7);
+    line('M212 148 L252 148 L252 182 L212 182 Z M232 148 L232 182 M212 165 L252 165', '2.4', '#7fd8ff', 1.9);
+    line('M90 246 L270 246 M90 240 L90 252 M270 240 L270 252', '1.6', '#ff9f1c', 2.1);
+    line('M62 130 L62 224 M56 130 L68 130 M56 224 L68 224', '1.6', '#ff9f1c', 2.2);
+    line('M306 66 L306 224 M300 66 L312 66 M300 224 L312 224', '1.6', '#ff9f1c', 2.3);
+    function txt(x, y, t, size, col, anchor, rot) {
+      var e = sv('text', { x: x, y: y, 'font-size': size, fill: col, 'font-family': 'Courier New, monospace', 'font-weight': '700', 'text-anchor': anchor || 'start' }, s);
+      if (rot) { e.setAttribute('transform', 'rotate(' + rot + ' ' + x + ' ' + y + ')'); }
+      e.textContent = t;
+    }
+    txt(180, 240, '12,00 m', 13, '#ffb54d', 'middle');
+    txt(52, 180, '3,00', 12, '#ffb54d', 'middle', -90);
+    txt(322, 150, '5,50', 12, '#ffb54d', 'middle', -90);
+    txt(26, 84, 'ESC 1:100', 11, '#9fd3ff', 'start');
+    sv('rect', { x: '196', y: '262', width: '144', height: '22', fill: 'none', stroke: '#9fd3ff', 'stroke-width': '1.3' }, s);
+    sv('path', { d: 'M244 262 L244 284', stroke: '#9fd3ff', 'stroke-width': '1.3' }, s);
+    txt(204, 277, 'ALZADO', 11, '#ffffff', 'start');
+    txt(250, 277, 'A4 · 1:100', 11, '#9fd3ff', 'start');
+    return s;
+  }
+  function stampSvg() {
+    var s = sv('svg', { 'class': 'cw-stamp', viewBox: '0 0 210 150', role: 'img', 'aria-label': 'Sello de plano aprobado' });
+    sv('rect', { x: '8', y: '24', width: '194', height: '102', rx: '14', fill: 'none', stroke: '#ff5d73', 'stroke-width': '6' }, s);
+    sv('rect', { x: '17', y: '33', width: '176', height: '84', rx: '9', fill: 'none', stroke: '#ff5d73', 'stroke-width': '2' }, s);
+    var t = sv('text', { x: '105', y: '86', 'text-anchor': 'middle', 'font-size': '29', 'font-weight': '900', fill: '#ff5d73', 'font-family': 'Arial Black, Arial, sans-serif', 'letter-spacing': '1' }, s);
+    t.textContent = 'APROBADO';
+    var t2 = sv('text', { x: '105', y: '108', 'text-anchor': 'middle', 'font-size': '12', 'font-weight': '700', fill: '#ff5d73', 'font-family': 'Courier New, monospace', 'letter-spacing': '3' }, s);
+    t2.textContent = 'DIBUJO Y PROYECTO';
+    return s;
+  }
+  function pencil(mood) {
+    var s = sv('svg', { viewBox: '0 0 100 110', 'aria-hidden': 'true' });
+    var k = '#1e293b';
+    sv('path', { d: 'M38 52 L24 62 M62 52 L76 62', stroke: '#f2b705', 'stroke-width': '5', 'stroke-linecap': 'round', fill: 'none' }, s);
+    sv('rect', { x: '38', y: '5', width: '24', height: '11', rx: '3', fill: '#ff8fa3' }, s);
+    sv('rect', { x: '38', y: '16', width: '24', height: '7', fill: '#cbd5e1' }, s);
+    sv('rect', { x: '38', y: '23', width: '24', height: '54', fill: '#ffd23f' }, s);
+    sv('path', { d: 'M44 23 L44 77 M56 23 L56 77', stroke: '#f2b705', 'stroke-width': '1.5', fill: 'none' }, s);
+    sv('polygon', { points: '38,77 62,77 50,100', fill: '#f4c795' }, s);
+    sv('polygon', { points: '46.5,92 53.5,92 50,100', fill: '#334155' }, s);
+    if (mood === 'happy') {
+      sv('path', { d: 'M41 40 Q44 35 47 40 M53 40 Q56 35 59 40', stroke: k, 'stroke-width': '2.4', fill: 'none', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M43 48 Q50 59 57 48 Z', fill: '#ff6b81', stroke: k, 'stroke-width': '1.8', 'stroke-linejoin': 'round' }, s);
+      sv('path', { d: 'M82 20 L82 32 M76 26 L88 26', stroke: '#ffd23f', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+    } else if (mood === 'oops') {
+      sv('circle', { cx: '44', cy: '40', r: '2.6', fill: k }, s);
+      sv('circle', { cx: '56', cy: '40', r: '2.6', fill: k }, s);
+      sv('path', { d: 'M40 34 L47 36 M60 34 L53 36', stroke: k, 'stroke-width': '2', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M44 55 Q50 48 56 55', stroke: k, 'stroke-width': '2.2', fill: 'none', 'stroke-linecap': 'round' }, s);
+    } else if (mood === 'think') {
+      sv('circle', { cx: '45', cy: '39', r: '2.6', fill: k }, s);
+      sv('circle', { cx: '57', cy: '39', r: '2.6', fill: k }, s);
+      sv('path', { d: 'M45 52 L55 52', stroke: k, 'stroke-width': '2.2', 'stroke-linecap': 'round' }, s);
+      sv('circle', { cx: '80', cy: '24', r: '3', fill: '#fff' }, s);
+      sv('circle', { cx: '87', cy: '15', r: '4.5', fill: '#fff' }, s);
+    } else {
+      sv('circle', { cx: '44', cy: '40', r: '2.6', fill: k }, s);
+      sv('circle', { cx: '56', cy: '40', r: '2.6', fill: k }, s);
+      sv('path', { d: 'M44 49 Q50 55 56 49', stroke: k, 'stroke-width': '2.2', fill: 'none', 'stroke-linecap': 'round' }, s);
+    }
+    return s;
+  }
+
+  /* ---------- construcción de la actividad ---------- */
+  function build(root) {
+    if (root.cwReady) { return; }
+    root.cwReady = true;
+    var kids = root.childNodes, n, i, j;
+    for (i = kids.length - 1; i !== -1; i--) {
+      n = kids[i];
+      if (n.nodeName !== 'STYLE') { if (n.nodeName !== 'SCRIPT') { root.removeChild(n); } }
+    }
+
+    /* datos de trabajo */
+    var W = [], CELLS = {}, ui = {}, starts = [], startNum = {};
+    function key(r, c) { return r + ',' + c; }
+    for (i = 0; i !== N; i++) {
+      var src = WORDS[i], w = { w: src.w, s: src.s, r: src.r, c: src.c, d: src.d, clue: src.clue, hint: src.hint, ok: src.ok, ko: src.ko, cells: [], num: 0 };
+      for (j = 0; j !== w.w.length; j++) {
+        var rr = w.r + (w.d === 'D' ? j : 0), cc = w.c + (w.d === 'A' ? j : 0), k = key(rr, cc), cell = CELLS[k];
+        if (!cell) { cell = { r: rr, c: cc, k: k, ch: '', locked: false, wa: -1, wd: -1, num: 0, fresh: false }; CELLS[k] = cell; }
+        if (w.d === 'A') { cell.wa = i; } else { cell.wd = i; }
+        w.cells.push(cell);
+      }
+      W.push(w);
+    }
+    for (i = 0; i !== N; i++) {
+      var sk = W[i].cells[0].k;
+      if (startNum[sk] === undefined) { startNum[sk] = 0; starts.push(W[i].cells[0]); }
+    }
+    starts.sort(function (p, q) { return (p.r - q.r) || (p.c - q.c); });
+    for (i = 0; i !== starts.length; i++) { startNum[starts[i].k] = i + 1; starts[i].num = i + 1; }
+    for (i = 0; i !== N; i++) { W[i].num = startNum[W[i].cells[0].k]; }
+    var order = [];
+    for (i = 0; i !== N; i++) { order.push(i); }
+    order.sort(function (p, q) { return (W[p].num - W[q].num) || (W[p].d === 'A' ? -1 : 1); });
+    var maxScore = 0, bonusAcc = 0;
+    for (i = 1; i !== N + 1; i++) { bonusAcc = i * 10; if (bonusAcc > 50) { bonusAcc = 50; } maxScore += 100 + bonusAcc; }
+
+    /* estado */
+    var score = 0, streak = 0, best = 0, hints = 0, failsTotal = 0, solvedCount = 0;
+    var curW = -1, curCell = null, dir = 'A';
+
+    /* estructura fija */
+    var shell = el('div', 'cw-shell');
+    var head = el('div', 'cw-header');
+    var logo = el('div', 'cw-logo'); logo.appendChild(logoSvg());
+    var ht = el('div', 'cw-head-text');
+    ht.appendChild(el('h2', 'cw-title', 'Crucigrama del proyecto'));
+    ht.appendChild(el('div', 'cw-subtitle', 'Dibujo y proyecto · lenguaje gráfico normalizado'));
+    var blk = el('div', 'cw-block'), cellsTxt = ['PALABRAS', String(N), 'ESCALA', '1:1'], q;
+    for (q = 0; q !== cellsTxt.length; q++) { blk.appendChild(el('span', q % 2 === 0 ? 'cw-bk' : '', cellsTxt[q])); }
+    head.appendChild(logo); head.appendChild(ht); head.appendChild(blk);
+    var scr = el('div', 'cw-main');
+    var foot = el('div', 'cw-footnote');
+    foot.appendChild(document.createTextNode('Actividad de creación propia generada con '));
+    var a = el('a', '', 'Claude'); a.setAttribute('href', LINK); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener noreferrer');
+    foot.appendChild(a); foot.appendChild(document.createTextNode('.'));
+    shell.appendChild(head); shell.appendChild(scr); shell.appendChild(foot);
+    root.appendChild(shell);
+
+    function fit() {
+      var wd = root.clientWidth, s = 'l', cs = 36, share, pad, avail;
+      if (wd !== 0) {
+        if (900 > wd) { s = 'm'; }
+        if (680 > wd) { s = 's'; }
+        if (480 > wd) { s = 'xs'; }
+        pad = (s === 's' || s === 'xs') ? 24 : (s === 'm' ? 32 : 44);
+        share = s === 'l' ? 0.6 : (s === 'm' ? 0.58 : 1);
+        avail = (wd - pad) * share - 26 - (COLS - 1) * 2;
+        cs = Math.floor(avail / COLS);
+        if (cs > 40) { cs = 40; }
+        if (22 > cs) { cs = 22; }
+      }
+      if (root.getAttribute('data-size') !== s) { root.setAttribute('data-size', s); }
+      root.style.setProperty('--cs', cs + 'px');
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (window.ResizeObserver) { new ResizeObserver(fit).observe(root); }
+    else { setInterval(fit, 1000); }
+    setTimeout(fit, 300);
+    setTimeout(fit, 1500);
+
+    function confetti(total) {
+      var layer = el('div', 'cw-confetti'), t, sp;
+      layer.setAttribute('aria-hidden', 'true');
+      for (t = 0; t !== total; t++) {
+        sp = document.createElement('span');
+        sp.setAttribute('style', 'left:' + Math.floor(Math.random() * 100) + '%;background:' + CONF_COLORS[t % CONF_COLORS.length] + ';animation-delay:' + (Math.random() * 0.9).toFixed(2) + 's;animation-duration:' + (2.2 + Math.random() * 1.6).toFixed(2) + 's');
+        layer.appendChild(sp);
+      }
+      shell.appendChild(layer);
+      setTimeout(function () { if (layer.parentNode) { layer.parentNode.removeChild(layer); } }, 5000);
+    }
+    function hud() {
+      if (ui.pts) { ui.pts.textContent = '\u2B50 ' + score + ' pts'; }
+      if (ui.streak) { ui.streak.textContent = '\uD83D\uDD25 Racha ' + streak; }
+      if (ui.hints) { ui.hints.textContent = '\uD83D\uDCA1 ' + hints; }
+      if (ui.count) { ui.count.textContent = solvedCount + ' / ' + N + ' palabras'; }
+      if (ui.fill) { ui.fill.setAttribute('style', 'width:' + Math.round(solvedCount * 100 / N) + '%'); }
+    }
+
+    /* ---------- portada ---------- */
+    function intro() {
+      clear(scr); ui = {};
+      var sec = el('div', 'cw-hero cw-fade');
+      var art = el('div', 'cw-art'); art.appendChild(heroSvg());
+      var copy = el('div', 'cw-copy');
+      copy.appendChild(el('p', 'cw-kicker', 'Misión de delineante'));
+      copy.appendChild(el('h3', 'cw-h2', '¡Completa el plano!'));
+      copy.appendChild(el('p', 'cw-text', 'Resuelve el crucigrama con los conceptos clave de Dibujo y proyecto: normalización, vistas, escalas, tipos de plano y mucho más. Cada respuesta es una sola palabra.'));
+      var facts = el('div', 'cw-facts'), fd = [[String(N), 'palabras'], ['1', 'pista por palabra'], ['100%', 'con feedback']], f, fc;
+      for (f = 0; f !== fd.length; f++) { fc = el('div', 'cw-fact'); fc.appendChild(el('b', '', fd[f][0])); fc.appendChild(el('span', '', fd[f][1])); facts.appendChild(fc); }
+      copy.appendChild(facts);
+      var steps = el('div', 'cw-steps'), sd = ['Pulsa una casilla o una definición de la lista.', 'Escribe la palabra: vale con o sin tildes. Al completarla se comprueba sola.', 'Si te atascas, pide una pista; si fallas, te oriento sin darte la solución.'], p, st;
+      for (p = 0; p !== sd.length; p++) { st = el('div', 'cw-step'); st.appendChild(el('span', 'cw-sn', String(p + 1))); st.appendChild(el('span', 'cw-st', sd[p])); steps.appendChild(st); }
+      copy.appendChild(steps);
+      var rules = el('div', 'cw-rules'), rd = ['\u2B50 100 puntos por palabra', '\uD83D\uDD25 Las rachas dan puntos extra', '\uD83D\uDCA1 Una pista resta 25', '\u274C Cada fallo resta 20'], r;
+      for (r = 0; r !== rd.length; r++) { rules.appendChild(el('span', 'cw-rule', rd[r])); }
+      copy.appendChild(rules);
+      var go = el('button', 'cw-primary cw-start', '¡Empezar a dibujar! \u270F'); go.type = 'button';
+      go.addEventListener('click', start);
+      copy.appendChild(go);
+      sec.appendChild(art); sec.appendChild(copy); scr.appendChild(sec);
+    }
+
+    function start() {
+      var t, c;
+      for (t = 0; t !== N; t++) { W[t].solved = false; W[t].fails = 0; W[t].hintUsed = false; W[t].revealed = false; W[t].tried = {}; }
+      for (c in CELLS) { if (Object.prototype.hasOwnProperty.call(CELLS, c)) { CELLS[c].ch = ''; CELLS[c].locked = false; } }
+      score = 0; streak = 0; best = 0; hints = 0; failsTotal = 0; solvedCount = 0; curW = -1; curCell = null; dir = 'A';
+      game();
+    }
+
+    /* ---------- juego ---------- */
+    function paintCell(cell) {
+      var cls = 'cw-cell', inWord = false, t;
+      if (curW !== -1) { for (t = 0; t !== W[curW].cells.length; t++) { if (W[curW].cells[t] === cell) { inWord = true; } } }
+      if (inWord) { cls += ' is-word'; }
+      if (cell.locked) { cls += ' is-solved'; }
+      if (cell === curCell) { cls += ' is-cur'; }
+      cell.box.className = cls;
+    }
+    function refresh() {
+      var c, t, w = curW === -1 ? null : W[curW], it, solved;
+      for (c in CELLS) { if (Object.prototype.hasOwnProperty.call(CELLS, c)) { paintCell(CELLS[c]); CELLS[c].input.tabIndex = (CELLS[c] === curCell) ? 0 : -1; } }
+      if (w) {
+        ui.anum.textContent = w.num + ' \u00B7 ' + (w.d === 'A' ? 'Horizontal' : 'Vertical') + ' \u00B7 ' + w.w.length + ' letras' + (w.solved ? ' \u00B7 \u2713 resuelta' : '');
+        ui.aclue.textContent = w.clue;
+        ui.bHint.disabled = w.solved; ui.bCheck.disabled = w.solved; ui.bClear.disabled = w.solved;
+        ui.bGive.hidden = w.solved ? true : (w.fails > 1 ? false : true);
+      }
+      for (t = 0; t !== N; t++) {
+        it = ui.items[t]; solved = W[t].solved;
+        it.className = 'cw-clue' + (t === curW ? ' is-active' : '') + (solved ? ' is-solved' : '');
+        it.mark.textContent = solved ? '\u2713' : '';
+      }
+    }
+    function setActive(cell, prefer) {
+      var d = prefer || dir, wi = d === 'A' ? cell.wa : cell.wd;
+      if (wi === -1) { d = d === 'A' ? 'D' : 'A'; wi = d === 'A' ? cell.wa : cell.wd; }
+      dir = d; curW = wi; curCell = cell;
+      refresh();
+    }
+    function focusCell(cell) {
+      try { cell.input.focus({ preventScroll: true }); } catch (err) { cell.input.focus(); }
+    }
+    function selectWord(wi, focus) {
+      var w = W[wi], target = w.cells[0], t;
+      for (t = 0; t !== w.cells.length; t++) { if (w.cells[t].ch === '') { target = w.cells[t]; break; } }
+      setActive(target, w.d);
+      if (focus) { focusCell(target); }
+    }
+    function say(kind, mood, title, text, quiet) {
+      ui.bubble.className = 'cw-bubble cw-' + kind;
+      ui.bt.textContent = title; ui.bx.textContent = text;
+      clear(ui.mbox); ui.mbox.appendChild(pencil(mood));
+      if (!quiet) { if (ui.coach.scrollIntoView) { try { ui.coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) { } } }
+    }
+    function wordStr(w) {
+      var s = '', t;
+      for (t = 0; t !== w.cells.length; t++) { s += w.cells[t].ch === '' ? '_' : w.cells[t].ch; }
+      return s;
+    }
+    function nextUnsolved(from) {
+      var pos = 0, t, idx;
+      for (t = 0; t !== order.length; t++) { if (order[t] === from) { pos = t; } }
+      for (t = 1; t !== order.length + 1; t++) {
+        idx = order[(pos + t) % order.length];
+        if (!W[idx].solved) { return idx; }
+      }
+      return -1;
+    }
+    function lockWord(w, popIt) {
+      var t, cell;
+      for (t = 0; t !== w.cells.length; t++) {
+        cell = w.cells[t]; cell.ch = w.w.charAt(t); cell.input.value = cell.ch; cell.locked = true; cell.input.readOnly = true;
+      }
+    }
+    function solveWord(wi, revealed) {
+      var w = W[wi], gained = 0, bonus = 0, base, next, msg, penalty;
+      w.solved = true; w.revealed = revealed; solvedCount++;
+      lockWord(w, true);
+      if (!revealed) {
+        penalty = 20 * (w.fails > 3 ? 3 : w.fails) + (w.hintUsed ? 25 : 0);
+        base = 100 - penalty; if (20 > base) { base = 20; }
+        if (w.fails === 0) { streak++; bonus = streak * 10; if (bonus > 50) { bonus = 50; } } else { streak = 0; }
+        if (streak > best) { best = streak; }
+        gained = base + bonus;
+      } else { streak = 0; }
+      score += gained;
+      hud();
+      if (gained !== 0) {
+        var fl = el('span', 'cw-float', '+' + gained); ui.ptsChip.appendChild(fl);
+        setTimeout(function () { if (fl.parentNode) { fl.parentNode.removeChild(fl); } }, 1400);
+      }
+      msg = revealed ? 'Solución: ' + w.s + '. ' + w.ok + ' Esta palabra no suma puntos, pero ya sabes lo importante: ¡sigue!'
+        : w.ok + ' Has ganado ' + gained + ' puntos' + (bonus ? ' (incluye +' + bonus + ' de racha).' : '.');
+      say('good', 'happy', revealed ? 'Solución: ' + w.s : pick(CHEERS) + ' ' + w.s, msg);
+      if (!revealed) { confetti(14); }
+      refresh();
+      for (var pp = 0; pp !== w.cells.length; pp++) { w.cells[pp].box.className += ' is-pop'; }
+      if (solvedCount === N) { setTimeout(finish, 1700); return; }
+      var full = -1, tt, uu, allLocked;
+      for (tt = 0; tt !== N; tt++) {
+        if (!W[tt].solved) {
+          allLocked = true;
+          for (uu = 0; uu !== W[tt].cells.length; uu++) { if (!W[tt].cells[uu].locked) { allLocked = false; } }
+          if (allLocked) { full = tt; break; }
+        }
+      }
+      if (full !== -1) { setTimeout(function () { solveWord(full, false); }, 900); return; }
+      next = nextUnsolved(wi);
+      if (next !== -1) { setTimeout(function () { selectWord(next, true); }, 500); }
+    }
+    function failWord(wi, str) {
+      var w = W[wi], right = 0, t, cell, text;
+      for (t = 0; t !== w.cells.length; t++) { if (w.cells[t].ch === w.w.charAt(t)) { right++; } }
+      if (!w.tried[str]) { w.tried[str] = 1; w.fails++; failsTotal++; streak = 0; hud(); }
+      text = w.ko + ' Llevas ' + right + ' de ' + w.w.length + ' letras bien colocadas.' + (w.fails > 1 ? ' Si lo necesitas, puedes pulsar «Ver solución».' : ' Corrige las letras y se comprobará de nuevo.');
+      say('bad', 'oops', pick(NUDGES), text);
+      refresh();
+      for (t = 0; t !== w.cells.length; t++) { if (!w.cells[t].locked) { w.cells[t].box.className += ' is-bad'; } }
+      setTimeout(function () { refresh(); }, 650);
+    }
+    function checkWord(wi, auto) {
+      var w = W[wi], str = '', missing = 0, t;
+      if (w.solved) { return; }
+      for (t = 0; t !== w.cells.length; t++) { if (w.cells[t].ch === '') { missing++; } str += w.cells[t].ch; }
+      if (missing !== 0) {
+        if (!auto) { say('hint', 'think', 'Faltan letras', 'Esta palabra tiene ' + w.w.length + ' letras y todavía te faltan ' + missing + ' por escribir: ' + wordStr(w).split('').join(' ')); }
+        return;
+      }
+      if (str === w.w) { solveWord(wi, false); } else { failWord(wi, str); }
+    }
+    function useHint() {
+      var w = curW === -1 ? null : W[curW], first;
+      if (!w) { return; }
+      if (w.solved) { return; }
+      first = !w.hintUsed;
+      if (first) { w.hintUsed = true; hints++; hud(); }
+      say('hint', 'think', 'Pista · ' + w.num + (w.d === 'A' ? ' horizontal' : ' vertical'), w.hint + (first ? ' (\u221225 puntos en esta palabra)' : ''));
+    }
+    function clearWord() {
+      var w = curW === -1 ? null : W[curW], t;
+      if (!w) { return; }
+      if (w.solved) { return; }
+      for (t = 0; t !== w.cells.length; t++) { if (!w.cells[t].locked) { w.cells[t].ch = ''; w.cells[t].input.value = ''; } }
+      refresh();
+      selectWord(curW, true);
+    }
+    function giveUp() {
+      var w = curW === -1 ? null : W[curW];
+      if (!w) { return; }
+      if (w.solved) { return; }
+      solveWord(curW, true);
+    }
+
+    function moveInWord(cell, step, skipLocked) {
+      var w = W[curW], idx = -1, t, nx;
+      for (t = 0; t !== w.cells.length; t++) { if (w.cells[t] === cell) { idx = t; } }
+      nx = idx + step;
+      while (nx > -1) {
+        if (nx === w.cells.length) { return; }
+        if (!skipLocked || !w.cells[nx].locked) { setActive(w.cells[nx]); focusCell(w.cells[nx]); return; }
+        nx += step;
+      }
+    }
+    function neighbor(cell, dr, dc) { return CELLS[key(cell.r + dr, cell.c + dc)] || null; }
+    function afterEdit() {
+      var w = curW === -1 ? null : W[curW], t, full = true;
+      if (!w) { return; }
+      if (w.solved) { return; }
+      for (t = 0; t !== w.cells.length; t++) { if (w.cells[t].ch === '') { full = false; } }
+      if (full) { checkWord(curW, true); }
+    }
+    function wire(cell) {
+      var inp = cell.input;
+      inp.addEventListener('focus', function () {
+        cell.fresh = true; setTimeout(function () { cell.fresh = false; }, 300);
+        setActive(cell);
+        try { inp.select(); } catch (err) { }
+      });
+      inp.addEventListener('click', function () {
+        if (cell.fresh) { return; }
+        if (curCell === cell) { if (cell.wa !== -1) { if (cell.wd !== -1) { setActive(cell, dir === 'A' ? 'D' : 'A'); } } }
+      });
+      inp.addEventListener('input', function () {
+        var v = norm(inp.value), ch = v.length === 0 ? '' : v.charAt(v.length - 1);
+        if (cell.locked) { inp.value = cell.ch; return; }
+        if (ch === '') {
+          if (cell.ch !== '') { cell.ch = ''; inp.value = ''; if (curW !== -1) { moveInWord(cell, -1, true); } }
+          return;
+        }
+        if (/^[A-Z]$/.test(ch)) {
+          cell.ch = ch; inp.value = ch;
+          cell.box.className = cell.box.className.replace(' is-bad', '');
+          moveInWord(cell, 1, true);
+          afterEdit();
+        } else { inp.value = cell.ch; }
+      });
+      inp.addEventListener('keydown', function (e) {
+        var k = e.key, nb = null, pref = null;
+        if (k === 'ArrowLeft') { nb = neighbor(cell, 0, -1); pref = 'A'; }
+        else if (k === 'ArrowRight') { nb = neighbor(cell, 0, 1); pref = 'A'; }
+        else if (k === 'ArrowUp') { nb = neighbor(cell, -1, 0); pref = 'D'; }
+        else if (k === 'ArrowDown') { nb = neighbor(cell, 1, 0); pref = 'D'; }
+        if (pref) {
+          e.preventDefault();
+          if (nb) { setActive(nb, pref); focusCell(nb); }
+          return;
+        }
+        if (k === 'Backspace') {
+          e.preventDefault();
+          if (cell.locked) { moveInWord(cell, -1, false); return; }
+          if (cell.ch !== '') { cell.ch = ''; inp.value = ''; refresh(); return; }
+          moveInWord(cell, -1, true);
+          if (curCell) { if (!curCell.locked) { curCell.ch = ''; curCell.input.value = ''; } }
+          return;
+        }
+        if (k === 'Delete') { e.preventDefault(); if (!cell.locked) { cell.ch = ''; inp.value = ''; } return; }
+        if (k === 'Enter') { e.preventDefault(); if (curW !== -1) { checkWord(curW, false); } return; }
+        if (k === ' ') { e.preventDefault(); if (cell.wa !== -1) { if (cell.wd !== -1) { setActive(cell, dir === 'A' ? 'D' : 'A'); } } }
+      });
+    }
+
+    function game() {
+      clear(scr);
+      var wrap = el('div', 'cw-fade'), t, c;
+      /* HUD */
+      var hd = el('div', 'cw-hud');
+      var ruler = el('div', 'cw-ruler'), rtop = el('div', 'cw-ruler-top');
+      ui.count = el('span'); rtop.appendChild(el('span', '', 'AVANCE DEL PLANO')); rtop.appendChild(ui.count);
+      var track = el('div', 'cw-ruler-track'); ui.fill = el('div', 'cw-ruler-fill'); track.appendChild(ui.fill); track.appendChild(el('div', 'cw-ruler-ticks'));
+      ruler.appendChild(rtop); ruler.appendChild(track);
+      ui.ptsChip = el('div', 'cw-chip cw-chip-pts'); ui.pts = el('span'); ui.ptsChip.appendChild(ui.pts);
+      var sc = el('div', 'cw-chip cw-chip-streak'); ui.streak = el('span'); sc.appendChild(ui.streak);
+      var hc = el('div', 'cw-chip'); ui.hints = el('span'); hc.appendChild(ui.hints);
+      hc.setAttribute('title', 'Pistas usadas');
+      hd.appendChild(ruler); hd.appendChild(ui.ptsChip); hd.appendChild(sc); hd.appendChild(hc);
+      wrap.appendChild(hd);
+      /* definición activa */
+      var act = el('div', 'cw-active'), at = el('div', 'cw-active-text');
+      ui.anum = el('p', 'cw-anum'); ui.aclue = el('p', 'cw-aclue'); at.appendChild(ui.anum); at.appendChild(ui.aclue);
+      var ab = el('div', 'cw-active-btns');
+      ui.bHint = el('button', 'cw-btn cw-btn-hint', '\uD83D\uDCA1 Pista'); ui.bCheck = el('button', 'cw-btn cw-btn-ok', '\u2713 Comprobar'); ui.bClear = el('button', 'cw-btn', 'Borrar'); ui.bGive = el('button', 'cw-btn cw-btn-give', 'Ver solución');
+      ui.bHint.type = 'button'; ui.bCheck.type = 'button'; ui.bClear.type = 'button'; ui.bGive.type = 'button'; ui.bGive.hidden = true;
+      ui.bHint.addEventListener('click', useHint);
+      ui.bCheck.addEventListener('click', function () { if (curW !== -1) { checkWord(curW, false); } });
+      ui.bClear.addEventListener('click', clearWord);
+      ui.bGive.addEventListener('click', giveUp);
+      ab.appendChild(ui.bHint); ab.appendChild(ui.bCheck); ab.appendChild(ui.bClear); ab.appendChild(ui.bGive);
+      act.appendChild(at); act.appendChild(ab); wrap.appendChild(act);
+      /* rejilla + definiciones */
+      var lay = el('div', 'cw-layout');
+      var gc = el('div', 'cw-card cw-gridcard'), grid = el('div', 'cw-grid');
+      grid.setAttribute('style', 'grid-template-columns:repeat(' + COLS + ',var(--cs))');
+      grid.setAttribute('role', 'group'); grid.setAttribute('aria-label', 'Crucigrama de ' + ROWS + ' por ' + COLS + ' casillas');
+      var cell, box, inp;
+      for (t = 0; t !== ROWS; t++) {
+        for (c = 0; c !== COLS; c++) {
+          cell = CELLS[key(t, c)];
+          if (!cell) { grid.appendChild(el('div', 'cw-blank')); continue; }
+          box = el('div', 'cw-cell');
+          if (cell.num !== 0) { box.appendChild(el('span', 'cw-num', String(cell.num))); }
+          inp = document.createElement('input');
+          inp.type = 'text'; inp.className = 'cw-in'; inp.maxLength = 2; inp.tabIndex = -1;
+          inp.setAttribute('autocomplete', 'off'); inp.setAttribute('autocapitalize', 'characters'); inp.setAttribute('autocorrect', 'off'); inp.setAttribute('spellcheck', 'false');
+          inp.setAttribute('aria-label', 'Fila ' + (t + 1) + ', columna ' + (c + 1) + (cell.num !== 0 ? ', definición ' + cell.num : ''));
+          if (cell.ch !== '') { inp.value = cell.ch; }
+          box.appendChild(inp);
+          cell.box = box; cell.input = inp;
+          wire(cell);
+          grid.appendChild(box);
+        }
+      }
+      gc.appendChild(grid);
+      var cc = el('div', 'cw-card cw-cluecard');
+      ui.items = [];
+      function listBlock(dd, title) {
+        var h3 = el('div', 'cw-cluehead', title), idx, wi, b, cn, ct, cs2;
+        cc.appendChild(h3);
+        for (idx = 0; idx !== order.length; idx++) {
+          wi = order[idx];
+          if (W[wi].d !== dd) { continue; }
+          b = el('button', 'cw-clue'); b.type = 'button';
+          cn = el('span', 'cw-cn', String(W[wi].num)); ct = el('span', 'cw-ct', W[wi].clue); cs2 = el('span', 'cw-cs', '');
+          b.appendChild(cn); b.appendChild(ct); b.appendChild(cs2);
+          b.mark = cs2;
+          b.addEventListener('click', makeSelect(wi));
+          ui.items[wi] = b;
+          cc.appendChild(b);
+        }
+      }
+      function makeSelect(wi) { return function () { selectWord(wi, true); }; }
+      listBlock('A', 'Horizontales \u2192'); listBlock('D', 'Verticales \u2193');
+      lay.appendChild(gc); lay.appendChild(cc); wrap.appendChild(lay);
+      /* lápiz y mensajes */
+      ui.coach = el('div', 'cw-coach');
+      ui.mbox = el('div', 'cw-mascot');
+      ui.bubble = el('div', 'cw-bubble'); ui.bubble.setAttribute('aria-live', 'polite');
+      ui.bt = el('p', 'cw-bt'); ui.bx = el('p', 'cw-bx');
+      ui.bubble.appendChild(ui.bt); ui.bubble.appendChild(ui.bx);
+      ui.coach.appendChild(ui.mbox); ui.coach.appendChild(ui.bubble); wrap.appendChild(ui.coach);
+      scr.appendChild(wrap);
+      hud();
+      say('info', 'hi', '¡Hola, delineante! Soy Lápiz', 'Pulsa una casilla o una definición y escribe la palabra. Cuando la completes, la compruebo yo. Si te atascas, pide una pista.', true);
+      selectWord(order[0], false);
+    }
+
+    /* ---------- pantalla final ---------- */
+    function finish() {
+      clear(scr); ui = {};
+      var ratio = score / maxScore, stars = 1, first = 0, t;
+      if (ratio > 0.49) { stars = 2; }
+      if (ratio > 0.79) { stars = 3; }
+      for (t = 0; t !== N; t++) { if (W[t].fails === 0) { if (!W[t].revealed) { first++; } } }
+      var rank = stars === 3 ? 'Delineante de oro' : (stars === 2 ? 'Delineante experto' : 'Aprendiz de delineante');
+      var msg = stars === 3 ? '¡Plano impecable! Dominas el lenguaje gráfico del proyecto. ¿Te atreves a repetirlo y mejorar tu marca?'
+        : (stars === 2 ? '¡Muy buen trabajo! Ya hablas el idioma de los planos. Repite el crucigrama y consigue las tres estrellas.'
+        : '¡Has completado el plano! Cada fallo es práctica: repásalo y vuelve a intentarlo para subir de nivel.');
+      var sec = el('div', 'cw-end cw-fade');
+      sec.appendChild(stampSvg());
+      var sr = el('div', 'cw-stars'), k, s;
+      for (k = 0; k !== 3; k++) { s = el('span', 'cw-star' + (k + 1 > stars ? '' : ' on'), '\u2605'); s.setAttribute('style', 'animation-delay:' + (0.4 + k * 0.25) + 's'); sr.appendChild(s); }
+      sr.setAttribute('aria-label', stars + ' de 3 estrellas');
+      sec.appendChild(sr);
+      sec.appendChild(el('h3', 'cw-rank', rank));
+      var bs = el('div', 'cw-bigscore', score + ' '); bs.appendChild(el('small', '', '/ ' + maxScore + ' puntos'));
+      sec.appendChild(bs);
+      var grid = el('div', 'cw-stats'), data = [[first + ' / ' + N, 'a la primera'], [String(failsTotal), 'fallos'], [String(hints), 'pistas usadas'], [String(best), 'mejor racha']], b;
+      for (k = 0; k !== data.length; k++) { b = el('div', 'cw-stat'); b.appendChild(el('b', '', data[k][0])); b.appendChild(el('span', '', data[k][1])); grid.appendChild(b); }
+      sec.appendChild(grid);
+      sec.appendChild(el('p', 'cw-text', msg));
+      var btns = el('div', 'cw-endbtns');
+      var again = el('button', 'cw-primary', 'Jugar de nuevo \u21BB'); again.type = 'button'; again.addEventListener('click', function () { intro(); });
+      var rev = el('button', 'cw-btn', 'Ver repaso de conceptos'); rev.type = 'button';
+      btns.appendChild(again); btns.appendChild(rev); sec.appendChild(btns);
+      var list = el('div', 'cw-review'), it;
+      list.hidden = true;
+      for (k = 0; k !== order.length; k++) {
+        it = el('div', 'cw-rev'); it.appendChild(el('b', '', W[order[k]].s)); it.appendChild(el('span', '', W[order[k]].ok)); list.appendChild(it);
+      }
+      rev.addEventListener('click', function () { list.hidden = !list.hidden; rev.textContent = list.hidden ? 'Ver repaso de conceptos' : 'Ocultar repaso'; });
+      sec.appendChild(list);
+      scr.appendChild(sec);
+      confetti(70);
+    }
+
+    intro();
+  }
+
+  /* ---------- arranque tolerante a eXeLearning ---------- */
+  function boot() {
+    var roots = document.querySelectorAll('.cw-root'), i;
+    for (i = 0; i !== roots.length; i++) {
+      try { build(roots[i]); } catch (err) {
+        roots[i].appendChild(el('p', 'cw-loading', 'Error al cargar la actividad: ' + err.message));
+      }
+    }
+  }
+  boot();
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', boot);
+    window.addEventListener('load', boot);
+  }
+  setTimeout(boot, 400);
+  setTimeout(boot, 1500);
+})();
+</script>
+</div>
+</div>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

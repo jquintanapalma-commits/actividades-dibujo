@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domina las líneas normalizadas</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<style>
+.ln128{--ln-ink:#14253a;--ln-blue:#0b3d91;--ln-teal:#0e7c86;--ln-amber:#ffb703;--ln-ok:#0f7b4a;--ln-bad:#b3261e;--ln-line:#c4d3ea;box-sizing:border-box;position:relative;overflow:hidden;max-width:780px;margin:1.2em auto;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.5;color:var(--ln-ink);background:#fff;border:1px solid #d6e2f5;border-radius:20px;box-shadow:0 8px 28px rgba(11,61,145,.18)}
+.ln128 *,.ln128 *::before,.ln128 *::after{box-sizing:border-box}
+.ln128 [hidden]{display:none!important}
+.ln128 .ln-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ln128 :focus-visible{outline:3px solid #0b3d91;outline-offset:3px}
+.ln128 .ln-hero :focus-visible{outline-color:#fff}
+.ln128 .ln-svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
+
+/* Portada y pantalla final */
+.ln128 .ln-hero{position:relative;padding:2.2em 1.4em 2em;text-align:center;color:#fff;background:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(135deg,#0b3d91 0%,#0e6f8f 60%,#0e7c86 100%)}
+.ln128 .ln-pill{display:inline-block;padding:.3em .95em;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);font-weight:700;font-size:.9em;letter-spacing:.02em;color:#fff}
+.ln128 .ln-title{margin:.5em 0 .3em;font-size:clamp(1.55rem,4.6vw,2.25rem);font-weight:800;line-height:1.15;color:#fff;outline:none}
+.ln128 .ln-sub{max-width:34em;margin:.4em auto 1.1em;font-size:1.05em;color:#eaf3ff}
+.ln128 .ln-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7em 1em;max-width:560px;margin:1em auto 1.2em;padding:1em 1.1em;background:#fff;border-radius:16px;color:#14253a;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.ln128 .ln-stripitem{opacity:0;animation:ln-in .6s ease forwards}
+.ln128 .ln-feat{display:flex;flex-wrap:wrap;gap:.5em;justify-content:center;margin:0 0 1.5em;padding:0;list-style:none}
+.ln128 .ln-feat li{margin:0;padding:.35em .95em;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);font-size:.95em;color:#fff}
+.ln128 .ln-feat li::before{content:none}
+
+/* Botones */
+.ln128 .ln-btn{font:inherit;font-weight:800;border:0;border-radius:999px;padding:.75em 1.7em;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s}
+.ln128 .ln-btn--go{font-size:1.15em;background:var(--ln-amber);color:#14253a;box-shadow:0 6px 0 #c98a00,0 12px 22px rgba(0,0,0,.25);animation:ln-pulse 2.2s ease-in-out infinite}
+.ln128 .ln-btn--go:hover,.ln128 .ln-btn--again:hover{transform:translateY(-2px)}
+.ln128 .ln-btn--go:active,.ln128 .ln-btn--again:active{transform:translateY(3px);box-shadow:0 2px 0 #c98a00}
+.ln128 .ln-btn--again{background:var(--ln-amber);color:#14253a;box-shadow:0 5px 0 #c98a00}
+.ln128 .ln-btn--next{background:var(--ln-blue);color:#fff;box-shadow:0 5px 0 #072a66;animation:ln-slide .35s ease}
+.ln128 .ln-btn--next:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.ln128 .ln-btn--ghost{padding:.4em 1.1em;font-size:.92em;background:#fff;color:var(--ln-blue);border:2px solid var(--ln-blue)}
+.ln128 .ln-btn--ghost:hover{background:#eaf1ff}
+
+/* Barra de juego */
+.ln128 .ln-hud{padding:1em 1.2em 1.1em;color:#fff;background:linear-gradient(135deg,#0b3d91,#0e7c86)}
+.ln128 .ln-hud-row{display:flex;flex-wrap:wrap;gap:.5em;justify-content:space-between;align-items:center}
+.ln128 .ln-chip{display:inline-flex;align-items:center;gap:.35em;padding:.3em .85em;border-radius:999px;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.3);font-weight:700;font-size:.92em;color:#fff}
+.ln128 .ln-chip.is-hot{background:var(--ln-amber);border-color:var(--ln-amber);color:#14253a;animation:ln-pop .45s ease}
+.ln128 .ln-bar{height:11px;margin-top:.85em;border-radius:999px;background:rgba(255,255,255,.28);overflow:hidden}
+.ln128 .ln-bar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ffd166,#ffb703);transition:width .5s ease}
+
+/* Tarjeta de pregunta */
+.ln128 .ln-card{padding:1.3em 1.2em 1.5em;background:linear-gradient(#e9f0fc 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,#e9f0fc 1px,transparent 1px) 0 0/22px 22px,#fbfdff}
+.ln128 .ln-qnum{display:inline-block;margin-bottom:.5em;padding:.15em .75em;border-radius:8px;background:var(--ln-blue);color:#fff;font-weight:700;font-size:.85em}
+.ln128 .ln-q{margin:.2em 0 .8em;font-size:1.2em;font-weight:700;line-height:1.35;color:var(--ln-ink);outline:none}
+.ln128 .ln-sample{max-width:430px;margin:.2em auto 1em;padding:.9em 1.2em 1.1em;text-align:center;color:#14253a;background:#fff;border:2px dashed var(--ln-line);border-radius:14px}
+.ln128 .ln-samplecap{margin:0 0 .4em;font-size:.78em;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#4a5d78}
+.ln128 .ln-hint{margin:.7em 0 .2em;padding:.7em 1em;border-left:5px solid var(--ln-amber);border-radius:0 10px 10px 0;background:#fff8e1;color:#4a3b00;animation:ln-slide .3s ease}
+
+/* Opciones */
+.ln128 .ln-opts{display:grid;gap:.75em;margin:1em 0 .6em}
+.ln128 .ln-opts--vis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ln128 .ln-opt{position:relative;display:flex;align-items:center;gap:.8em;width:100%;margin:0;padding:.8em 3em .8em .8em;text-align:left;font:inherit;line-height:1.4;color:var(--ln-ink);background:#fff;border:2px solid var(--ln-line);border-radius:14px;box-shadow:0 3px 0 var(--ln-line);cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s,background .15s}
+.ln128 .ln-opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--ln-blue);box-shadow:0 5px 0 #9db7e4}
+.ln128 .ln-let{flex:none;display:grid;place-items:center;width:2.2em;height:2.2em;border-radius:50%;background:#e3ecfb;color:var(--ln-blue);font-weight:800}
+.ln128 .ln-body{flex:1;min-width:0}
+.ln128 .ln-optsvg{margin:0 0 .5em}
+.ln128 .ln-optsvg .ln-svg{max-width:260px}
+.ln128 .ln-opt--vis .ln-txt{display:block;text-align:center;font-weight:600}
+.ln128 .ln-mark{position:absolute;right:.9em;top:50%;transform:translateY(-50%);font-size:1.35em;font-weight:800}
+.ln128 .ln-opt:disabled{cursor:default;color:var(--ln-ink)}
+.ln128 .ln-opt:disabled:not(.is-ok):not(.is-bad){opacity:.6}
+.ln128 .ln-opt.is-ok{background:#e4f6ec;border-color:var(--ln-ok);box-shadow:0 3px 0 var(--ln-ok);animation:ln-pop .45s ease}
+.ln128 .ln-opt.is-ok .ln-let{background:var(--ln-ok);color:#fff}
+.ln128 .ln-opt.is-ok .ln-mark{color:var(--ln-ok)}
+.ln128 .ln-opt.is-ok .ln-mark::before{content:"\2714"}
+.ln128 .ln-opt.is-bad{background:#fdeceb;border-color:var(--ln-bad);box-shadow:0 3px 0 var(--ln-bad);animation:ln-shake .45s ease}
+.ln128 .ln-opt.is-bad .ln-let{background:var(--ln-bad);color:#fff}
+.ln128 .ln-opt.is-bad .ln-mark{color:var(--ln-bad)}
+.ln128 .ln-opt.is-bad .ln-mark::before{content:"\2716"}
+
+/* Retroalimentación */
+.ln128 .ln-fb{outline:none}
+.ln128 .ln-fb.is-ok,.ln128 .ln-fb.is-bad{margin-top:.9em;padding:1em 1.1em;border-radius:14px;animation:ln-slide .35s ease}
+.ln128 .ln-fb.is-ok{background:#e4f6ec;border:2px solid var(--ln-ok);color:#0b3d27}
+.ln128 .ln-fb.is-bad{background:#fff3f1;border:2px solid var(--ln-bad);color:#561511}
+.ln128 .ln-fb-head{margin:0 0 .3em;font-size:1.1em;font-weight:800}
+.ln128 .ln-fb.is-ok .ln-fb-head{color:#0a5c37}
+.ln128 .ln-fb.is-bad .ln-fb-head{color:#8f1d17}
+.ln128 .ln-fb-txt{margin:.2em 0}
+.ln128 .ln-fb-right{margin:.6em 0 0;padding-top:.6em;border-top:1px dashed currentColor}
+.ln128 .ln-nextrow{margin-top:1em;text-align:right}
+
+/* Resultado */
+.ln128 .ln-medal{font-size:4rem;line-height:1.1;animation:ln-pop .8s ease}
+.ln128 .ln-stars{margin:.2em 0;font-size:2.1rem;letter-spacing:.15em;line-height:1.2}
+.ln128 .ln-star{color:#ffd166}
+.ln128 .ln-star.off{color:rgba(255,255,255,.4)}
+.ln128 .ln-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7em;max-width:520px;margin:1.2em auto}
+.ln128 .ln-stat{padding:.7em .3em;border-radius:14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:.88em}
+.ln128 .ln-stat b{display:block;font-size:1.9em;line-height:1.1}
+.ln128 .ln-dots{display:flex;flex-wrap:wrap;gap:.45em;justify-content:center;margin:.9em 0 1.3em}
+.ln128 .ln-dot{display:grid;place-items:center;width:2.2em;height:2.2em;border:2px solid #fff;border-radius:50%;font-size:.9em;font-weight:800;color:#fff}
+.ln128 .ln-dot.is-ok{background:var(--ln-ok)}
+.ln128 .ln-dot.is-bad{background:var(--ln-bad)}
+.ln128 .ln-cheat{padding:1em 1.2em 1.3em;background:#f6f9ff;border-top:1px solid #d6e2f5}
+.ln128 .ln-cheat summary{padding:.4em 0;font-size:1.05em;font-weight:800;color:var(--ln-blue);cursor:pointer}
+.ln128 .ln-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8em;margin-top:.8em}
+.ln128 .ln-ref{padding:.85em;background:#fff;border:1px solid var(--ln-line);border-radius:12px}
+.ln128 .ln-ref-code{display:inline-block;margin-top:.4em;padding:.1em .65em;border-radius:6px;background:var(--ln-blue);color:#fff;font-size:.8em;font-weight:700}
+.ln128 .ln-ref-name{margin:.3em 0 .1em;font-weight:700}
+.ln128 .ln-ref-use{margin:0;font-size:.92em;color:#33465f}
+
+/* Crédito */
+.ln128 .ln-credit{margin:0;padding:.7em 1.2em;text-align:center;font-size:.85em;color:#33465f;background:#f6f9ff;border-top:1px solid #d6e2f5}
+.ln128 .ln-credit a{color:var(--ln-blue);font-weight:700;text-decoration:underline}
+.ln128 .ln-credit a:hover{color:#072a66}
+
+/* Confeti */
+.ln128 .ln-confetti{position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;overflow:hidden;pointer-events:none}
+.ln128 .ln-cf{position:absolute;top:-16px;width:9px;height:15px;border-radius:2px;opacity:0;animation:ln-fall linear forwards}
+
+@keyframes ln-pop{0%{transform:scale(.96)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes ln-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes ln-slide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ln-in{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes ln-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes ln-fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:1;transform:translateY(820px) rotate(620deg)}}
+
+@media (max-width:520px){
+  .ln128 .ln-opt{padding-right:2.6em}
+  .ln128 .ln-opts--vis{grid-template-columns:1fr}
+  .ln128 .ln-nextrow{text-align:center}
+  .ln128 .ln-stats{gap:.4em}
+}
+@media (prefers-reduced-motion:reduce){
+  .ln128 *,.ln128 *::before,.ln128 *::after{animation:none!important;transition:none!important}
+  .ln128 .ln-stripitem{opacity:1}
+  .ln128 .ln-confetti{display:none}
+}
+</style>
+
+<div class="ln128">
+  <div class="ln-confetti" aria-hidden="true"></div>
+
+  <!-- PORTADA -->
+  <section class="ln-screen ln-intro" aria-label="Presentación de la actividad">
+    <div class="ln-hero">
+      <span class="ln-pill">📐 UNE-EN ISO 128-2:2022</span>
+      <div class="ln-title" role="heading" aria-level="3">Domina las líneas normalizadas</div>
+      <p class="ln-sub">¿Sabes distinguir un contorno visto de uno oculto, o un eje de un plano de corte? Demuéstralo en 10 retos de dibujo técnico.</p>
+      <div class="ln-strip" aria-hidden="true"></div>
+      <ul class="ln-feat">
+        <li>🎯 10 retos</li>
+        <li>🔠 4 opciones, solo 1 correcta</li>
+        <li>💬 Feedback en cada respuesta</li>
+        <li>🔥 Puntos y rachas</li>
+      </ul>
+      <button type="button" class="ln-btn ln-btn--go" data-go>¡Empezar el reto! ✏️</button>
+    </div>
+  </section>
+
+  <!-- JUEGO -->
+  <section class="ln-screen ln-play" aria-label="Preguntas" hidden>
+    <div class="ln-hud">
+      <div class="ln-hud-row">
+        <span class="ln-chip" data-count>Reto 1 de 10</span>
+        <span class="ln-chip">⭐ <b data-pts>0</b> puntos</span>
+        <span class="ln-chip" data-streak>🔥 Racha 0</span>
+      </div>
+      <div class="ln-bar" role="progressbar" aria-label="Progreso de la actividad" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span data-bar></span></div>
+    </div>
+    <div class="ln-card">
+      <span class="ln-qnum" data-qnum>Pregunta 1</span>
+      <div class="ln-q" data-q role="heading" aria-level="4" tabindex="-1"></div>
+      <div class="ln-sample" data-sample hidden></div>
+      <button type="button" class="ln-btn ln-btn--ghost" data-hintbtn aria-expanded="false">💡 Pista</button>
+      <p class="ln-hint" data-hint hidden></p>
+      <div class="ln-opts" data-opts role="group" aria-label="Opciones de respuesta"></div>
+      <div class="ln-fb" data-fb aria-live="polite" tabindex="-1"></div>
+      <div class="ln-nextrow"><button type="button" class="ln-btn ln-btn--next" data-next hidden>Siguiente reto ➜</button></div>
+    </div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="ln-screen ln-end" aria-label="Resultado final" hidden>
+    <div class="ln-hero">
+      <div class="ln-medal" data-medal aria-hidden="true">🏆</div>
+      <div class="ln-title" role="heading" aria-level="3" data-rank tabindex="-1">Resultado</div>
+      <div class="ln-stars" data-stars role="img" aria-label="Estrellas"></div>
+      <p class="ln-sub" data-msg></p>
+      <div class="ln-stats">
+        <div class="ln-stat"><b data-fpts>0</b>puntos</div>
+        <div class="ln-stat"><b data-fok>0</b>aciertos</div>
+        <div class="ln-stat"><b data-fbest>0</b>mejor racha</div>
+      </div>
+      <div class="ln-dots" data-dots role="list" aria-label="Resultado de cada pregunta"></div>
+      <button type="button" class="ln-btn ln-btn--again" data-again>🔁 Jugar de nuevo</button>
+    </div>
+    <details class="ln-cheat">
+      <summary>📋 Tu chuleta: las líneas normalizadas de un vistazo</summary>
+      <div class="ln-grid" data-grid></div>
+    </details>
+  </section>
+
+  <p class="ln-credit">Actividad de elaboración propia generada con <a href="https://claude.ai/login" target="_blank" rel="noopener noreferrer">Claude</a></p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var LETTERS = 'ABCD';
+  var THIN = 1.7;
+  var THICK = 4.4;
+
+  /* ---------- utilidades ---------- */
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (txt !== undefined) { e.textContent = txt; }
+    return e;
+  }
+  function svgEl(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+  function atLeast(a, b) { return Math.max(a, b) === a; }
+  function shuffle(list) {
+    var r = list.slice(0), i, j, t;
+    for (i = r.length - 1; i !== 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      t = r[i]; r[i] = r[j]; r[j] = t;
+    }
+    return r;
+  }
+
+  /* ---------- datos de las líneas (tabla UNE-EN ISO 128-2:2022) ---------- */
+  var NAME = {
+    '01.2': 'Línea continua gruesa',
+    '01.1': 'Línea continua fina',
+    '01.1.19': 'Línea continua fina a mano alzada',
+    '01.1.20': 'Línea continua fina en zigzag',
+    '02.1': 'Línea de trazos fina',
+    '02.2': 'Línea de trazos gruesa',
+    '04.1': 'Línea fina de trazo largo y punto',
+    '04.2': 'Línea gruesa de trazo largo y punto',
+    '05.1': 'Línea fina de trazo largo y dos puntos',
+    '07.2': 'Línea de puntos gruesa'
+  };
+  var CODE = {
+    '01.2': '01.2', '01.1': '01.1',
+    '01.1.19': '01.1, aplicación .19', '01.1.20': '01.1, aplicación .20',
+    '02.1': '02.1', '02.2': '02.2', '04.1': '04.1', '04.2': '04.2', '05.1': '05.1', '07.2': '07.2'
+  };
+  var LOOK = {
+    '01.2': 'Línea continua de trazo grueso',
+    '01.1': 'Línea continua de trazo fino',
+    '01.1.19': 'Línea fina continua y ondulada, dibujada a mano alzada',
+    '01.1.20': 'Línea fina continua en zigzag',
+    '02.1': 'Línea fina formada por trazos cortos iguales separados por huecos',
+    '02.2': 'Línea gruesa formada por trazos cortos iguales separados por huecos',
+    '04.1': 'Línea fina que alterna un trazo largo y un punto',
+    '04.2': 'Línea que alterna trazo largo y punto, con los extremos más gruesos',
+    '05.1': 'Línea fina que alterna un trazo largo y dos puntos',
+    '07.2': 'Línea formada solo por puntos gruesos'
+  };
+  var USE = {
+    '01.2': 'Contornos y aristas vistos: las partes visibles de la pieza.',
+    '01.1': 'Líneas de cota y auxiliares de cota, líneas de referencia, rayados de cortes y secciones, contornos de secciones abatidas, líneas ficticias de intersección y ejes cortos.',
+    '01.1.19': 'Límites de vistas, cortes y secciones parciales o interrumpidos, cuando el límite no coincide con un eje o una línea de simetría.',
+    '01.1.20': 'Los mismos límites, cuando se utiliza una representación mecánica del límite.',
+    '02.1': 'Contornos y aristas ocultos: lo que no se ve directamente en la vista.',
+    '02.2': 'Contornos ocultos con una línea de mayor anchura, cuando el dibujo lo requiere.',
+    '04.1': 'Ejes y líneas de centro: ejes de revolución, simetrías y otras referencias geométricas.',
+    '04.2': 'Planos de corte. Los extremos y los cambios de dirección se destacan con mayor grosor.',
+    '05.1': 'Contornos de piezas contiguas, posiciones alternativas o extremas de piezas móviles, centros de gravedad, contornos iniciales antes del conformado y partes situadas delante del plano de corte.',
+    '07.2': 'Zonas en las que no está permitido aplicar un tratamiento térmico.'
+  };
+  var ORDER = ['01.2', '01.1', '01.1.19', '01.1.20', '02.1', '02.2', '04.1', '04.2', '05.1', '07.2'];
+
+  /* ---------- dibujo de las muestras ---------- */
+  function lineSvg(type, decorative) {
+    var s = svgEl('svg', { viewBox: '0 0 240 30', 'class': 'ln-svg', focusable: 'false' });
+    if (decorative) {
+      s.setAttribute('aria-hidden', 'true');
+    } else {
+      s.setAttribute('role', 'img');
+      s.setAttribute('aria-label', LOOK[type]);
+    }
+    function seg(x1, x2, w, dash, cap) {
+      var a = { x1: x1, y1: 15, x2: x2, y2: 15, stroke: 'currentColor', 'stroke-width': w };
+      if (dash) { a['stroke-dasharray'] = dash; }
+      if (cap) { a['stroke-linecap'] = cap; }
+      return svgEl('line', a);
+    }
+    function path(d) {
+      return svgEl('path', { d: d, fill: 'none', stroke: 'currentColor', 'stroke-width': THIN, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+    }
+    if (type === '01.2') {
+      s.appendChild(seg(8, 232, THICK));
+    } else if (type === '01.1') {
+      s.appendChild(seg(8, 232, THIN));
+    } else if (type === '01.1.19') {
+      s.appendChild(path('M8 15 Q16 4 24 15 T40 15 T56 15 T72 15 T88 15 T104 15 T120 15 T136 15 T152 15 T168 15 T184 15 T200 15 T216 15 T232 15'));
+    } else if (type === '01.1.20') {
+      s.appendChild(path('M8 15 L20 7 L32 23 L44 7 L56 23 L68 7 L80 23 L92 7 L104 23 L116 7 L128 23 L140 7 L152 23 L164 7 L176 23 L188 7 L200 23 L212 7 L224 23 L232 15'));
+    } else if (type === '02.1') {
+      s.appendChild(seg(8, 232, THIN, '12 6'));
+    } else if (type === '02.2') {
+      s.appendChild(seg(8, 232, THICK, '12 6'));
+    } else if (type === '04.1') {
+      s.appendChild(seg(8, 232, THIN, '28 6 3 6'));
+    } else if (type === '04.2') {
+      s.appendChild(seg(8, 30, THICK));
+      s.appendChild(seg(36, 202, THIN, '28 6 3 6'));
+      s.appendChild(seg(208, 232, THICK));
+    } else if (type === '05.1') {
+      s.appendChild(seg(8, 232, THIN, '28 6 3 5 3 6'));
+    } else if (type === '07.2') {
+      s.appendChild(seg(10, 230, THICK, '0.1 9', 'round'));
+    }
+    return s;
+  }
+
+  /* ---------- banco de preguntas ---------- */
+  function T(t, ok, f) { return { t: t, ok: ok, f: f }; }
+  function V(type, ok, f) { return { line: type, t: NAME[type] + ' (' + CODE[type] + ')', ok: ok, f: f }; }
+
+  var QS = [
+    {
+      q: '¿Qué norma establece las convenciones básicas para las líneas en los dibujos técnicos?',
+      hint: 'Piensa en el «ladrillo» básico de cualquier plano: el trazo. ¿Qué parte de la serie ISO 128 se centra en él?',
+      o: [
+        T('UNE-EN ISO 128-2:2022', true, 'Es la norma que define los tipos de líneas, su designación (01.1, 02.1, 04.2…) y sus aplicaciones en el dibujo técnico. ¡Tu punto de partida para todo lo que viene!'),
+        T('UNE-EN ISO 128-3 (vistas, cortes y secciones)', false, 'Esa parte de la serie ISO 128 explica cómo se disponen las vistas, los cortes y las secciones. Utiliza las líneas, pero quien las define es la parte 2.'),
+        T('UNE-EN ISO 129-1 (acotación)', false, 'La serie ISO 129 trata de la acotación: cómo se escriben y colocan las medidas. Las líneas de cota se dibujan con un tipo de línea que sí define la ISO 128-2.'),
+        T('Serie ISO 3098 (escritura)', false, 'Esa serie se ocupa de la escritura (rotulación) en los documentos técnicos, no de los tipos de línea.')
+      ]
+    },
+    {
+      q: 'Observa la línea de la muestra. ¿Cuál es su aplicación principal?',
+      sample: '01.2',
+      hint: 'Es la línea que más destaca de todo el dibujo: la que «perfila» la pieza.',
+      o: [
+        T('Dibujar los contornos y aristas vistos de la pieza', true, 'Es la línea continua gruesa (01.2). Marca todo lo que se ve directamente de la pieza y es la gran protagonista del dibujo.'),
+        T('Dibujar los contornos y aristas ocultos', false, 'Lo que no se ve se representa con línea de trazos fina (02.1), no con una línea continua.'),
+        T('Dibujar las líneas de cota y las auxiliares de cota', false, 'Las cotas usan la línea continua fina (01.1), para que no se confundan con el contorno de la pieza.'),
+        T('Marcar los ejes de revolución y las simetrías', false, 'Los ejes y simetrías se trazan con la línea fina de trazo largo y punto (04.1).')
+      ]
+    },
+    {
+      q: '¿Cómo se designa la línea de la muestra y para qué sirve?',
+      sample: '02.1',
+      hint: 'Fíjate en los huecos: la línea no es continua, pero tampoco lleva puntos.',
+      o: [
+        T('Línea de trazos fina (02.1): contornos y aristas ocultos', true, '¡Bien visto! Los trazos cortos e iguales representan las partes que existen en la pieza pero no se ven directamente desde esa vista.'),
+        T('Línea continua fina (01.1): líneas de cota', false, 'La 01.1 es continua, sin huecos. La muestra tiene trazos separados, así que es otra línea. La 01.1 se reserva para cotas, rayados, líneas de referencia…'),
+        T('Línea fina de trazo largo y punto (04.1): ejes', false, 'La 04.1 alterna trazos largos con un punto. En la muestra todos los trazos son cortos e iguales y no hay puntos.'),
+        T('Línea de puntos gruesa (07.2): zonas sin tratamiento térmico', false, 'La 07.2 está formada solo por puntos gruesos. La muestra es fina y está hecha de trazos, no de puntos.')
+      ]
+    },
+    {
+      q: 'Necesitas marcar los ejes de revolución y de simetría de una pieza. ¿Qué línea utilizas?',
+      vis: true,
+      hint: 'Piensa en una rueda: una línea que atraviesa su centro y alterna trazos largos con un solo punto.',
+      o: [
+        V('02.1', false, 'Los trazos cortos e iguales (02.1) representan contornos y aristas ocultos, no ejes.'),
+        V('04.1', true, '¡Exacto! El trazo largo alternado con un punto identifica los ejes y líneas de centro: ejes de revolución, simetrías y otras referencias geométricas.'),
+        V('05.1', false, 'La 05.1 lleva dos puntos y se usa para contornos de piezas contiguas, posiciones extremas de piezas móviles, centros de gravedad… Para los ejes basta un solo punto (04.1).'),
+        V('01.1', false, 'La continua fina sirve para cotas, rayados o ejes cortos, pero los ejes de revolución y simetría se trazan con trazo largo y punto (04.1).')
+      ]
+    },
+    {
+      q: '¿Con qué línea se dibujan las líneas de cota y las líneas auxiliares de cota?',
+      hint: 'Las cotas deben leerse bien sin competir con la propia pieza. ¿Gruesa o fina? ¿Continua o discontinua?',
+      o: [
+        T('Línea continua fina (01.1)', true, '¡Correcto! La 01.1 se emplea en las líneas de cota y auxiliares de cota, y también en rayados de cortes y secciones, líneas de referencia, contornos de secciones abatidas y ejes cortos.'),
+        T('Línea continua gruesa (01.2)', false, 'La 01.2 se reserva para los contornos y aristas vistos. Si acotases con ella, las cotas se confundirían con la propia pieza.'),
+        T('Línea de trazos fina (02.1)', false, 'La 02.1 representa contornos y aristas ocultos. Las líneas de cota son continuas para leerse con claridad.'),
+        T('Línea fina de trazo largo y dos puntos (05.1)', false, 'La 05.1 se usa para piezas contiguas, posiciones extremas de piezas móviles, centros de gravedad… no para acotar.')
+      ]
+    },
+    {
+      q: 'La línea de la muestra tiene los extremos más gruesos. ¿Qué indica en un dibujo?',
+      sample: '04.2',
+      hint: 'Se dibuja por donde «cortarías» la pieza con un plano imaginario.',
+      o: [
+        T('El plano por donde se realiza un corte o sección', true, 'Es la línea gruesa de trazo largo y punto (04.2). Indica por dónde se corta la pieza para obtener la sección, y sus extremos y cambios de dirección se destacan con mayor grosor.'),
+        T('Un contorno oculto', false, 'Los contornos ocultos se dibujan con trazos cortos e iguales (02.1 o 02.2), sin puntos.'),
+        T('Una zona donde no se permite el tratamiento térmico', false, 'Esas zonas se señalan con la línea de puntos gruesa (07.2), sin trazos largos.'),
+        T('El centro de gravedad de la pieza', false, 'El centro de gravedad se dibuja con la línea fina de trazo largo y dos puntos (05.1).')
+      ]
+    },
+    {
+      q: 'Dibujas un mecanismo y quieres mostrar la posición extrema de una pieza móvil. ¿Qué línea eliges?',
+      hint: 'Cuenta los puntos: esta línea alterna un trazo largo con dos puntos.',
+      o: [
+        T('Línea fina de trazo largo y dos puntos (05.1)', true, '¡Genial! La 05.1 muestra posiciones alternativas o extremas de piezas móviles, y también contornos de piezas contiguas, centros de gravedad, contornos iniciales antes del conformado y partes situadas delante del plano de corte.'),
+        T('Línea fina de trazo largo y punto (04.1)', false, 'La 04.1 solo lleva un punto y se usa para ejes y líneas de centro.'),
+        T('Línea de trazos gruesa (02.2)', false, 'La 02.2 se utiliza para contornos ocultos con mayor anchura, cuando el dibujo lo requiere. No lleva puntos.'),
+        T('Línea continua fina a mano alzada (01.1, aplicación .19)', false, 'Esa línea marca límites de vistas, cortes y secciones parciales o interrumpidos, no posiciones de piezas móviles.')
+      ]
+    },
+    {
+      q: 'En un plano hay que señalar una zona de la pieza donde NO se permite aplicar un tratamiento térmico. ¿Qué línea se utiliza?',
+      vis: true,
+      hint: 'Es la única línea normalizada formada solo por puntos, y además gruesos.',
+      o: [
+        V('01.2', false, 'La continua gruesa dibuja los contornos y aristas vistos de la pieza.'),
+        V('02.2', false, 'Los trazos gruesos se emplean para contornos ocultos cuando el dibujo lo requiere. Aquí buscamos una línea de puntos.'),
+        V('07.2', true, '¡Eso es! Los puntos gruesos (07.2) señalan las zonas donde no está permitido aplicar un tratamiento térmico. Es inconfundible: la única línea hecha solo de puntos.'),
+        V('04.1', false, 'La 04.1 alterna trazo largo y punto, y se usa para ejes y simetrías.')
+      ]
+    },
+    {
+      q: '¿Qué representa la línea continua fina en zigzag de la muestra?',
+      sample: '01.1.20',
+      hint: 'Su forma recuerda a una «Z» repetida. Es una manera mecánica de dibujar un límite.',
+      o: [
+        T('El límite de una vista, corte o sección parcial o interrumpido, con representación mecánica', true, 'Es la línea continua fina en zigzag (01.1, aplicación .20). Marca el límite de vistas, cortes y secciones parciales o interrumpidos cuando se utiliza una representación mecánica del límite.'),
+        T('El plano de corte', false, 'El plano de corte se traza con la línea gruesa de trazo largo y punto (04.2).'),
+        T('Un contorno oculto', false, 'Lo oculto se dibuja con trazos separados por huecos (02.1 o 02.2). El zigzag es una línea continua, sin huecos.'),
+        T('La posición alternativa de una pieza móvil', false, 'Las posiciones alternativas o extremas de piezas móviles usan la línea fina de trazo largo y dos puntos (05.1).')
+      ]
+    },
+    {
+      q: '¿Cuándo se emplea la línea continua fina a mano alzada (01.1, aplicación .19)?',
+      hint: 'Compárala con el zigzag: ambas marcan límites, pero una se traza «a pulso».',
+      o: [
+        T('Para marcar el límite de una vista o corte parcial cuando el límite no coincide con un eje ni con una línea de simetría', true, '¡Exacto! Es la alternativa a mano alzada al zigzag (aplicación .20) para los límites de vistas, cortes y secciones parciales o interrumpidos que no coinciden con un eje o línea de simetría. ¡Has completado el reto!'),
+        T('Para dibujar los ejes de revolución de la pieza', false, 'Los ejes de revolución se trazan con la línea fina de trazo largo y punto (04.1).'),
+        T('Para dibujar los contornos y aristas vistos con más naturalidad', false, 'Los contornos y aristas vistos van siempre con la continua gruesa (01.2). La mano alzada solo se usa para límites de vistas y cortes parciales.'),
+        T('Para trazar las líneas de cota a mano', false, 'Las líneas de cota y auxiliares de cota son continuas finas regulares (01.1), no a mano alzada.')
+      ]
+    }
+  ];
+
+  var TIERS = [
+    { min: 10, icon: '🏆', name: 'Maestría total', stars: 3, msg: '¡Pleno! Reconoces cada línea como un auténtico proyectista. Tus planos saldrían impecables.' },
+    { min: 8, icon: '🥇', name: 'Nivel experto', stars: 3, msg: '¡Gran trabajo! Dominas casi todas las líneas. Repasa la chuleta y vuelve a por el pleno.' },
+    { min: 6, icon: '🥈', name: 'Nivel avanzado', stars: 2, msg: '¡Vas por muy buen camino! Ya distingues las líneas más importantes. Un repaso a la chuleta y lo bordas.' },
+    { min: 4, icon: '🥉', name: 'Nivel aprendiz', stars: 2, msg: '¡Buen comienzo! Ya tienes la base. Echa un vistazo a la chuleta y vuelve a intentarlo: cada intento suma.' },
+    { min: 0, icon: '✏️', name: 'Calentando el lápiz', stars: 1, msg: 'Todo gran proyectista empezó con un primer trazo. Lee la chuleta de abajo y prueba otra vez: ¡seguro que mejoras!' }
+  ];
+  var PRAISE = ['¡Correcto!', '¡Muy bien!', '¡Exacto!', '¡Bien visto!', '¡Genial!', '¡Eso es!'];
+  var OOPS = ['Casi…', 'Esta vez no, ¡pero aprendes!', 'Ups, no era esa', 'No es esa: ¡mira por qué!'];
+
+  /* ---------- lógica de cada actividad ---------- */
+  function init(root) {
+    if (root.getAttribute('data-ready')) { return; }
+    root.setAttribute('data-ready', '1');
+
+    function $(s) { return root.querySelector(s); }
+    var N = QS.length;
+    var st = { i: 0, pts: 0, ok: 0, streak: 0, best: 0, res: [], locked: false };
+    var btns = [];
+
+    /* eXe (TinyMCE) elimina al pegar los elementos vacíos: si falta alguno, se vuelve a crear */
+    function ensure(sel, parentSel, tag, cls, attr, beforeSel) {
+      var e = $(sel);
+      if (e) { return e; }
+      var par = parentSel ? $(parentSel) : root;
+      if (!par) { return null; }
+      e = document.createElement(tag);
+      if (cls) { e.className = cls; }
+      if (attr) { e.setAttribute(attr, ''); }
+      var ref = beforeSel ? $(beforeSel) : null;
+      if (ref && ref.parentNode === par) { par.insertBefore(e, ref); } else { par.appendChild(e); }
+      return e;
+    }
+    var fbNew = !$('[data-fb]');
+    ensure('.ln-confetti', null, 'div', 'ln-confetti', '', '.ln-intro');
+    ensure('.ln-strip', '.ln-intro .ln-hero', 'div', 'ln-strip', '', '.ln-feat');
+    ensure('[data-bar]', '.ln-bar', 'span', '', 'data-bar', null);
+    ensure('[data-fb]', '.ln-card', 'div', 'ln-fb', 'data-fb', '.ln-nextrow');
+    ensure('[data-opts]', '.ln-card', 'div', 'ln-opts', 'data-opts', '[data-fb]');
+    ensure('[data-hint]', '.ln-card', 'p', 'ln-hint', 'data-hint', '[data-opts]');
+    ensure('[data-sample]', '.ln-card', 'div', 'ln-sample', 'data-sample', '[data-hintbtn]');
+    ensure('[data-q]', '.ln-card', 'div', 'ln-q', 'data-q', '[data-sample]');
+    ensure('[data-grid]', '.ln-cheat', 'div', 'ln-grid', 'data-grid', null);
+    ensure('[data-dots]', '.ln-end .ln-hero', 'div', 'ln-dots', 'data-dots', '[data-again]');
+    ensure('[data-msg]', '.ln-end .ln-hero', 'p', 'ln-sub', 'data-msg', '.ln-stats');
+    ensure('[data-stars]', '.ln-end .ln-hero', 'div', 'ln-stars', 'data-stars', '[data-msg]');
+    var fbEl = $('[data-fb]');
+    if (fbEl) { fbEl.setAttribute('aria-live', 'polite'); fbEl.setAttribute('tabindex', '-1'); }
+    var qEl = $('[data-q]');
+    if (qEl) { qEl.setAttribute('tabindex', '-1'); }
+
+    function show(name) {
+      ['intro', 'play', 'end'].forEach(function (n) {
+        $('.ln-' + n).hidden = (n !== name);
+      });
+    }
+
+    function hud() {
+      $('[data-pts]').textContent = st.pts;
+      var sk = $('[data-streak]');
+      sk.textContent = '🔥 Racha ' + st.streak;
+      sk.classList.remove('is-hot');
+      if (atLeast(st.streak, 2)) {
+        void sk.offsetWidth;
+        sk.classList.add('is-hot');
+      }
+      var bar = $('.ln-bar');
+      var done = st.locked ? st.i + 1 : st.i;
+      $('[data-bar]').style.width = Math.round(done * 100 / N) + '%';
+      bar.setAttribute('aria-valuenow', done);
+    }
+
+    function buildOpt(o, k) {
+      var b = el('button', 'ln-opt' + (o.line ? ' ln-opt--vis' : ''));
+      b.type = 'button';
+      b.appendChild(el('span', 'ln-let', LETTERS.charAt(k)));
+      var body = el('span', 'ln-body');
+      if (o.line) {
+        var w = el('span', 'ln-optsvg');
+        w.appendChild(lineSvg(o.line, true));
+        body.appendChild(w);
+      }
+      body.appendChild(el('span', 'ln-txt', o.t));
+      b.appendChild(body);
+      var mk = el('span', 'ln-mark');
+      mk.setAttribute('aria-hidden', 'true');
+      b.appendChild(mk);
+      b.addEventListener('click', function () { answer(o, b); });
+      btns.push({ o: o, b: b });
+      return b;
+    }
+
+    function renderQ() {
+      var q = QS[st.i];
+      st.locked = false;
+      btns = [];
+      var box = $('[data-opts]');
+      box.textContent = '';
+      box.className = 'ln-opts' + (q.vis ? ' ln-opts--vis' : '');
+      var fb = $('[data-fb]');
+      fb.textContent = '';
+      fb.className = 'ln-fb';
+      try {
+        var opts = shuffle(q.o);
+        for (var k = 0; k !== opts.length; k++) { box.appendChild(buildOpt(opts[k], k)); }
+      } catch (err) {
+        fb.textContent = 'Error al crear las opciones: ' + err.message;
+      }
+      try {
+        $('[data-count]').textContent = 'Reto ' + (st.i + 1) + ' de ' + N;
+        $('[data-qnum]').textContent = 'Pregunta ' + (st.i + 1);
+        var qe = $('[data-q]');
+        qe.textContent = q.q;
+        var sm = $('[data-sample]');
+        sm.textContent = '';
+        if (q.sample) {
+          sm.appendChild(el('p', 'ln-samplecap', '🔎 Muestra de línea'));
+          sm.appendChild(lineSvg(q.sample, false));
+          sm.hidden = false;
+        } else {
+          sm.hidden = true;
+        }
+        var hp = $('[data-hint]');
+        hp.textContent = '💡 ' + q.hint;
+        hp.hidden = true;
+        $('[data-hintbtn]').setAttribute('aria-expanded', 'false');
+        $('[data-next]').hidden = true;
+        hud();
+        qe.focus({ preventScroll: true });
+      } catch (err2) {
+        fb.textContent = 'Error en la pregunta: ' + err2.message;
+      }
+    }
+
+    function answer(o, chosenBtn) {
+      if (st.locked) { return; }
+      st.locked = true;
+      var gain = 0;
+      var head;
+      if (o.ok) {
+        st.streak += 1;
+        st.ok += 1;
+        st.best = Math.max(st.best, st.streak);
+        gain = 100 + 20 * Math.min(st.streak - 1, 5);
+        st.pts += gain;
+        head = '✔ ' + PRAISE[st.i % PRAISE.length] + ' +' + gain + ' puntos';
+        if (atLeast(st.streak, 2)) { head += ' · 🔥 Racha de ' + st.streak; }
+      } else {
+        st.streak = 0;
+        head = '✖ ' + OOPS[st.i % OOPS.length];
+      }
+      st.res.push(o.ok);
+
+      var right = '';
+      btns.forEach(function (it) {
+        it.b.disabled = true;
+        var isPick = (it.b === chosenBtn);
+        if (it.o.ok) {
+          right = it.o.t;
+          it.b.classList.add('is-ok');
+          it.b.appendChild(el('span', 'ln-sr', isPick ? ' (tu respuesta, correcta)' : ' (respuesta correcta)'));
+        } else if (isPick) {
+          it.b.classList.add('is-bad');
+          it.b.appendChild(el('span', 'ln-sr', ' (tu respuesta, incorrecta)'));
+        }
+      });
+
+      var fb = $('[data-fb]');
+      fb.textContent = '';
+      fb.className = 'ln-fb ' + (o.ok ? 'is-ok' : 'is-bad');
+      fb.appendChild(el('p', 'ln-fb-head', head));
+      fb.appendChild(el('p', 'ln-fb-txt', o.f));
+      if (!o.ok) {
+        var r = el('p', 'ln-fb-right');
+        r.appendChild(el('strong', '', 'Respuesta correcta: '));
+        r.appendChild(document.createTextNode(right));
+        fb.appendChild(r);
+      }
+
+      var nx = $('[data-next]');
+      nx.textContent = (st.i + 1 === N) ? 'Ver mi resultado 🏆' : 'Siguiente reto ➜';
+      nx.hidden = false;
+      hud();
+      fb.focus({ preventScroll: true });
+      if (fb.scrollIntoView) { fb.scrollIntoView({ block: 'nearest' }); }
+    }
+
+    function confetti() {
+      var box = $('.ln-confetti');
+      box.textContent = '';
+      var cols = ['#ffb703', '#0b3d91', '#0e7c86', '#e63946', '#8ecae6', '#06d6a0'];
+      for (var k = 0; k !== 46; k++) {
+        var s = el('span', 'ln-cf');
+        s.style.left = (Math.random() * 100) + '%';
+        s.style.background = cols[k % cols.length];
+        s.style.animationDelay = (Math.random() * 1.2) + 's';
+        s.style.animationDuration = (2.6 + Math.random() * 2) + 's';
+        box.appendChild(s);
+      }
+      setTimeout(function () { box.textContent = ''; }, 5600);
+    }
+
+    function finish() {
+      show('end');
+      var tier = TIERS.filter(function (t) { return atLeast(st.ok, t.min); })[0];
+      $('[data-medal]').textContent = tier.icon;
+      var rk = $('[data-rank]');
+      rk.textContent = tier.name;
+      var stars = $('[data-stars]');
+      stars.textContent = '';
+      stars.setAttribute('aria-label', tier.stars + ' de 3 estrellas');
+      [1, 2, 3].forEach(function (n) {
+        stars.appendChild(el('span', atLeast(tier.stars, n) ? 'ln-star' : 'ln-star off', '★'));
+      });
+      $('[data-msg]').textContent = tier.msg;
+      $('[data-fpts]').textContent = st.pts;
+      $('[data-fok]').textContent = st.ok + '/' + N;
+      $('[data-fbest]').textContent = st.best;
+      var dots = $('[data-dots]');
+      dots.textContent = '';
+      st.res.forEach(function (ok, k) {
+        var d = el('span', 'ln-dot ' + (ok ? 'is-ok' : 'is-bad'), String(k + 1));
+        d.setAttribute('role', 'listitem');
+        d.setAttribute('aria-label', 'Pregunta ' + (k + 1) + ': ' + (ok ? 'acertada' : 'fallada'));
+        dots.appendChild(d);
+      });
+      if (atLeast(st.ok, 6)) { confetti(); }
+      rk.focus({ preventScroll: true });
+    }
+
+    function start() {
+      st = { i: 0, pts: 0, ok: 0, streak: 0, best: 0, res: [], locked: false };
+      $('.ln-confetti').textContent = '';
+      show('play');
+      renderQ();
+    }
+
+    /* portada decorativa */
+    var strip = $('.ln-strip');
+    ['01.2', '02.1', '04.1', '05.1', '07.2', '01.1.20'].forEach(function (t, k) {
+      var it = el('div', 'ln-stripitem');
+      it.style.animationDelay = (k * 0.12) + 's';
+      it.appendChild(lineSvg(t, true));
+      strip.appendChild(it);
+    });
+
+    /* chuleta */
+    var grid = $('[data-grid]');
+    ORDER.forEach(function (t) {
+      var c = el('div', 'ln-ref');
+      c.appendChild(lineSvg(t, true));
+      c.appendChild(el('span', 'ln-ref-code', CODE[t]));
+      c.appendChild(el('p', 'ln-ref-name', NAME[t]));
+      c.appendChild(el('p', 'ln-ref-use', USE[t]));
+      grid.appendChild(c);
+    });
+
+    show('intro');
+    $('[data-go]').addEventListener('click', start);
+    $('[data-again]').addEventListener('click', start);
+    $('[data-next]').addEventListener('click', function () {
+      if (st.i + 1 === N) { finish(); } else { st.i += 1; renderQ(); }
+    });
+    $('[data-hintbtn]').addEventListener('click', function () {
+      var hp = $('[data-hint]');
+      hp.hidden = !hp.hidden;
+      this.setAttribute('aria-expanded', hp.hidden ? 'false' : 'true');
+    });
+  }
+
+  function boot() {
+    var roots = document.querySelectorAll('.ln128');
+    for (var k = 0; k !== roots.length; k++) {
+      try { init(roots[k]); } catch (err) {
+        if (window.console) { console.error('ln128:', err); }
+      }
+    }
+  }
+  /* eXeLearning puede ejecutar el script antes de que exista el HTML o volver a
+     insertar el contenido más tarde: se reintenta en varios momentos (init es idempotente) */
+  boot();
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', boot);
+    window.addEventListener('load', boot);
+  }
+  setTimeout(boot, 400);
+  setTimeout(boot, 1500);
+})();
+</script>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

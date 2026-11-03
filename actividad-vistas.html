@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reto de las vistas</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<!-- ==========================================================================
+  RETO DE LAS VISTAS · Actividad interactiva para eXeLearning 2.9
+  Pegar en el iDevice DUA (en el modo de edición de código HTML / código fuente).
+  Todo el CSS y el JavaScript van incluidos: no depende de archivos externos.
+=========================================================================== -->
+<style>
+.vpx{--ink:#1d2340;--ink2:#444c78;--indigo:#2f3d9e;--ok:#0b7a43;--okbg:#e6f7ee;--line:#d9cfee;position:relative;max-width:1040px;margin:1rem auto;font-family:"Nunito","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;color:var(--ink);background:#fff7f3;border-radius:24px;box-shadow:0 12px 40px rgba(58,34,110,.2);text-align:left}
+.vpx *,.vpx *::before,.vpx *::after{box-sizing:border-box}
+.vpx [hidden]{display:none!important}
+.vpx h2,.vpx h3,.vpx h4,.vpx p,.vpx ol,.vpx ul,.vpx li{margin:0;padding:0;border:0;background:none;font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;text-transform:none;letter-spacing:normal;text-shadow:none}
+.vpx ol,.vpx ul{list-style:none}
+.vpx .vpx-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ---------- Botones ---------- */
+.vpx .vpx-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em;font:inherit;font-weight:800;font-size:1rem;line-height:1.2;color:#fff;background:linear-gradient(135deg,#b8123a,#d9382a);border:2px solid transparent;border-radius:999px;padding:.65em 1.3em;margin:0;cursor:pointer;box-shadow:0 5px 0 #7d0b28;transition:transform .12s,box-shadow .12s,filter .12s;text-decoration:none}
+.vpx .vpx-btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.07)}
+.vpx .vpx-btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #7d0b28}
+.vpx .vpx-btn:disabled{opacity:.45;cursor:not-allowed}
+.vpx .vpx-btn-big{font-size:1.15rem;padding:.8em 1.8em}
+.vpx .vpx-btn-hint{color:#3d2600;background:#ffc533;box-shadow:0 5px 0 #b98200}
+.vpx .vpx-btn-ghost{color:var(--indigo);background:#fff;border-color:var(--indigo);box-shadow:0 4px 0 #b9c0ea}
+.vpx .vpx-btn:focus-visible,.vpx .vpx-card:focus-visible,.vpx .vpx-slot:focus-visible,.vpx summary:focus-visible,.vpx a:focus-visible,.vpx input:focus-visible,.vpx .vpx-result:focus-visible{outline:4px solid #ffb703;outline-offset:3px}
+
+/* ---------- Portada ---------- */
+.vpx .vpx-cover{position:relative;overflow:hidden;border-radius:24px;padding:clamp(1.1rem,4vw,2.6rem);color:#fff;background:linear-gradient(140deg,#1f2466 0%,#4b2a86 52%,#b8123a 100%)}
+.vpx .vpx-cover::before,.vpx .vpx-cover::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.vpx .vpx-cover::before{width:330px;height:330px;right:-100px;top:-120px;background:rgba(255,255,255,.12)}
+.vpx .vpx-cover::after{width:220px;height:220px;left:-70px;bottom:-80px;background:rgba(255,154,122,.28)}
+.vpx .vpx-cover-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(1rem,3vw,2rem);align-items:center}
+.vpx .vpx-kicker{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.25em .95em;font-size:.82rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.vpx .vpx-title{font-size:clamp(1.7rem,4.6vw,2.7rem);line-height:1.1;font-weight:900;margin:.7rem 0 .6rem;color:#fff}
+.vpx .vpx-lead{font-size:1.08rem;color:#f1eeff;margin:0 0 1rem}
+.vpx p.vpx-pie{position:relative;z-index:1;display:block;width:fit-content;max-width:100%;margin:1.6rem auto 0;padding:.4em 1.1em;background:rgba(18,18,58,.62);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;box-shadow:none;font-size:.76rem;font-weight:600;line-height:1.4;text-align:center}
+.vpx p.vpx-pie a{color:#ffe08a;background:none;font-weight:800;text-decoration:underline}
+.vpx .vpx-fallback{padding:1.4rem;background:#fff;border-radius:24px}
+.vpx .vpx-fallback-title{font-size:1.4rem;font-weight:900;color:var(--indigo);margin-bottom:.4rem}
+.vpx .vpx-fallback-credit{font-size:.8rem;color:var(--ink2);margin-top:.6rem}
+.vpx .vpx-fallback-credit a{color:#b8123a;font-weight:800}
+.vpx .vpx-how{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.vpx .vpx-how li{display:flex;flex-direction:column;gap:.2rem;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:.7rem .8rem;font-size:.9rem;color:#f6f3ff}
+.vpx .vpx-how strong{font-size:1rem;color:#fff}
+.vpx .vpx-how-ico{font-size:1.5rem;line-height:1}
+.vpx .vpx-guided{display:flex;gap:.6em;align-items:flex-start;margin:0 0 1.1rem;font-size:.93rem;cursor:pointer;background:rgba(255,255,255,.13);padding:.6rem .8rem;border-radius:12px;border:1px solid rgba(255,255,255,.3)}
+.vpx .vpx-guided input{width:1.2em;height:1.2em;margin:.15em 0 0;accent-color:#ffb703;flex:0 0 auto}
+.vpx .vpx-isocard{background:#fff;border-radius:24px;padding:.9rem;box-shadow:0 18px 40px rgba(0,0,0,.35);animation:vpx-float 5s ease-in-out infinite}
+.vpx .vpx-isocard svg{display:block;width:100%;height:auto;max-height:340px;filter:drop-shadow(0 6px 6px rgba(91,18,48,.22))}
+.vpx .vpx-isocard figcaption,.vpx .vpx-isocard .vpx-isocap{display:block;text-align:center;color:var(--ink2);font-size:.85rem;font-weight:700;margin-top:.2rem}
+
+/* ---------- Zona de juego ---------- */
+.vpx .vpx-game{position:relative;padding:clamp(.8rem,2.5vw,1.4rem)}
+.vpx .vpx-topbar{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.vpx .vpx-stepper{display:flex;flex-wrap:wrap;gap:.5rem}
+.vpx .vpx-pill{padding:.35em 1em;border-radius:999px;border:2px solid var(--line);background:#fff;font-weight:800;font-size:.9rem;color:var(--ink2)}
+.vpx .vpx-pill.is-current{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.vpx .vpx-pill.is-done{background:var(--okbg);border-color:#8fd3ac;color:#0a5c33}
+.vpx .vpx-total{font-weight:900;background:#fff;border:2px solid #f6c36b;border-radius:999px;padding:.3em .95em;color:#7a4a00}
+.vpx .vpx-layout{display:grid;grid-template-columns:minmax(210px,290px) 1fr;gap:1rem;align-items:start}
+.vpx .vpx-aside{position:sticky;top:.6rem;z-index:6;background:#fff;border:2px solid #f3dcd5;border-radius:20px;padding:.8rem;box-shadow:0 8px 24px rgba(58,34,110,.12)}
+.vpx .vpx-aside-title{font-weight:900;color:var(--indigo);font-size:1.05rem;margin-bottom:.2rem;text-align:center}
+.vpx .vpx-isosvg svg{display:block;width:100%;height:auto;filter:drop-shadow(0 5px 5px rgba(91,18,48,.2))}
+.vpx .vpx-aside-cap{font-size:.84rem;color:var(--ink2);font-weight:700;text-align:center}
+.vpx .vpx-main{background:#fff;border:2px solid #f3dcd5;border-radius:20px;padding:clamp(.8rem,2.5vw,1.2rem);box-shadow:0 8px 24px rgba(58,34,110,.1);min-width:0}
+.vpx .vpx-parthead{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between}
+.vpx .vpx-partno{font-size:.8rem;font-weight:900;color:#b8123a;text-transform:uppercase;letter-spacing:.06em}
+.vpx .vpx-parttitle{font-size:1.45rem;font-weight:900;color:var(--indigo);line-height:1.2}
+.vpx .vpx-tech{font-size:.85rem;color:var(--ink2);font-weight:700}
+.vpx .vpx-symbol{display:flex;align-items:center;gap:.5rem;background:#eceef7;border:2px solid #b9bfd8;border-radius:14px;padding:.3rem .7rem}
+.vpx .vpx-symbol svg{display:block;width:100px;height:50px}
+.vpx .vpx-symbol-txt{font-size:.72rem;font-weight:800;color:var(--ink2);line-height:1.15;max-width:5.5em}
+.vpx .vpx-progress{height:12px;background:#ece6f7;border-radius:999px;overflow:hidden;margin:.8rem 0 .4rem}
+.vpx .vpx-progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#19a35c,#8ad05a);border-radius:999px;transition:width .4s}
+.vpx .vpx-meta{display:flex;flex-wrap:wrap;gap:.2rem 1rem;font-size:.88rem;color:var(--ink2);font-weight:700}
+.vpx .vpx-streak{color:#b25400}
+.vpx .vpx-toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.8rem 0 .2rem}
+.vpx .vpx-toolbar .vpx-btn{font-size:.92rem;padding:.5em 1.1em}
+.vpx .vpx-legend{display:inline-flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:.8rem;color:var(--ink2);font-weight:700;margin-left:auto}
+.vpx .vpx-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.vpx .vpx-legend svg{width:34px;height:8px;display:block}
+.vpx .vpx-fb{display:flex;gap:.7rem;align-items:flex-start;border-radius:14px;padding:.7rem .9rem;border:2px solid;margin:.7rem 0;font-size:.97rem;min-height:3.8em}
+.vpx .vpx-fb[data-kind="info"]{background:#eef1ff;border-color:#b9c3f5;color:#232e75}
+.vpx .vpx-fb[data-kind="ok"]{background:var(--okbg);border-color:#8fd3ac;color:#0a5c33}
+.vpx .vpx-fb[data-kind="bad"]{background:#fdecea;border-color:#f1aaa5;color:#8a1c14}
+.vpx .vpx-fb[data-kind="hint"]{background:#fff3d1;border-color:#f0cf7a;color:#7a4a00}
+.vpx .vpx-fb-ico{font-size:1.5rem;line-height:1.2}
+.vpx .vpx-board-wrap{background:linear-gradient(160deg,#fbf5ff,#fff1ea);border:2px dashed #e0d0f5;border-radius:18px;padding:.8rem}
+.vpx .vpx-board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:580px;margin:0 auto}
+.vpx .vpx-slot{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border:3px dashed #a893d8;border-radius:14px;background:rgba(255,255,255,.8);cursor:pointer;transition:background .15s,border-color .15s,transform .15s;min-width:0}
+.vpx .vpx-slot:hover,.vpx .vpx-slot.is-over{background:#ece4ff;border-color:var(--indigo);transform:scale(1.04)}
+.vpx .vpx-slot.is-filled{border-style:solid;border-color:#19a35c;background:#fff;cursor:default;transform:none;padding:4px 4px 1.7em;animation:vpx-pop .45s}
+.vpx .vpx-slot.is-shake{animation:vpx-shake .45s}
+.vpx .vpx-slot.is-hint,.vpx .vpx-card.is-hint{animation:vpx-glow 1s ease-in-out 4}
+.vpx .vpx-slot-label{display:none;font-size:clamp(.6rem,1.9vw,.82rem);font-weight:800;color:var(--indigo);text-align:center;line-height:1.15;padding:.2em;pointer-events:none}
+.vpx .vpx-board.show-names .vpx-slot:not(.is-filled) .vpx-slot-label{display:block}
+.vpx .vpx-slot.is-filled .vpx-slot-label{display:block;position:absolute;left:0;right:0;bottom:0;background:var(--ok);color:#fff;border-radius:0 0 10px 10px;padding:.3em .2em}
+.vpx .vpx-h4{font-size:1rem;font-weight:900;color:var(--indigo);margin:1rem 0 .4rem}
+.vpx .vpx-tray{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:16px 14px;padding:.9rem .7rem .7rem;background:#f6f1ff;border:2px dashed #cdbff0;border-radius:16px;min-height:118px;max-width:580px;margin:0 auto}
+.vpx .vpx-tray:empty::after{content:"🎉 ¡Todas las vistas están en su sitio!";grid-column:1/-1;text-align:center;font-weight:800;color:var(--ok);padding:1.2rem 0}
+.vpx .vpx-card{position:relative;display:block;width:100%;aspect-ratio:1/1;padding:6px;margin:0;font:inherit;color:inherit;background:#fff;border:3px solid #cdbff0;border-radius:16px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 4px 0 #cdbff0;transition:transform .15s,box-shadow .15s,border-color .15s}
+.vpx .vpx-card:hover{transform:translateY(-3px);box-shadow:0 8px 0 #cdbff0}
+.vpx .vpx-card.is-selected{border-color:var(--indigo);box-shadow:0 0 0 5px rgba(47,61,158,.28);transform:translateY(-4px)}
+.vpx .vpx-card.is-dragging{opacity:.3}
+.vpx .vpx-card svg{display:block;width:100%;height:100%;pointer-events:none}
+.vpx .vpx-card-badge{position:absolute;top:-10px;left:-10px;width:28px;height:28px;border-radius:50%;background:var(--indigo);color:#fff;font-weight:900;font-size:.9rem;display:flex;align-items:center;justify-content:center;border:2px solid #fff;pointer-events:none}
+.vpx .vpx-card.is-locked{width:100%;height:100%;aspect-ratio:auto;padding:0;border:0;border-radius:8px;box-shadow:none;cursor:default;background:transparent;transform:none}
+.vpx .vpx-card.is-locked .vpx-card-badge{display:none}
+.vpx .vpx-result{margin-top:1.1rem;padding:1.1rem;border-radius:18px;background:linear-gradient(135deg,#fff4d6,#ffe3ec);border:2px solid #f6c36b;text-align:center}
+.vpx .vpx-res-title,.vpx .vpx-final-title{font-size:1.4rem;font-weight:900;color:#7d0b28}
+.vpx .vpx-stars{font-size:2.3rem;line-height:1.3;letter-spacing:.12em;color:#f5a300;text-shadow:0 1px 0 #b87400}
+.vpx .vpx-res-msg{font-weight:800;margin:.2rem 0}
+.vpx .vpx-res-stats{font-size:.92rem;color:var(--ink2);font-weight:700;margin-bottom:.5rem}
+.vpx .vpx-res-tip{text-align:left;background:#fff;border-radius:12px;padding:.7rem .9rem;font-size:.93rem;margin:.6rem auto;max-width:640px;border-left:6px solid var(--indigo)}
+.vpx .vpx-res-actions{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:.8rem}
+.vpx .vpx-final{text-align:center}
+.vpx .vpx-final-list{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin:.6rem 0}
+.vpx .vpx-final-list li{background:#fff;border:2px solid #f0cf7a;border-radius:12px;padding:.4rem .9rem;font-weight:800;font-size:.92rem}
+.vpx .vpx-table-wrap{overflow-x:auto;margin:.8rem 0}
+.vpx .vpx-table{width:100%;border-collapse:collapse;font-size:.88rem;background:#fff;border-radius:12px;overflow:hidden;text-align:left}
+.vpx .vpx-table caption{font-weight:900;color:var(--indigo);padding:.4rem;text-align:left}
+.vpx .vpx-table th,.vpx .vpx-table td{padding:.5rem .65rem;border:1px solid #e5dcf6;vertical-align:top;background:#fff;color:var(--ink)}
+.vpx .vpx-table thead th{background:#2f3d9e;color:#fff;border-color:#2f3d9e}
+.vpx .vpx-table tbody th{background:#f6f1ff;font-weight:800}
+.vpx .vpx-more{margin-top:.8rem;border:2px solid #eadff7;border-radius:12px;padding:.5rem .8rem;background:#fcfaff;font-size:.92rem}
+.vpx .vpx-more summary{cursor:pointer;font-weight:800;color:var(--indigo)}
+.vpx .vpx-more p,.vpx .vpx-more li{margin-top:.4rem}
+.vpx .vpx-more ul{list-style:disc;padding-left:1.2rem}
+.vpx .vpx-confetti{position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;z-index:30;border-radius:24px}
+.vpx .vpx-confetti i{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;animation:vpx-fall linear forwards}
+.vpx-ghost{position:fixed;left:0;top:0;z-index:99999;pointer-events:none;background:#fff;border:3px solid #2f3d9e;border-radius:16px;padding:6px;box-shadow:0 16px 32px rgba(20,20,60,.35);opacity:.96;will-change:transform}
+.vpx-ghost svg{display:block;width:100%;height:100%}
+
+@keyframes vpx-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes vpx-pop{0%{transform:scale(.86)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes vpx-glow{0%,100%{box-shadow:0 0 0 0 rgba(255,183,3,0)}50%{box-shadow:0 0 0 9px rgba(255,183,3,.8)}}
+@keyframes vpx-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+@keyframes vpx-fall{0%{transform:translate(0,-20px) rotate(0);opacity:1}100%{transform:translate(var(--dx,0),560px) rotate(560deg);opacity:.9}}
+
+@media (max-width:760px){
+  .vpx .vpx-topbar{gap:.4rem .6rem}
+  .vpx .vpx-stepper{gap:.35rem;flex-wrap:nowrap}
+  .vpx .vpx-pill{font-size:.74rem;padding:.3em .7em;white-space:nowrap}
+  .vpx .vpx-total{font-size:.8rem;padding:.2em .7em}
+  .vpx .vpx-cover-grid{grid-template-columns:1fr}
+  .vpx .vpx-how{grid-template-columns:1fr}
+  .vpx .vpx-isocard{max-width:320px;margin:0 auto}
+  .vpx .vpx-layout{grid-template-columns:1fr}
+  .vpx .vpx-aside{top:0;display:flex;align-items:center;gap:.7rem;padding:.4rem .7rem;border-radius:16px}
+  .vpx .vpx-aside-title{display:none}
+  .vpx .vpx-isosvg{flex:0 0 118px}
+  .vpx .vpx-aside-cap{text-align:left;font-size:.8rem}
+  .vpx .vpx-legend{margin-left:0}
+  .vpx .vpx-board{gap:6px}
+  .vpx .vpx-slot{border-width:2px;border-radius:10px}
+  .vpx .vpx-slot.is-filled{padding:2px 2px 1.5em}
+  .vpx .vpx-tray{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .vpx *,.vpx *::before,.vpx *::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="vpx" lang="es" data-vpx role="region" aria-label="Actividad interactiva: ordena las vistas de la pieza">
+  <div class="vpx-fallback">
+    <h2 class="vpx-fallback-title">Reto de las vistas: ¡pon cada una en su sitio!</h2>
+    <p>Actividad interactiva para ordenar las vistas de una pieza en el sistema europeo y en el sistema americano. Se muestra al ver la página con JavaScript activado.</p>
+    <p class="vpx-fallback-credit">Actividad de elaboración propia generada con <a href="https://claude.ai/login" target="_blank" rel="noopener noreferrer">Claude</a></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var INK = '#1d2340';
+
+  /* Todo el marcado se genera aqui: asi el editor de eXe no puede alterarlo */
+  var TEMPLATE = '<section class="vpx-cover" data-screen="cover"><div class="vpx-cover-grid"><div><span class="vpx-kicker">🧩 Dibujo técnico · Sistemas de representación</span><h2 class="vpx-title">Reto de las vistas: ¡pon cada una en su sitio!</h2><p class="vpx-lead">Tienes una pieza en perspectiva y seis vistas desordenadas. ¿Serás capaz de colocarlas correctamente en el <strong>sistema europeo</strong> y en el <strong>sistema americano</strong>?</p><ol class="vpx-how"><li><span class="vpx-how-ico" aria-hidden="true">🔎</span><strong>1. Observa</strong><span>Fíjate en la pieza y en la flecha: te indica desde dónde se mira el alzado.</span></li><li><span class="vpx-how-ico" aria-hidden="true">🖐️</span><strong>2. Arrastra</strong><span>Lleva cada vista a su casilla. También puedes tocar la vista y luego la casilla.</span></li><li><span class="vpx-how-ico" aria-hidden="true">⭐</span><strong>3. Gana estrellas</strong><span>Dos partes, hasta 3 estrellas en cada una. Menos fallos y pistas, más estrellas.</span></li></ol><label class="vpx-guided"><input type="checkbox" data-role="guided"><span><strong>Modo guiado:</strong> mostrar desde el principio el nombre de cada casilla. Es un apoyo opcional y no resta estrellas.</span></label><button type="button" class="vpx-btn vpx-btn-big" data-role="start">¡Empezar el reto! 🚀</button></div><div class="vpx-isocard"><div data-iso-slot="cover"></div><span class="vpx-isocap">La flecha marca desde dónde se observa el alzado</span></div></div><p class="vpx-pie">Actividad de elaboración propia generada con <a href="https://claude.ai/login" target="_blank" rel="noopener noreferrer">Claude<span class="vpx-sr"> (se abre en una pestaña nueva)</span></a></p></section><section class="vpx-game" data-screen="game" hidden><div class="vpx-topbar"><ol class="vpx-stepper" aria-label="Partes de la actividad"><li class="vpx-pill" data-pill="0">1 · Sistema europeo</li><li class="vpx-pill" data-pill="1">2 · Sistema americano</li></ol><div class="vpx-total" data-role="total">⭐ 0 / 6</div></div><div class="vpx-layout"><aside class="vpx-aside" aria-label="Pieza en perspectiva, siempre visible"><h3 class="vpx-aside-title">La pieza</h3><div class="vpx-isosvg" data-iso-slot="game"></div><p class="vpx-aside-cap">➡ La flecha indica desde dónde se mira el <strong>alzado</strong>.</p></aside><div class="vpx-main"><div data-role="partpanel"><div class="vpx-parthead"><div><p class="vpx-partno" data-role="partno"></p><h3 class="vpx-parttitle" data-role="parttitle"></h3><p class="vpx-tech" data-role="parttech"></p></div><div class="vpx-symbol" data-role="symbol"></div></div><div class="vpx-progress" role="progressbar" aria-label="Vistas colocadas" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><i data-role="bar"></i></div><div class="vpx-meta" data-role="meta"></div><div class="vpx-toolbar"><button type="button" class="vpx-btn vpx-btn-hint" data-role="hint">💡 Pista</button><button type="button" class="vpx-btn vpx-btn-ghost" data-role="reset">↺ Reiniciar parte</button><span class="vpx-legend" aria-label="Leyenda de líneas"><span><svg viewBox="0 0 34 8" aria-hidden="true"><line x1="0" y1="4" x2="34" y2="4" stroke="#1d2340" stroke-width="3"/></svg>continua = se ve</span><span><svg viewBox="0 0 34 8" aria-hidden="true"><line x1="0" y1="4" x2="34" y2="4" stroke="#1d2340" stroke-width="2.4" stroke-dasharray="5 4"/></svg>discontinua = oculta</span></span></div><div class="vpx-fb" data-role="fb" data-kind="info" role="status" aria-live="polite"><span class="vpx-fb-ico" aria-hidden="true">🔎</span><p data-role="fbtext"></p></div><div class="vpx-board-wrap"><div class="vpx-board" data-role="board"></div></div><h4 class="vpx-h4">Vistas por colocar</h4><div class="vpx-tray" data-role="tray"></div><div class="vpx-result" data-role="result" tabindex="-1" hidden></div><details class="vpx-more"><summary>📝 Descripción de la pieza con palabras</summary><p>Es un bloque de 4 × 4 × 4 unidades. En la esquina superior delantera izquierda le falta un trozo de 1 × 1 que baja 2 unidades: es la <strong>muesca</strong>. En la mitad derecha tiene una <strong>rampa</strong> a 45°: arranca en la cara frontal a 1 unidad de altura y sube hasta la cara superior, a 3 unidades del frente. El alzado se observa siguiendo la flecha.</p></details><details class="vpx-more"><summary>❓ Cómo se juega</summary><ul><li><strong>Con ratón o pantalla táctil:</strong> arrastra cada vista hasta una casilla punteada.</li><li><strong>Con teclado o lector de pantalla:</strong> elige una vista con Intro o Espacio y pulsa Intro sobre la casilla de destino.</li><li>Si aciertas, la vista se queda fija y aparece su nombre. Si fallas, vuelve a la bandeja.</li><li>El botón <strong>Pista</strong> te ayuda paso a paso, pero cada pista resta puntos.</li></ul></details></div><div data-role="finalpanel" hidden></div></div></div></section>';
+  var REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* ------------------------------------------------------------------
+     DATOS: las seis vistas. Líneas en unidades de una cuadrícula 4 × 4
+     [x1, y1, x2, y2] con el origen arriba a la izquierda.
+  ------------------------------------------------------------------ */
+  var VIEWS = {
+    alz: {
+      name: 'Alzado', num: '3',
+      solid: [[1, 0, 1, 2], [0, 2, 1, 2], [2, 0, 2, 3], [2, 3, 4, 3]], dash: [],
+      alt: 'cuadrado con una muesca arriba a la izquierda y un escalón arriba a la derecha, todo en línea continua',
+      clue: 'Es la vista que se obtiene mirando en la dirección de la flecha. De frente se ven la muesca (arriba a la izquierda) y el borde inferior de la rampa (a la derecha), todo con línea continua.',
+      ok: 'Es el alzado: lo que ves al mirar la pieza de frente, siguiendo la flecha. La muesca (arriba a la izquierda) y la rampa (a la derecha) se ven, por eso van con línea continua.'
+    },
+    sup: {
+      name: 'Planta superior', num: '1',
+      solid: [[0, 3, 1, 3], [1, 3, 1, 4], [2, 1, 4, 1], [2, 1, 2, 4]], dash: [],
+      alt: 'cuadrado con un cuadradito abajo a la izquierda y un rectángulo a la derecha, todo en línea continua',
+      clue: 'Desde arriba todo es visible (línea continua): el cuadradito de la esquina delantera izquierda es la muesca y el rectángulo de la derecha es la rampa.',
+      ok: 'Planta superior: mirando desde arriba se ven la muesca (el cuadradito del frente a la izquierda) y la rampa (el rectángulo de la derecha). El frente de la pieza queda en la parte inferior del dibujo.'
+    },
+    inf: {
+      name: 'Planta inferior', num: '5',
+      solid: [], dash: [[0, 1, 1, 1], [1, 0, 1, 1], [2, 0, 2, 3], [2, 3, 4, 3]],
+      alt: 'cuadrado con un cuadradito arriba a la izquierda y un rectángulo a la derecha, dibujados con línea discontinua',
+      clue: 'Desde abajo la base tapa la muesca y la rampa, así que se dibujan con línea discontinua (aristas ocultas). El frente de la pieza queda en la parte superior del dibujo.',
+      ok: 'Planta inferior: desde abajo la base tapa la muesca y la rampa, que se dibujan con línea discontinua. ¡Ojo! El frente de la pieza queda en la parte superior del dibujo.'
+    },
+    izq: {
+      name: 'Perfil izquierdo', num: '2',
+      solid: [[3, 0, 3, 2], [3, 2, 4, 2]], dash: [[1, 0, 4, 3]],
+      alt: 'cuadrado con un rectángulo en línea continua arriba a la derecha y una diagonal discontinua de arriba a la izquierda hacia abajo a la derecha',
+      clue: 'Desde la izquierda se ve de frente la muesca (rectángulo de línea continua junto al lado del frente). La rampa queda oculta: su arista inclinada va con línea discontinua.',
+      ok: 'Perfil izquierdo: desde la izquierda se ve la muesca en línea continua y, detrás, la arista oculta de la rampa en diagonal discontinua. El frente queda a la derecha del dibujo.'
+    },
+    der: {
+      name: 'Perfil derecho', num: '6',
+      solid: [[0, 3, 3, 0]], dash: [[1, 0, 1, 2], [0, 2, 1, 2]],
+      alt: 'cuadrado con una diagonal continua de abajo a la izquierda hacia arriba a la derecha y un pequeño ángulo discontinuo arriba a la izquierda',
+      clue: 'Desde la derecha se ve la rampa de perfil: una diagonal continua. La muesca queda oculta, por eso aparece con línea discontinua junto al lado del frente.',
+      ok: 'Perfil derecho: desde la derecha la rampa se ve como una diagonal continua y la muesca queda oculta (discontinua). El frente queda a la izquierda del dibujo.'
+    },
+    post: {
+      name: 'Alzado posterior', num: '4',
+      solid: [], dash: [[2, 0, 2, 3], [0, 3, 2, 3], [3, 0, 3, 2], [3, 2, 4, 2]],
+      alt: 'cuadrado con dos formas en ángulo, una a la izquierda y otra arriba a la derecha, todas con línea discontinua',
+      clue: 'Mirando desde atrás se ve la cara contraria al alzado: la muesca y la rampa quedan ocultas (todo con línea discontinua) y la izquierda y la derecha aparecen invertidas.',
+      ok: 'Alzado posterior: visto desde atrás todo queda oculto (línea discontinua) y la izquierda y la derecha están invertidas respecto al alzado.'
+    }
+  };
+
+  var HINT_ORDER = ['alz', 'sup', 'izq', 'der', 'inf', 'post'];
+  var MIRROR = { sup: 'inf', inf: 'sup', izq: 'der', der: 'izq' };
+
+  /* Posiciones [columna, fila] de cada vista en la cruz de 4 × 3 */
+  var SYS = [
+    {
+      key: 'eu', name: 'Sistema europeo', tech: 'ISO-E · primer diedro',
+      tagline: 'la pieza queda entre tú y el plano de proyección',
+      pos: { inf: [2, 1], der: [1, 2], alz: [2, 2], izq: [3, 2], post: [4, 2], sup: [2, 3] },
+      rule: 'En el sistema europeo la pieza está entre tú y el plano de proyección, así que cada vista se dibuja en el lado <strong>contrario</strong> al que miras: la planta (vista desde arriba) va <strong>debajo</strong> del alzado y el perfil izquierdo, a su <strong>derecha</strong>.',
+      short: 'Recuerda: en el sistema europeo cada vista se dibuja en el lado contrario al que miras (¡la planta va debajo del alzado!).',
+      recap: 'Sistema europeo (primer diedro): cada vista se coloca en el lado contrario al que se mira. La planta superior va debajo del alzado, la inferior encima, el perfil izquierdo a la derecha y el derecho a la izquierda; el alzado posterior queda en el extremo derecho.',
+      intro: 'Observa la pieza y la flecha: el alzado se mira en esa dirección. Arrastra cada vista a su casilla del <strong>sistema europeo</strong> (o toca una vista y después la casilla).'
+    },
+    {
+      key: 'am', name: 'Sistema americano', tech: 'ISO-A · tercer diedro',
+      tagline: 'el plano de proyección queda entre tú y la pieza, como un cristal',
+      pos: { sup: [3, 1], post: [1, 2], izq: [2, 2], alz: [3, 2], der: [4, 2], inf: [3, 3] },
+      rule: 'En el sistema americano el plano de proyección está entre tú y la pieza, como un cristal, así que cada vista se dibuja en el <strong>mismo lado</strong> desde el que miras: la planta va <strong>encima</strong> del alzado y el perfil izquierdo, a su <strong>izquierda</strong>.',
+      short: 'Recuerda: en el sistema americano cada vista se dibuja en el mismo lado desde el que miras (¡la planta va encima del alzado!).',
+      recap: 'Sistema americano (tercer diedro): cada vista se coloca en el mismo lado desde el que se mira. La planta superior va encima del alzado, la inferior debajo, el perfil izquierdo a la izquierda y el derecho a la derecha; el alzado posterior queda en el extremo izquierdo.',
+      intro: '¡Segunda parte! La pieza es la misma, pero ahora las vistas se colocan según el <strong>sistema americano</strong>. Ojo: ¡la cruz cambia de forma!'
+    }
+  ];
+
+  var PRAISE = ['¡Bien visto! 👀', '¡Eso es! 🎯', '¡Ojo de águila! 🦅', '¡Perfecto! ⭐', '¡Muy bien! 💪', '¡Acierto! 🚀'];
+  var OOPS = ['¡Casi! 💪', 'Todavía no 🔍', 'Uy, esa no 🙈', 'Respira y observa 🧘'];
+
+  /* ------------------------------------------------------------------
+     DIBUJOS SVG
+  ------------------------------------------------------------------ */
+  function g(u) { return 10 + 20 * u; }
+
+  function line(l, dash) {
+    return '<line x1="' + g(l[0]) + '" y1="' + g(l[1]) + '" x2="' + g(l[2]) + '" y2="' + g(l[3]) +
+      '" stroke="' + INK + '" stroke-width="' + (dash ? 2.4 : 3.2) + '"' + (dash ? ' stroke-dasharray="5 4"' : '') + '/>';
+  }
+
+  function viewSVG(key) {
+    var v = VIEWS[key];
+    var s = '<svg xmlns="' + NS + '" viewBox="0 0 100 100" focusable="false" aria-hidden="true">' +
+      '<rect x="10" y="10" width="80" height="80" fill="#fffaf7" stroke="' + INK + '" stroke-width="3.2"/>';
+    v.dash.forEach(function (l) { s += line(l, true); });
+    v.solid.forEach(function (l) { s += line(l, false); });
+    return s + '</svg>';
+  }
+
+  /* Pieza en perspectiva isométrica. Ejes: x (derecha), d (fondo), z (altura). */
+  function isoSVG() {
+    var U = 26, OX = 150, OY = 282, K = 0.8660254;
+    function P(x, d, z) { return [OX + U * K * (x - d), OY - U * (0.5 * (x + d) + z)]; }
+    function fmt(p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }
+    function pts(a) { return a.map(function (q) { return fmt(P(q[0], q[1], q[2])); }).join(' '); }
+    var STR = '#5b1230';
+    function face(a, fill) {
+      return '<polygon points="' + pts(a) + '" fill="' + fill + '" stroke="' + STR + '" stroke-width="2.6" stroke-linejoin="round"/>';
+    }
+    var s = '<svg xmlns="' + NS + '" viewBox="0 0 310 310" role="img" aria-label="Pieza en perspectiva isométrica: un bloque con una muesca en la esquina superior delantera izquierda y una rampa inclinada en el lado derecho. Una flecha indica desde dónde se observa el alzado.">';
+    /* cara izquierda (con la muesca recortada) */
+    s += face([[0, 0, 0], [0, 4, 0], [0, 4, 4], [0, 1, 4], [0, 1, 2], [0, 0, 2]], '#d81e4f');
+    /* cara frontal (con muesca y rampa recortadas) */
+    s += face([[0, 0, 0], [4, 0, 0], [4, 0, 1], [2, 0, 1], [2, 0, 4], [1, 0, 4], [1, 0, 2], [0, 0, 2]], '#f9c5b5');
+    /* cara superior */
+    s += face([[1, 0, 4], [2, 0, 4], [2, 3, 4], [4, 3, 4], [4, 4, 4], [0, 4, 4], [0, 1, 4], [1, 1, 4]], '#ee7f5f');
+    /* rampa (parte visible) */
+    s += face([[2, 0, 1], [4, 0, 1], [4, 3, 4], [2, 3, 4], [2, 0, 4]], '#f7a98f');
+    /* interior de la muesca */
+    s += face([[0, 0, 2], [1, 0, 2], [1, 1, 2], [0, 1, 2]], '#e3704f');
+    s += face([[0, 1, 2], [1, 1, 2], [1, 1, 4], [0, 1, 4]], '#eea08d');
+    s += face([[1, 0, 2], [1, 1, 2], [1, 1, 4], [1, 0, 4]], '#b3163f');
+    /* arista oculta de la rampa */
+    var A = P(2, 0, 1), D = P(2, 3, 4);
+    s += '<line x1="' + A[0].toFixed(1) + '" y1="' + A[1].toFixed(1) + '" x2="' + D[0].toFixed(1) + '" y2="' + D[1].toFixed(1) +
+      '" stroke="' + STR + '" stroke-width="1.7" stroke-dasharray="5 4" stroke-linecap="round" opacity=".8"/>';
+    /* flecha que marca la dirección del alzado */
+    var t = P(3, 0, 0.6), tx = t[0] + 12, ty = t[1] + 7;
+    s += '<g transform="translate(' + (tx + 22.5).toFixed(1) + ',' + (ty + 13).toFixed(1) + ') rotate(210)">' +
+      '<polygon points="-44,-7 4,-7 4,-15 26,0 4,15 4,7 -44,7" fill="#ffffff" stroke="' + INK + '" stroke-width="2.4" stroke-linejoin="round"/></g>';
+    return s + '</svg>';
+  }
+
+  function symbolSVG(key) {
+    function trap(x) {
+      return '<polygon points="' + x + ',17 ' + (x + 36) + ',7 ' + (x + 36) + ',43 ' + x + ',33" fill="#fff" stroke="' + INK + '" stroke-width="2.4" stroke-linejoin="round"/>';
+    }
+    function circ(cx) {
+      return '<circle cx="' + cx + '" cy="25" r="18" fill="#fff" stroke="' + INK + '" stroke-width="2.4"/>' +
+        '<circle cx="' + cx + '" cy="25" r="8" fill="#fff" stroke="' + INK + '" stroke-width="2.4"/>' +
+        '<line x1="' + cx + '" y1="3" x2="' + cx + '" y2="47" stroke="#6b7399" stroke-width="1.1" stroke-dasharray="8 3 2 3"/>';
+    }
+    var axis = '<line x1="0" y1="25" x2="100" y2="25" stroke="#6b7399" stroke-width="1.1" stroke-dasharray="8 3 2 3"/>';
+    var label = key === 'eu'
+      ? 'Símbolo del sistema europeo: tronco de cono a la izquierda y círculos concéntricos a la derecha'
+      : 'Símbolo del sistema americano: círculos concéntricos a la izquierda y tronco de cono a la derecha';
+    return '<svg xmlns="' + NS + '" viewBox="0 0 100 50" role="img" aria-label="' + label + '">' + axis +
+      (key === 'eu' ? trap(4) + circ(78) : circ(22) + trap(58)) + '</svg>';
+  }
+
+  /* ------------------------------------------------------------------
+     UTILIDADES
+  ------------------------------------------------------------------ */
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function stars(n, total) {
+    total = total || 3;
+    var s = '';
+    for (var i = 0; i < total; i++) s += i < n ? '★' : '☆';
+    return s;
+  }
+
+  /* ------------------------------------------------------------------
+     LÓGICA DE LA ACTIVIDAD
+  ------------------------------------------------------------------ */
+  function setup(root) {
+    if (root.__vpxReady) return;
+    root.__vpxReady = true;
+    root.innerHTML = TEMPLATE;
+
+    function R(n) { return root.querySelector('[data-role="' + n + '"]'); }
+    var coverEl = root.querySelector('[data-screen="cover"]');
+    var gameEl = root.querySelector('[data-screen="game"]');
+    var boardEl = R('board'), trayEl = R('tray'), fbEl = R('fb'), fbText = R('fbtext');
+    var fbIco = fbEl.querySelector('.vpx-fb-ico');
+    var resEl = R('result'), partPanel = R('partpanel'), finalPanel = R('finalpanel');
+    var hintBtn = R('hint'), resetBtn = R('reset'), metaEl = R('meta');
+    var barEl = R('bar'), progEl = barEl.parentNode, totalEl = R('total');
+    var pills = root.querySelectorAll('[data-pill]');
+    var NV = HINT_ORDER.length;
+
+    var st = {
+      part: 0, placed: {}, nPlaced: 0, errors: 0, hints: 0, streak: 0, cardErr: {},
+      selected: null, guided: false, names: false, results: [null, null]
+    };
+    var drag = null, lastKb = false;
+
+    Array.prototype.forEach.call(root.querySelectorAll('[data-iso-slot]'), function (el) { el.innerHTML = isoSVG(); });
+
+    root.addEventListener('keydown', function () { lastKb = true; }, true);
+    root.addEventListener('pointerdown', function () { lastKb = false; }, true);
+
+    function setFb(kind, icon, html) {
+      fbEl.setAttribute('data-kind', kind);
+      fbIco.textContent = icon;
+      fbText.innerHTML = html;
+    }
+    function goTo(el) {
+      try { el.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'start' }); } catch (e) { /* sin soporte */ }
+    }
+    function totalStars() {
+      var t = 0;
+      st.results.forEach(function (r) { t += r ? r.stars : 0; });
+      return t;
+    }
+
+    /* ---------- construcción de cada parte ---------- */
+    function updatePills(finalMode) {
+      Array.prototype.forEach.call(pills, function (p, i) {
+        var cur = !finalMode && i === st.part;
+        var done = !!st.results[i] && !cur;
+        p.classList.toggle('is-current', cur);
+        p.classList.toggle('is-done', done);
+        if (cur) p.setAttribute('aria-current', 'step'); else p.removeAttribute('aria-current');
+      });
+    }
+
+    function updateMeta() {
+      var n = st.nPlaced;
+      metaEl.innerHTML = '<span>✅ Colocadas: <strong>' + n + '/' + NV + '</strong></span>' +
+        '<span>❌ Fallos: <strong>' + st.errors + '</strong></span>' +
+        '<span>💡 Pistas: <strong>' + st.hints + '</strong></span>' +
+        (st.streak >= 2 ? '<span class="vpx-streak">🔥 Racha: <strong>' + st.streak + '</strong></span>' : '');
+      barEl.style.width = (n / NV * 100) + '%';
+      progEl.setAttribute('aria-valuenow', n);
+      hintBtn.textContent = '💡 Pista' + (st.hints ? ' (' + st.hints + ')' : '');
+      hintBtn.disabled = n >= NV;
+      totalEl.textContent = '⭐ ' + totalStars() + ' / ' + (SYS.length * 3);
+    }
+
+    function slotLabel(p) { return 'Casilla de la fila ' + p[1] + ', columna ' + p[0]; }
+
+    function buildBoard(sys) {
+      boardEl.innerHTML = '';
+      boardEl.className = 'vpx-board' + (st.names ? ' show-names' : '');
+      Object.keys(sys.pos).forEach(function (key) {
+        var p = sys.pos[key];
+        var slot = document.createElement('div');
+        slot.className = 'vpx-slot';
+        slot.setAttribute('role', 'button');
+        slot.tabIndex = 0;
+        slot.setAttribute('data-view', key);
+        slot.setAttribute('aria-label', slotLabel(p));
+        slot.style.gridColumn = p[0];
+        slot.style.gridRow = p[1];
+        slot.innerHTML = '<span class="vpx-slot-label">' + VIEWS[key].name + '</span>';
+        slot.addEventListener('click', function () { onSlotClick(slot); });
+        slot.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); onSlotClick(slot); }
+        });
+        boardEl.appendChild(slot);
+      });
+    }
+
+    function createCard(key) {
+      var v = VIEWS[key];
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'vpx-card';
+      b.setAttribute('data-view', key);
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-label', 'Vista ' + v.num + ': ' + v.alt);
+      b.innerHTML = '<span class="vpx-card-badge" aria-hidden="true">' + v.num + '</span>' + viewSVG(key);
+      b.addEventListener('pointerdown', onDown);
+      b.addEventListener('pointermove', onMove);
+      b.addEventListener('pointerup', onUp);
+      b.addEventListener('pointercancel', onCancel);
+      b.addEventListener('click', function (e) { if (e.detail === 0) toggleSelect(b); });
+      return b;
+    }
+
+    function buildTray() {
+      trayEl.innerHTML = '';
+      shuffle(HINT_ORDER).forEach(function (k) { trayEl.appendChild(createCard(k)); });
+    }
+
+    function startPart(i) {
+      var sys = SYS[i];
+      st.part = i; st.placed = {}; st.nPlaced = 0; st.errors = 0; st.hints = 0;
+      st.streak = 0; st.cardErr = {}; st.selected = null; st.names = st.guided;
+      R('partno').textContent = 'Parte ' + (i + 1) + ' de ' + SYS.length;
+      R('parttitle').textContent = sys.name;
+      R('parttech').textContent = sys.tech + ' · ' + sys.tagline;
+      R('symbol').innerHTML = symbolSVG(sys.key) + '<span class="vpx-symbol-txt">Símbolo del sistema</span>';
+      buildBoard(sys);
+      buildTray();
+      resEl.hidden = true; resEl.innerHTML = '';
+      finalPanel.hidden = true; partPanel.hidden = false;
+      updatePills(false);
+      updateMeta();
+      setFb('info', '🔎', sys.intro);
+    }
+
+    /* ---------- selección y colocación ---------- */
+    function clearSelection() {
+      if (st.selected) {
+        st.selected.classList.remove('is-selected');
+        st.selected.setAttribute('aria-pressed', 'false');
+      }
+      st.selected = null;
+    }
+
+    function toggleSelect(card) {
+      if (card.classList.contains('is-locked')) return;
+      if (st.selected === card) {
+        clearSelection();
+        setFb('info', '🔎', 'Vista deseleccionada. Elige otra cuando quieras.');
+        return;
+      }
+      clearSelection();
+      st.selected = card;
+      card.classList.add('is-selected');
+      card.setAttribute('aria-pressed', 'true');
+      setFb('info', '👉', 'Has elegido la <strong>vista ' + VIEWS[card.getAttribute('data-view')].num + '</strong>. Ahora toca (o pulsa Intro sobre) la casilla donde crees que va.');
+    }
+
+    function onSlotClick(slot) {
+      var key = slot.getAttribute('data-view');
+      if (slot.classList.contains('is-filled')) {
+        setFb('info', '✅', 'Esta casilla ya está resuelta: es el <strong>' + VIEWS[key].name + '</strong>.');
+        return;
+      }
+      if (!st.selected) {
+        setFb('info', '☝️', 'Primero elige una vista de la bandeja (arrástrala o tócala) y después toca la casilla.');
+        return;
+      }
+      var c = st.selected;
+      clearSelection();
+      attemptPlace(c, slot);
+    }
+
+    function wrongMessage(cardView, slotView) {
+      var sys = SYS[st.part];
+      var msg;
+      if (MIRROR[cardView] === slotView) {
+        msg = 'Estás muy cerca: has cruzado dos vistas opuestas (arriba↔abajo o izquierda↔derecha). ' + sys.short;
+      } else {
+        msg = 'Esa vista no corresponde a esa casilla. ' + sys.short;
+      }
+      if ((st.cardErr[cardView] || 0) >= 2) msg += ' 🔎 <strong>Mira este dibujo:</strong> ' + VIEWS[cardView].clue;
+      return msg;
+    }
+
+    function attemptPlace(card, slot) {
+      if (slot.classList.contains('is-filled')) {
+        setFb('info', '✅', 'Esa casilla ya está resuelta. Prueba en otra.');
+        return;
+      }
+      var v = card.getAttribute('data-view'), target = slot.getAttribute('data-view');
+      if (v === target) {
+        lockCard(card, slot);
+        st.placed[v] = true; st.nPlaced++; st.streak++;
+        var extra = st.streak >= 3 ? ' 🔥 ¡Racha de ' + st.streak + ' aciertos seguidos!' : '';
+        setFb('ok', '✅', '<strong>' + pick(PRAISE) + '</strong> ' + VIEWS[v].ok + extra);
+        updateMeta();
+        if (lastKb) { var nx = trayEl.querySelector('.vpx-card'); if (nx) nx.focus(); }
+        if (st.nPlaced >= NV) completePart();
+      } else {
+        st.errors++; st.streak = 0;
+        st.cardErr[v] = (st.cardErr[v] || 0) + 1;
+        slot.classList.remove('is-shake');
+        void slot.offsetWidth;
+        slot.classList.add('is-shake');
+        setTimeout(function () { slot.classList.remove('is-shake'); }, 500);
+        setFb('bad', '❌', '<strong>' + pick(OOPS) + '</strong> ' + wrongMessage(v, target));
+        updateMeta();
+      }
+    }
+
+    function lockCard(card, slot) {
+      var v = card.getAttribute('data-view');
+      slot.classList.add('is-filled');
+      slot.insertBefore(card, slot.firstChild);
+      slot.setAttribute('role', 'group');
+      slot.tabIndex = -1;
+      slot.setAttribute('aria-label', 'Casilla resuelta: ' + VIEWS[v].name);
+      card.classList.remove('is-selected');
+      card.classList.add('is-locked');
+      card.tabIndex = -1;
+      card.setAttribute('aria-disabled', 'true');
+      card.removeAttribute('aria-pressed');
+      card.setAttribute('aria-label', 'Vista ' + VIEWS[v].num + ' colocada: ' + VIEWS[v].name);
+    }
+
+    /* ---------- arrastrar y soltar (ratón y táctil) ---------- */
+    function overSlot(x, y) {
+      var el = document.elementFromPoint(x, y);
+      var s = el && el.closest ? el.closest('.vpx-slot') : null;
+      return (s && root.contains(s)) ? s : null;
+    }
+
+    function onDown(e) {
+      var card = e.currentTarget;
+      if (card.classList.contains('is-locked')) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      drag = { card: card, id: e.pointerId, sx: e.clientX, sy: e.clientY, moved: false, ghost: null, over: null, w: card.offsetWidth };
+      try { card.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
+    }
+
+    function onMove(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.moved) {
+        if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) < 6) return;
+        drag.moved = true;
+        var gh = document.createElement('div');
+        gh.className = 'vpx-ghost';
+        gh.setAttribute('aria-hidden', 'true');
+        gh.style.width = gh.style.height = drag.w + 'px';
+        gh.innerHTML = viewSVG(drag.card.getAttribute('data-view'));
+        document.body.appendChild(gh);
+        drag.ghost = gh;
+        drag.card.classList.add('is-dragging');
+        clearSelection();
+      }
+      e.preventDefault();
+      drag.ghost.style.transform = 'translate(' + (e.clientX - drag.w / 2) + 'px,' + (e.clientY - drag.w / 2) + 'px) rotate(-3deg) scale(1.05)';
+      var s = overSlot(e.clientX, e.clientY);
+      if (s !== drag.over) {
+        if (drag.over) drag.over.classList.remove('is-over');
+        if (s && !s.classList.contains('is-filled')) s.classList.add('is-over');
+        drag.over = s;
+      }
+    }
+
+    function endDrag(d) {
+      if (d.ghost && d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
+      if (d.over) d.over.classList.remove('is-over');
+      d.card.classList.remove('is-dragging');
+    }
+
+    function onUp(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag; drag = null;
+      try { d.card.releasePointerCapture(e.pointerId); } catch (err) { /* nada */ }
+      if (d.moved) {
+        var slot = overSlot(e.clientX, e.clientY);
+        endDrag(d);
+        if (slot) attemptPlace(d.card, slot);
+        else setFb('info', '☝️', 'Suelta la vista dentro de una de las casillas punteadas.');
+      } else {
+        toggleSelect(d.card);
+      }
+    }
+
+    function onCancel(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag; drag = null;
+      endDrag(d);
+    }
+
+    /* ---------- pistas ---------- */
+    function flash(el) {
+      if (!el) return;
+      el.classList.add('is-hint');
+      setTimeout(function () { el.classList.remove('is-hint'); }, 4500);
+    }
+
+    hintBtn.addEventListener('click', function () {
+      if (st.nPlaced >= NV) return;
+      st.hints++;
+      var sys = SYS[st.part];
+      if (st.hints === 1) {
+        setFb('hint', '💡', '<strong>Pista 1 · La regla del sistema.</strong> ' + sys.rule);
+      } else if (st.hints === 2) {
+        st.names = true;
+        boardEl.classList.add('show-names');
+        setFb('hint', '💡', '<strong>Pista 2.</strong> Ahora cada casilla muestra su nombre. Busca la vista que le corresponde fijándote en qué líneas son continuas (se ven) y cuáles discontinuas (ocultas).');
+      } else {
+        var k = null, i;
+        for (i = 0; i < HINT_ORDER.length; i++) { if (!st.placed[HINT_ORDER[i]]) { k = HINT_ORDER[i]; break; } }
+        if (k) {
+          flash(trayEl.querySelector('.vpx-card[data-view="' + k + '"]'));
+          flash(boardEl.querySelector('.vpx-slot[data-view="' + k + '"]'));
+          setFb('hint', '💡', '<strong>Pista ' + st.hints + '.</strong> Mira la <strong>vista ' + VIEWS[k].num + '</strong> (brilla en la bandeja) y llévala a la casilla que brilla en la cruz. ' + VIEWS[k].clue);
+        }
+      }
+      updateMeta();
+    });
+
+    resetBtn.addEventListener('click', function () { startPart(st.part); });
+
+    /* ---------- final de cada parte ---------- */
+    function confetti() {
+      if (REDUCE) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'vpx-confetti';
+      wrap.setAttribute('aria-hidden', 'true');
+      var cols = ['#d81e4f', '#ffb703', '#2f3d9e', '#19a35c', '#ff7a59', '#8e5bd6'];
+      for (var i = 0; i < 44; i++) {
+        var p = document.createElement('i');
+        p.style.left = (Math.random() * 100) + '%';
+        p.style.background = cols[i % cols.length];
+        p.style.animationDelay = (Math.random() * 0.6) + 's';
+        p.style.animationDuration = (1.9 + Math.random() * 1.5) + 's';
+        p.style.setProperty('--dx', (Math.random() * 180 - 90) + 'px');
+        wrap.appendChild(p);
+      }
+      gameEl.appendChild(wrap);
+      setTimeout(function () { if (wrap.parentNode) wrap.parentNode.removeChild(wrap); }, 4200);
+    }
+
+    function completePart() {
+      var pen = st.errors + st.hints;
+      var n = pen <= 2 ? 3 : (pen <= 6 ? 2 : 1);
+      st.results[st.part] = { stars: n, errors: st.errors, hints: st.hints };
+      var sys = SYS[st.part];
+      var last = st.part === SYS.length - 1;
+      var msg = n === 3 ? '¡Impecable! Tienes ojo de dibujante técnico 🎯'
+        : (n === 2 ? '¡Muy bien! Con un poco más de práctica serás imbatible 💪'
+          : '¡Lo has conseguido! Repasa la regla del sistema y vuelve a intentarlo para ganar más estrellas 🌱');
+      resEl.innerHTML =
+        '<h4 class="vpx-res-title">🎉 ¡Parte ' + (st.part + 1) + ' completada!</h4>' +
+        '<p class="vpx-stars" role="img" aria-label="' + n + ' de 3 estrellas">' + stars(n) + '</p>' +
+        '<p class="vpx-res-msg">' + msg + '</p>' +
+        '<p class="vpx-res-stats">❌ Fallos: <strong>' + st.errors + '</strong> · 💡 Pistas: <strong>' + st.hints + '</strong></p>' +
+        '<p class="vpx-res-tip"><strong>Para recordar:</strong> ' + sys.recap + '</p>' +
+        '<div class="vpx-res-actions">' +
+        '<button type="button" class="vpx-btn" data-role="next">' + (last ? 'Ver mi resultado final 🏆' : 'Continuar con la parte 2: sistema americano ➜') + '</button>' +
+        '<button type="button" class="vpx-btn vpx-btn-ghost" data-role="again">↺ Repetir esta parte</button></div>';
+      resEl.hidden = false;
+      resEl.querySelector('[data-role="next"]').addEventListener('click', function () {
+        if (last) showFinal(); else { startPart(st.part + 1); goTo(gameEl); }
+      });
+      resEl.querySelector('[data-role="again"]').addEventListener('click', function () { startPart(st.part); goTo(gameEl); });
+      setFb('ok', '🏆', '<strong>¡Has colocado las ' + NV + ' vistas!</strong> Mira cómo ha quedado la cruz y lee el resumen.');
+      updatePills(false);
+      updateMeta();
+      confetti();
+      try { resEl.focus({ preventScroll: true }); } catch (e) { /* nada */ }
+      try { resEl.scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'nearest' }); } catch (e2) { /* nada */ }
+    }
+
+    function showFinal() {
+      var tot = totalStars(), max = SYS.length * 3;
+      var title, msg;
+      if (tot >= 6) { title = '🏆 ¡Maestro/a de las vistas!'; msg = 'Dominas los dos sistemas de representación. ¡Enhorabuena!'; }
+      else if (tot >= 4) { title = '🥇 ¡Gran trabajo!'; msg = 'Ya casi lo tienes todo. Repite alguna parte para llegar a las 6 estrellas.'; }
+      else { title = '🌱 ¡Buen comienzo!'; msg = 'Cada intento cuenta. Repasa la tabla de abajo y vuelve a jugar para mejorar.'; }
+      var r0 = st.results[0] ? st.results[0].stars : 0, r1 = st.results[1] ? st.results[1].stars : 0;
+      finalPanel.innerHTML =
+        '<div class="vpx-final">' +
+        '<h3 class="vpx-final-title">' + title + '</h3>' +
+        '<p class="vpx-stars" role="img" aria-label="' + tot + ' de ' + max + ' estrellas">' + stars(tot, max) + '</p>' +
+        '<p class="vpx-res-msg">' + msg + '</p>' +
+        '<ul class="vpx-final-list"><li>Parte 1 · Europeo: ' + stars(r0) + '</li><li>Parte 2 · Americano: ' + stars(r1) + '</li></ul>' +
+        '<div class="vpx-table-wrap"><table class="vpx-table"><caption>Resumen: dónde va cada vista respecto al alzado</caption>' +
+        '<thead><tr><th scope="col">Vista</th><th scope="col">Sistema europeo</th><th scope="col">Sistema americano</th></tr></thead><tbody>' +
+        '<tr><th scope="row">Planta superior (desde arriba)</th><td>Debajo del alzado</td><td>Encima del alzado</td></tr>' +
+        '<tr><th scope="row">Planta inferior (desde abajo)</th><td>Encima del alzado</td><td>Debajo del alzado</td></tr>' +
+        '<tr><th scope="row">Perfil izquierdo</th><td>A la derecha del alzado</td><td>A la izquierda del alzado</td></tr>' +
+        '<tr><th scope="row">Perfil derecho</th><td>A la izquierda del alzado</td><td>A la derecha del alzado</td></tr>' +
+        '<tr><th scope="row">Alzado posterior</th><td>Extremo derecho, junto al perfil izquierdo</td><td>Extremo izquierdo, junto al perfil izquierdo</td></tr>' +
+        '</tbody></table></div>' +
+        '<p class="vpx-res-tip"><strong>Truco:</strong> en el europeo la vista se dibuja en el lado <em>contrario</em> al que miras; en el americano, en el <em>mismo</em> lado.</p>' +
+        '<div class="vpx-res-actions"><button type="button" class="vpx-btn" data-role="replay">🔁 Jugar de nuevo</button></div>' +
+        '</div>';
+      finalPanel.querySelector('[data-role="replay"]').addEventListener('click', function () {
+        st.results = [null, null];
+        startPart(0);
+        goTo(gameEl);
+      });
+      partPanel.hidden = true; finalPanel.hidden = false;
+      updatePills(true);
+      updateMeta();
+      confetti();
+      goTo(gameEl);
+    }
+
+    /* ---------- inicio ---------- */
+    R('start').addEventListener('click', function () {
+      st.guided = !!R('guided').checked;
+      coverEl.hidden = true;
+      gameEl.hidden = false;
+      startPart(0);
+      goTo(gameEl);
+    });
+  }
+
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.vpx[data-vpx]'), setup);
+    /* La portada también muestra la pieza antes de empezar */
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

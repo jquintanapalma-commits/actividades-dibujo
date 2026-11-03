@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juego de vistas diédricas</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<div class="jvd-embed-wrap" style="display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div id="jvd-activity" class="jvd-root">
+<style>
+#jvd-activity{--wine:#8e1732;--wine-d:#5c0f22;--wine2:#aa364b;--ink:#292522;--line:#d9bfb4;--muted:#6d6258;--green:#2f7359;--red:#a52c37;--amber:#e29b35;font-family:Arial,Helvetica,sans-serif;color:var(--ink);width:100%;min-width:0;max-width:1180px;margin:0 auto;font-size:16px;line-height:1.4;box-sizing:border-box}
+#jvd-activity *{box-sizing:border-box}
+#jvd-activity button{font:inherit;cursor:pointer}
+#jvd-activity .jvd-loading{margin:0;padding:18px;text-align:center;color:#6d6258;font-size:14px}
+
+/* Estructura general */
+#jvd-activity .jvd-shell{position:relative;background-color:#fbf5dc;background-image:linear-gradient(rgba(142,23,50,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(142,23,50,.05) 1px,transparent 1px);background-size:24px 24px;border:1px solid #d8c9ac;border-radius:22px;overflow:hidden;box-shadow:0 12px 32px rgba(60,25,30,.2)}
+#jvd-activity .jvd-header{position:relative;display:flex;align-items:center;gap:16px;padding:16px 24px;color:#fff;background:linear-gradient(120deg,#5c0f22 0%,#8e1732 55%,#aa364b 100%);border-bottom:5px solid var(--amber)}
+#jvd-activity .jvd-header:after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0,rgba(255,255,255,.07) 2px,transparent 2px,transparent 14px);pointer-events:none}
+#jvd-activity .jvd-logo,#jvd-activity .jvd-head-text,#jvd-activity .jvd-badge{position:relative;z-index:1}
+#jvd-activity .jvd-logo{width:56px;height:56px;border-radius:15px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;flex:none}
+#jvd-activity .jvd-head-text{flex:1;min-width:0}
+#jvd-activity .jvd-title{font-size:28px;font-weight:800;letter-spacing:.04em;margin:0;text-transform:uppercase;color:#fff;line-height:1.15}
+#jvd-activity .jvd-subtitle{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-top:3px}
+#jvd-activity .jvd-badge{white-space:nowrap;background:var(--amber);color:#4a1220;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:.07em;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+#jvd-activity .jvd-main{padding:22px 24px 18px}
+
+/* Animaciones */
+@keyframes jvdFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes jvdFloat{0%{transform:translateY(0)}50%{transform:translateY(-7px)}100%{transform:translateY(0)}}
+@keyframes jvdShake{0%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}}
+@keyframes jvdPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes jvdGlow{0%{box-shadow:0 4px 0 #5c0f22,0 0 0 0 rgba(226,155,53,.55)}70%{box-shadow:0 4px 0 #5c0f22,0 0 0 12px rgba(226,155,53,0)}100%{box-shadow:0 4px 0 #5c0f22,0 0 0 0 rgba(226,155,53,0)}}
+@keyframes jvdFall{0%{transform:translateY(-30px) rotate(0deg);opacity:1}100%{transform:translateY(520px) rotate(540deg);opacity:0}}
+#jvd-activity .jvd-fade{animation:jvdFade .45s ease both}
+
+/* Botones */
+#jvd-activity .jvd-primary{border:0;background:linear-gradient(180deg,#a52b47,#8e1732);color:#fff;border-radius:12px;padding:13px 22px;font-weight:800;font-size:16px;box-shadow:0 4px 0 #5c0f22;transition:transform .12s,box-shadow .12s,filter .12s}
+#jvd-activity .jvd-primary:hover{filter:brightness(1.1);transform:translateY(-2px)}
+#jvd-activity .jvd-primary:active{transform:translateY(3px);box-shadow:0 1px 0 #5c0f22}
+#jvd-activity .jvd-start{margin-top:20px;animation:jvdGlow 2.2s infinite}
+#jvd-activity .jvd-primary:focus-visible,#jvd-activity .jvd-option:focus-visible,#jvd-activity .jvd-secondary:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+#jvd-activity .jvd-secondary{border:1px solid #ad8b86;border-radius:999px;background:#fff;color:var(--wine);padding:7px 14px;font-weight:700;font-size:12px;transition:background .12s}
+#jvd-activity .jvd-secondary:hover{background:#f6e3da}
+
+/* Portada */
+#jvd-activity .jvd-intro{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.4fr);gap:28px;align-items:center;min-height:380px}
+#jvd-activity .jvd-intro-art{position:relative;border:1px solid var(--line);border-radius:20px;min-height:310px;display:flex;align-items:center;justify-content:center;overflow:hidden;background-color:#fffdf6;background-image:radial-gradient(#e2cfc0 .8px,transparent .8px);background-size:14px 14px;box-shadow:inset 0 0 0 6px #fff,0 6px 16px rgba(92,15,34,.12)}
+#jvd-activity .jvd-intro-art svg{animation:jvdFloat 5s ease-in-out infinite;max-height:310px}
+#jvd-activity .jvd-kicker{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:var(--wine);border-radius:999px;padding:4px 12px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 10px}
+#jvd-activity .jvd-h2{font-size:34px;line-height:1.12;margin:0 0 14px;color:var(--wine);font-weight:800}
+#jvd-activity .jvd-intro-copy p{margin:9px 0;color:#413832;max-width:680px}
+#jvd-activity .jvd-info-note{margin-top:16px;padding:13px 16px;border-left:5px solid var(--amber);background:#fff3dc;border-radius:0 12px 12px 0;font-size:14px;color:#4a3b2c}
+#jvd-activity .jvd-legend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0}
+#jvd-activity .jvd-chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:5px 12px 5px 8px;font-size:12px;font-weight:800;letter-spacing:.06em;background:#fff;border:1px solid var(--line)}
+#jvd-activity .jvd-dot{width:14px;height:14px;border-radius:4px;border:2px solid}
+#jvd-activity .jvd-dot-alz{background:#f9dde2;border-color:#8e1732}
+#jvd-activity .jvd-dot-per{background:#d3ebee;border-color:#1f6f78}
+#jvd-activity .jvd-dot-pla{background:#fbe8c4;border-color:#b9731a}
+
+/* Pantalla de juego */
+#jvd-activity .jvd-game-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+#jvd-activity .jvd-piece-label{font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:#fff;background:var(--wine);border-radius:999px;padding:8px 16px;box-shadow:0 3px 0 var(--wine-d)}
+#jvd-activity .jvd-progress{display:flex;align-items:center;gap:6px}
+#jvd-activity .jvd-step{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;background:#f1e8d6;color:#8a7a68;border:2px solid #d3c3aa;flex:none}
+#jvd-activity .jvd-step.done{background:var(--green);border-color:var(--green);color:#fff}
+#jvd-activity .jvd-step.current{background:var(--wine);border-color:var(--amber);color:#fff;box-shadow:0 0 0 4px rgba(226,155,53,.35)}
+#jvd-activity .jvd-sep{width:20px;height:4px;border-radius:4px;background:#d3c3aa}
+#jvd-activity .jvd-sep.done{background:var(--green)}
+#jvd-activity .jvd-prompt{font-size:16px;margin:0 0 14px;color:#3b312b}
+#jvd-activity .jvd-board{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.6fr);gap:18px;align-items:stretch}
+#jvd-activity .jvd-panel{border:1px solid var(--line);border-radius:18px;background:#fffdf8;overflow:hidden;min-width:0;box-shadow:0 6px 16px rgba(92,15,34,.1)}
+#jvd-activity .jvd-panel-head{background:linear-gradient(90deg,#f6e6d6,#fbf1e3);border-bottom:1px solid #e3cbbd;padding:11px 15px;font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;color:#6e2132}
+#jvd-activity .jvd-answers-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+#jvd-activity .jvd-answers-head span{font-weight:normal;letter-spacing:0;text-transform:none;color:#75695f;font-size:11px}
+#jvd-activity .jvd-model-area{min-height:300px;padding:10px;display:flex;align-items:center;justify-content:center;background-image:radial-gradient(#e7d9c4 .8px,transparent .8px);background-size:13px 13px}
+#jvd-activity .jvd-model-svg{width:100%;max-width:330px;height:auto;max-height:320px;display:block}
+#jvd-activity .jvd-small-note{padding:0 15px 14px;font-size:12px;color:var(--muted);text-align:center}
+#jvd-activity .jvd-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px}
+#jvd-activity .jvd-option{display:block;width:100%;min-width:0;min-height:122px;background:#fff;border:2px solid #e6d6cb;border-radius:14px;padding:8px 7px 6px;color:var(--ink);text-align:center;transition:border-color .12s,box-shadow .12s,transform .12s,opacity .2s;position:relative}
+#jvd-activity .jvd-option:not(:disabled):hover{border-color:var(--wine);box-shadow:0 8px 16px rgba(93,25,40,.18);transform:translateY(-3px)}
+#jvd-activity .jvd-option:disabled{cursor:default}
+#jvd-activity .jvd-option-num{display:inline-block;font-size:10px;color:#fff;background:var(--wine2);border-radius:999px;padding:1px 9px;font-weight:800;margin-bottom:5px;letter-spacing:.05em}
+#jvd-activity .jvd-option.is-good{border-color:var(--green);background:#eff8f0;box-shadow:0 0 0 3px #9fc9b0;animation:jvdPop .4s ease both}
+#jvd-activity .jvd-option.is-bad{border-color:var(--red);background:#fff0ee;box-shadow:0 0 0 3px #e8b6b6;animation:jvdShake .45s ease both}
+#jvd-activity .jvd-option.is-dim{opacity:.5}
+#jvd-activity .jvd-view-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:'front side' 'top blank';align-items:center;gap:1px 6px;max-width:132px;margin:0 auto}
+#jvd-activity .jvd-view-alz{grid-area:front}
+#jvd-activity .jvd-view-per{grid-area:side}
+#jvd-activity .jvd-view-pla{grid-area:top}
+#jvd-activity .jvd-view{width:100%;height:auto;display:block;overflow:visible}
+#jvd-activity .jvd-view-label{font-size:7px;letter-spacing:.03em;font-weight:800}
+#jvd-activity .jvd-view-alz .jvd-view-label{fill:#8e1732}
+#jvd-activity .jvd-view-per .jvd-view-label{fill:#1f6f78}
+#jvd-activity .jvd-view-pla .jvd-view-label{fill:#a2640f}
+#jvd-activity .jvd-answer-foot{font-size:11px;color:#77695e;text-align:center;padding:0 12px 12px}
+#jvd-activity .jvd-bottomline{border-top:2px dashed #d6c1ae;margin-top:16px;padding-top:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;color:#6f6258;font-size:12px}
+
+/* Retroalimentación */
+#jvd-activity .jvd-overlay{margin:16px 0 0;padding:15px 18px;border:1px solid #91b5a1;border-left:6px solid var(--green);border-radius:14px;background:#eff8f0;display:flex;align-items:center;gap:14px;box-shadow:0 6px 14px rgba(47,115,89,.15)}
+#jvd-activity .jvd-overlay.error{border-color:#d39b9e;border-left-color:var(--red);background:#fff0ee;box-shadow:0 6px 14px rgba(165,44,55,.15)}
+#jvd-activity .jvd-fb-icon{width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+#jvd-activity .jvd-overlay.error .jvd-fb-icon{background:var(--red)}
+#jvd-activity .jvd-fb-text{flex:1;min-width:0}
+#jvd-activity .jvd-feedback-title{font-weight:800;margin:0 0 3px;font-size:17px;color:var(--green)}
+#jvd-activity .jvd-overlay.error .jvd-feedback-title{color:var(--red)}
+#jvd-activity .jvd-feedback-copy{font-size:13px;margin:0;color:#4a403a}
+
+/* Pantalla final */
+#jvd-activity .jvd-finish{position:relative;max-width:800px;margin:0 auto;text-align:center;padding:14px 15px 24px}
+#jvd-activity .jvd-finish-mark{width:104px;height:104px;margin:0 auto 12px;border-radius:50%;background:radial-gradient(circle,#fff7e4,#f1dfc3);border:3px solid var(--amber);display:flex;align-items:center;justify-content:center;animation:jvdPop .6s ease both;box-shadow:0 8px 20px rgba(226,155,53,.4)}
+#jvd-activity .jvd-finish p{margin:8px 0;color:#413832}
+#jvd-activity .jvd-ticket{display:inline-block;max-width:100%;margin:14px auto;padding:6px;border-radius:18px;background:linear-gradient(135deg,var(--amber),#f6cf8a,var(--amber))}
+#jvd-activity .jvd-ticket-in{border:2px dashed #b7727c;border-radius:13px;background:#fffaf0;padding:14px 22px 16px}
+#jvd-activity .jvd-ticket-label{margin:0 0 4px;font-size:11px;font-weight:800;letter-spacing:.2em;color:#8a7a68;text-transform:uppercase}
+#jvd-activity .jvd-password{font-size:26px;font-weight:900;color:var(--wine);overflow-wrap:anywhere;line-height:1.3}
+#jvd-activity .jvd-confetti{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:5}
+#jvd-activity .jvd-confetti span{position:absolute;top:0;width:10px;height:16px;border-radius:2px;opacity:0;animation:jvdFall 3s ease-in forwards}
+
+/* Adaptación al ancho real del contenedor (data-size lo calcula el script) */
+#jvd-activity .jvd-intro-art svg,#jvd-activity .jvd-model-svg{max-width:100%}
+#jvd-activity[data-size="m"] .jvd-main{padding:18px}
+#jvd-activity[data-size="m"] .jvd-header{padding:14px 18px;gap:12px}
+#jvd-activity[data-size="m"] .jvd-logo{width:48px;height:48px}
+#jvd-activity[data-size="m"] .jvd-title{font-size:24px}
+#jvd-activity[data-size="m"] .jvd-intro{grid-template-columns:minmax(230px,.85fr) minmax(0,1.3fr);gap:20px;min-height:330px}
+#jvd-activity[data-size="m"] .jvd-intro-art{min-height:270px}
+#jvd-activity[data-size="m"] .jvd-h2{font-size:28px}
+#jvd-activity[data-size="m"] .jvd-board{grid-template-columns:minmax(230px,.72fr) minmax(0,1.6fr);gap:14px}
+#jvd-activity[data-size="m"] .jvd-model-area{min-height:250px}
+#jvd-activity[data-size="m"] .jvd-options{gap:8px;padding:9px}
+#jvd-activity[data-size="m"] .jvd-option{min-height:108px;padding:6px 4px 5px}
+#jvd-activity[data-size="m"] .jvd-view-set{max-width:112px}
+
+#jvd-activity[data-size="s"] .jvd-main,#jvd-activity[data-size="xs"] .jvd-main{padding:14px}
+#jvd-activity[data-size="s"] .jvd-header,#jvd-activity[data-size="xs"] .jvd-header{padding:12px 14px;gap:10px}
+#jvd-activity[data-size="s"] .jvd-logo,#jvd-activity[data-size="xs"] .jvd-logo{width:42px;height:42px}
+#jvd-activity[data-size="s"] .jvd-title{font-size:22px}
+#jvd-activity[data-size="s"] .jvd-badge,#jvd-activity[data-size="xs"] .jvd-badge{font-size:10px;padding:5px 9px}
+#jvd-activity[data-size="s"] .jvd-intro,#jvd-activity[data-size="xs"] .jvd-intro{grid-template-columns:1fr;gap:14px;min-height:0}
+#jvd-activity[data-size="s"] .jvd-intro-art,#jvd-activity[data-size="xs"] .jvd-intro-art{min-height:230px}
+#jvd-activity[data-size="s"] .jvd-intro-art svg,#jvd-activity[data-size="xs"] .jvd-intro-art svg{max-height:230px}
+#jvd-activity[data-size="s"] .jvd-h2,#jvd-activity[data-size="xs"] .jvd-h2{font-size:25px}
+#jvd-activity[data-size="s"] .jvd-board,#jvd-activity[data-size="xs"] .jvd-board{grid-template-columns:1fr;gap:14px}
+#jvd-activity[data-size="s"] .jvd-model-area,#jvd-activity[data-size="xs"] .jvd-model-area{min-height:220px}
+#jvd-activity[data-size="s"] .jvd-model-svg,#jvd-activity[data-size="xs"] .jvd-model-svg{max-height:240px}
+#jvd-activity[data-size="s"] .jvd-options,#jvd-activity[data-size="xs"] .jvd-options{gap:8px;padding:9px}
+#jvd-activity[data-size="s"] .jvd-option{min-height:108px}
+#jvd-activity[data-size="s"] .jvd-overlay,#jvd-activity[data-size="xs"] .jvd-overlay{flex-wrap:wrap}
+
+#jvd-activity[data-size="xs"] .jvd-title{font-size:18px}
+#jvd-activity[data-size="xs"] .jvd-subtitle{font-size:10px}
+#jvd-activity[data-size="xs"] .jvd-badge{display:none}
+#jvd-activity[data-size="xs"] .jvd-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+#jvd-activity[data-size="xs"] .jvd-step{width:26px;height:26px;font-size:12px}
+#jvd-activity[data-size="xs"] .jvd-sep{width:8px}
+#jvd-activity[data-size="xs"] .jvd-password{font-size:20px}
+
+/* Pie */
+#jvd-activity .jvd-footnote{font-size:12px;color:#85776c;text-align:center;padding:12px 16px 16px;border-top:1px solid #e5d9c3;background:rgba(255,255,255,.55)}
+#jvd-activity .jvd-footnote a{color:var(--wine);font-weight:700}
+
+#jvd-activity .jvd-intro-copy p.jvd-kicker,#jvd-activity .jvd-finish p.jvd-kicker{color:#fff}
+#jvd-activity .jvd-board .jvd-panel:first-child{display:flex;flex-direction:column}
+#jvd-activity .jvd-board .jvd-panel:first-child .jvd-model-area{flex:1}
+#jvd-activity .jvd-finish .jvd-primary{margin-top:10px}
+
+@media (prefers-reduced-motion:reduce){#jvd-activity *{animation:none!important;transition:none!important}}
+</style>
+<p class="jvd-loading">Cargando la actividad… Si este mensaje no desaparece, abre la Vista previa de eXeLearning o exporta el contenido: los scripts no se ejecutan en todas las vistas del editor.</p>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var LINK = 'https://claude.ai/login';
+  var shapes = [
+    { h: [[2, 2, 0], [2, 2, 0], [1, 1, 1]] },
+    { h: [[1, 1, 1], [2, 0, 1], [1, 1, 2]] },
+    { h: [[1, 1, 1], [1, 3, 1], [1, 1, 1]] },
+    { h: [[2, 2, 0], [1, 1, 1], [0, 1, 2]] },
+    { h: [[1, 2, 2], [1, 0, 1], [0, 1, 1]] }
+  ];
+  var PRAISE = ['¡Correcto!', '¡Vas muy bien!', '¡Fenomenal!', '¡Genial!', '¡Reto completado!'];
+  var ROWS = [[1, 1, 1], [0, 1, 1], [1, 0, 1], [1, 1, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]];
+  var VIEWS = {
+    front: { label: 'ALZADO', cls: 'alz', fill: '#f9dde2', stroke: '#8e1732' },
+    side: { label: 'PERFIL', cls: 'per', fill: '#d3ebee', stroke: '#1f6f78' },
+    top: { label: 'PLANTA', cls: 'pla', fill: '#fbe8c4', stroke: '#b9731a' }
+  };
+
+  /* ---------- utilidades DOM (sin cadenas HTML) ---------- */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text !== undefined) { e.textContent = text; }
+    return e;
+  }
+  function sv(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag), k;
+    for (k in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, k)) { e.setAttribute(k, attrs[k]); }
+    }
+    if (parent) { parent.appendChild(e); }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function rich(tag, cls, parts) {
+    var p = el(tag, cls), i;
+    for (i = 0; i !== parts.length; i++) {
+      if (typeof parts[i] === 'string') { p.appendChild(document.createTextNode(parts[i])); }
+      else { p.appendChild(el('strong', '', parts[i].b)); }
+    }
+    return p;
+  }
+  function anyTrue(a) { var i; for (i = 0; i !== a.length; i++) { if (a[i]) { return true; } } return false; }
+  function maxH(h) {
+    var m = 0, r, c;
+    for (r = 0; r !== h.length; r++) { for (c = 0; c !== h[r].length; c++) { if (h[r][c] > m) { m = h[r][c]; } } }
+    return m;
+  }
+
+  /* ---------- geometría ---------- */
+  function projections(h) {
+    var rows = h.length, cols = h[0].length, max = maxH(h);
+    var front = [], side = [], top = [], z, x, y, row, on;
+    for (z = max - 1; z !== -1; z--) {
+      row = [];
+      for (x = 0; x !== cols; x++) { on = 0; for (y = 0; y !== rows; y++) { if (h[y][x] > z) { on = 1; } } row.push(on); }
+      if (anyTrue(row)) { front.push(row); }
+    }
+    for (z = max - 1; z !== -1; z--) {
+      row = [];
+      for (y = 0; y !== rows; y++) { on = 0; for (x = 0; x !== cols; x++) { if (h[y][x] > z) { on = 1; } } row.push(on); }
+      if (anyTrue(row)) { side.push(row); }
+    }
+    for (y = 0; y !== rows; y++) {
+      row = [];
+      for (x = 0; x !== cols; x++) { row.push(h[y][x] > 0 ? 1 : 0); }
+      top.push(row);
+    }
+    return { front: front, side: side, top: top };
+  }
+  function exists(h, x, y, z) {
+    if (x > -1) { if (y > -1) { if (h.length > y) { if (h[0].length > x) { return h[y][x] > z; } } } }
+    return false;
+  }
+  function poly(parent, pts, fill) {
+    var s = '', i;
+    for (i = 0; i !== pts.length; i++) { s += pts[i][0].toFixed(2) + ',' + pts[i][1].toFixed(2) + ' '; }
+    return sv('polygon', { points: s, fill: fill, stroke: '#2c2926', 'stroke-width': '1.35', 'stroke-linejoin': 'round' }, parent);
+  }
+  function isoSvg(h) {
+    var rows = h.length, cols = h[0].length, max = maxH(h);
+    var U = 27, V = 15, Z = 27, OX = 130, OY = 112;
+    function pt(x, y, z) { return [OX + (x - y) * U, OY + (x + y) * V - z * Z]; }
+    var svg = sv('svg', { 'class': 'jvd-model-svg', viewBox: '0 0 280 250', role: 'img',
+      'aria-label': 'Pieza en perspectiva axonométrica con la etiqueta ALZADO y una pequeña flecha orientada hacia la pieza' });
+    var a = pt(0, 0, 0), b = pt(cols, 0, 0), c = pt(cols, rows, 0), d = pt(0, rows, 0);
+    sv('polygon', { points: a.join(',') + ' ' + b.join(',') + ' ' + c.join(',') + ' ' + d.join(','), fill: 'rgba(110,32,50,.10)' }, svg);
+    var guide = sv('g', { opacity: '.45', fill: 'none', stroke: '#b9aa98', 'stroke-width': '1', 'stroke-dasharray': '3 4' }, svg);
+    var t1 = pt(0, 0, max), t2 = pt(cols, 0, max), t3 = pt(cols, rows, max), t4 = pt(0, rows, max);
+    sv('path', { d: 'M ' + t1.join(' ') + ' L ' + t2.join(' ') + ' L ' + t3.join(' ') + ' L ' + t4.join(' ') + ' Z' }, guide);
+    var corners = [[0, 0], [cols, 0], [0, rows], [cols, rows]], i, p0, p1;
+    for (i = 0; i !== corners.length; i++) {
+      p0 = pt(corners[i][0], corners[i][1], 0); p1 = pt(corners[i][0], corners[i][1], max);
+      sv('path', { d: 'M ' + p0.join(' ') + ' L ' + p1.join(' ') }, guide);
+    }
+    var cubes = [], x, y, z;
+    for (y = 0; y !== rows; y++) { for (x = 0; x !== cols; x++) { for (z = 0; z !== h[y][x]; z++) { cubes.push({ x: x, y: y, z: z }); } } }
+    cubes.sort(function (p, q) { return ((p.x + p.y) - (q.x + q.y)) || (p.z - q.z); });
+    var faces = sv('g', {}, svg);
+    for (i = 0; i !== cubes.length; i++) {
+      x = cubes[i].x; y = cubes[i].y; z = cubes[i].z;
+      if (!exists(h, x, y + 1, z)) { poly(faces, [pt(x, y + 1, z), pt(x + 1, y + 1, z), pt(x + 1, y + 1, z + 1), pt(x, y + 1, z + 1)], '#a9a39b'); }
+      if (!exists(h, x + 1, y, z)) { poly(faces, [pt(x + 1, y, z), pt(x + 1, y + 1, z), pt(x + 1, y + 1, z + 1), pt(x + 1, y, z + 1)], '#d3cdc4'); }
+      if (!exists(h, x, y, z + 1)) { poly(faces, [pt(x, y, z + 1), pt(x + 1, y, z + 1), pt(x + 1, y + 1, z + 1), pt(x, y + 1, z + 1)], '#fffdf6'); }
+    }
+    var lab = sv('g', { 'aria-hidden': 'true' }, svg);
+    sv('path', { d: 'M 32 228 L 64 177', fill: 'none', stroke: '#fffaf0', 'stroke-width': '4', 'stroke-linecap': 'round' }, lab);
+    sv('path', { d: 'M 32 228 L 64 177', fill: 'none', stroke: '#8e1732', 'stroke-width': '1.6', 'stroke-linecap': 'round' }, lab);
+    sv('path', { d: 'M 64 177 L 63.1 182.3 L 59.7 180.2 Z', fill: '#8e1732' }, lab);
+    var tx = sv('text', { x: '12', y: '239', 'text-anchor': 'start', 'font-size': '9', 'font-weight': '800', fill: '#8e1732',
+      stroke: '#fffaf0', 'stroke-width': '3', 'paint-order': 'stroke', 'letter-spacing': '.4' }, lab);
+    tx.textContent = 'ALZADO';
+    return svg;
+  }
+  function viewSvg(matrix, kind) {
+    var v = VIEWS[kind], rows = matrix.length, cols = matrix[0].length, cell = 8, w = 46, hh = 40;
+    var dx = (w - cols * cell) / 2, dy = (hh - rows * cell) / 2, x, y;
+    var svg = sv('svg', { 'class': 'jvd-view jvd-view-' + v.cls, viewBox: '0 0 46 49', 'aria-hidden': 'true' });
+    for (y = 0; y !== rows; y++) {
+      for (x = 0; x !== cols; x++) {
+        if (matrix[y][x]) {
+          sv('rect', { x: dx + x * cell, y: dy + y * cell, width: cell, height: cell, fill: v.fill, stroke: v.stroke, 'stroke-width': '1.1' }, svg);
+        }
+      }
+    }
+    var t = sv('text', { 'class': 'jvd-view-label', x: '23', y: '47', 'text-anchor': 'middle' }, svg);
+    t.textContent = v.label;
+    return svg;
+  }
+  function logoSvg() {
+    var s = sv('svg', { viewBox: '0 0 40 40', width: '36', height: '36', 'aria-hidden': 'true' });
+    sv('polygon', { points: '20,5 34,13 20,21 6,13', fill: '#fffdf6', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    sv('polygon', { points: '6,13 20,21 20,36 6,28', fill: '#e8b6bf', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    sv('polygon', { points: '34,13 20,21 20,36 34,28', fill: '#c97a8a', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    return s;
+  }
+
+  /* ---------- generación de opciones ---------- */
+  function shuffled(arr) {
+    var i, j, t;
+    for (i = arr.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function matrixKey(m) {
+    var out = [], i;
+    for (i = 0; i !== m.length; i++) { out.push(m[i].join('')); }
+    return out.join('/');
+  }
+  function copyM(m) { var out = [], i; for (i = 0; i !== m.length; i++) { out.push(m[i].slice()); } return out; }
+  function validM(m) {
+    var i;
+    if (m.length === 0) { return false; }
+    for (i = 0; i !== m.length; i++) { if (m[i].length !== 3) { return false; } if (!anyTrue(m[i])) { return false; } }
+    return true;
+  }
+  function buildViewPool(kind, target) {
+    var seen = {}, pool = [], i, k;
+    seen[matrixKey(target)] = 1;
+    function addM(m) {
+      var key;
+      if (!validM(m)) { return; }
+      key = matrixKey(m);
+      if (!seen[key]) { seen[key] = 1; pool.push(copyM(m)); }
+    }
+    var real = [], m;
+    for (i = 0; i !== shapes.length; i++) { m = projections(shapes[i].h)[kind]; real.push(m); addM(m); }
+    for (i = 0; i !== real.length; i++) {
+      m = [];
+      for (k = 0; k !== real[i].length; k++) { m.push(real[i][k].slice().reverse()); }
+      addM(m);
+    }
+    var heights = (kind === 'top') ? [3] : [2, 3], hi, total, code, value, row;
+    for (hi = 0; hi !== heights.length; hi++) {
+      total = Math.pow(ROWS.length, heights[hi]);
+      for (code = 0; code !== total; code++) {
+        value = code; m = [];
+        for (row = 0; row !== heights[hi]; row++) { m.push(ROWS[value % ROWS.length].slice()); value = Math.floor(value / ROWS.length); }
+        addM(m);
+      }
+    }
+    return pool.slice(0, 8);
+  }
+  function makeChoices(index) {
+    var target = projections(shapes[index].h);
+    var fp = buildViewPool('front', target.front), sp = buildViewPool('side', target.side), tp = buildViewPool('top', target.top);
+    var choices = [{ front: target.front, side: target.side, top: target.top, correct: true }], j;
+    for (j = 0; j !== 8; j++) {
+      choices.push({ front: fp[j], side: sp[(j * 3 + index) % 8], top: tp[(j * 5 + index) % 8], correct: false });
+    }
+    return shuffled(choices);
+  }
+  function viewSet(c) {
+    var s = el('div', 'jvd-view-set');
+    s.appendChild(viewSvg(c.front, 'front'));
+    s.appendChild(viewSvg(c.side, 'side'));
+    s.appendChild(viewSvg(c.top, 'top'));
+    return s;
+  }
+  function legend() {
+    var l = el('div', 'jvd-legend'), items = [['alz', 'ALZADO'], ['per', 'PERFIL'], ['pla', 'PLANTA']], i, c;
+    for (i = 0; i !== items.length; i++) {
+      c = el('span', 'jvd-chip');
+      c.appendChild(el('span', 'jvd-dot jvd-dot-' + items[i][0]));
+      c.appendChild(document.createTextNode(items[i][1]));
+      l.appendChild(c);
+    }
+    return l;
+  }
+
+  /* ---------- construcción de la actividad ---------- */
+  function build(root) {
+    if (root.jvdReady) { return; }
+    root.jvdReady = true;
+    var kids = root.childNodes, n, i;
+    for (i = kids.length - 1; i !== -1; i--) {
+      n = kids[i];
+      if (n.nodeName !== 'STYLE') { if (n.nodeName !== 'SCRIPT') { root.removeChild(n); } }
+    }
+    var level = 0, chosen = false;
+
+    var shell = el('div', 'jvd-shell');
+    var head = el('div', 'jvd-header');
+    var logo = el('div', 'jvd-logo'); logo.appendChild(logoSvg());
+    var ht = el('div', 'jvd-head-text');
+    ht.appendChild(el('h2', 'jvd-title', 'Juego de vistas'));
+    ht.appendChild(el('div', 'jvd-subtitle', 'Del volumen al sistema europeo'));
+    head.appendChild(logo); head.appendChild(ht); head.appendChild(el('div', 'jvd-badge', 'MISIÓN · 5 PIEZAS'));
+    var scr = el('div', 'jvd-main'); scr.setAttribute('aria-live', 'polite');
+    var foot = el('div', 'jvd-footnote');
+    foot.appendChild(document.createTextNode('Actividad de creación propia generada con '));
+    var a = el('a', '', 'Claude'); a.setAttribute('href', LINK); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener noreferrer');
+    foot.appendChild(a); foot.appendChild(document.createTextNode('.'));
+    shell.appendChild(head); shell.appendChild(scr); shell.appendChild(foot);
+    root.appendChild(shell);
+
+    function fit() {
+      var w = root.clientWidth, s = 'l';
+      if (w !== 0) {
+        if (900 > w) { s = 'm'; }
+        if (680 > w) { s = 's'; }
+        if (480 > w) { s = 'xs'; }
+      }
+      if (root.getAttribute('data-size') !== s) { root.setAttribute('data-size', s); }
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (window.ResizeObserver) { new ResizeObserver(fit).observe(root); }
+    else { setInterval(fit, 1000); }
+    setTimeout(fit, 300);
+    setTimeout(fit, 1500);
+
+    function stepper() {
+      var p = el('div', 'jvd-progress'), k, s;
+      p.setAttribute('aria-label', 'Progreso: ' + level + ' de 5 piezas completadas');
+      for (k = 0; k !== shapes.length; k++) {
+        if (k !== 0) { p.appendChild(el('span', 'jvd-sep' + (k > level ? '' : ' done'))); }
+        s = el('span', 'jvd-step' + (k === level ? ' current' : (k > level ? '' : ' done')), k > level - 1 ? (k + 1) : '\u2713');
+        if (k === level) { s.textContent = String(k + 1); }
+        p.appendChild(s);
+      }
+      return p;
+    }
+
+    function intro() {
+      clear(scr); chosen = false;
+      var sec = el('div', 'jvd-intro jvd-fade');
+      var art = el('div', 'jvd-intro-art'); art.appendChild(isoSvg(shapes[0].h));
+      var copy = el('div', 'jvd-intro-copy');
+      copy.appendChild(el('p', 'jvd-kicker', 'Entrenamiento espacial'));
+      copy.appendChild(el('h3', 'jvd-h2', '¿Reconoces sus vistas?'));
+      copy.appendChild(el('p', '', 'A la izquierda verás una pieza representada en perspectiva axonométrica. A la derecha tendrás nueve opciones con sus vistas en el sitema europeo.'));
+      copy.appendChild(rich('p', '', ['Observa el ', { b: 'alzado' }, ', el ', { b: 'perfil izquierdo' }, ' y la ', { b: 'planta' }, ', y elige el conjunto que corresponde a la pieza.']));
+      copy.appendChild(legend());
+      copy.appendChild(rich('div', 'jvd-info-note', [{ b: 'Tu misión:' }, ' identifica las cinco piezas para completar el juego. ¡Atención! Si eliges una respuesta incorrecta, tendrás que volver al inicio y comenzar de nuevo.']));
+      var go = el('button', 'jvd-primary jvd-start', 'Comenzar misión \u2192'); go.type = 'button';
+      go.addEventListener('click', function () { level = 0; game(); });
+      copy.appendChild(go);
+      sec.appendChild(art); sec.appendChild(copy); scr.appendChild(sec);
+    }
+
+    function makeOption(c, idx) {
+      var b = el('button', 'jvd-option'); b.type = 'button';
+      b.setAttribute('data-correct', c.correct ? '1' : '0');
+      b.setAttribute('aria-label', 'Opción ' + (idx + 1) + ', alzado, perfil y planta');
+      b.appendChild(el('span', 'jvd-option-num', 'OPCIÓN ' + (idx + 1)));
+      b.appendChild(viewSet(c));
+      return b;
+    }
+
+    function feedback(good, isLast) {
+      var box = el('div', 'jvd-overlay jvd-fade' + (good ? '' : ' error'));
+      box.appendChild(el('div', 'jvd-fb-icon', good ? '\u2713' : '!'));
+      var txt = el('div', 'jvd-fb-text');
+      var btn = el('button', 'jvd-primary'); btn.type = 'button';
+      if (good) {
+        txt.appendChild(el('p', 'jvd-feedback-title', PRAISE[level]));
+        txt.appendChild(el('p', 'jvd-feedback-copy', 'Has desbloqueado ' + (level + 1) + ' pieza' + (level === 0 ? '' : 's') + ' de 5.' + (isLast ? ' Has completado la misión.' : ' Sigue así; cada pieza te acerca a la contraseña.')));
+        btn.textContent = (isLast ? 'Ver contraseña' : 'Siguiente pieza') + ' \u2192';
+        btn.addEventListener('click', function () { if (isLast) { finish(); } else { level++; game(); } });
+      } else {
+        txt.appendChild(el('p', 'jvd-feedback-title', '¡Vaya, no es esa!'));
+        txt.appendChild(el('p', 'jvd-feedback-copy', 'La combinación no corresponde a la pieza. Repasa las vistas e inténtalo de nuevo desde el principio: los errores también ayudan a aprender.'));
+        btn.textContent = 'Volver al inicio';
+        btn.addEventListener('click', function () { level = 0; intro(); });
+      }
+      box.appendChild(txt); box.appendChild(btn);
+      return box;
+    }
+
+    function game() {
+      clear(scr); chosen = false;
+      var sh = shapes[level], choices = makeChoices(level), k;
+      var wrap = el('div', 'jvd-fade');
+      var top = el('div', 'jvd-game-top');
+      top.appendChild(el('div', 'jvd-piece-label', 'Pieza ' + (level + 1) + ' / 5'));
+      top.appendChild(stepper());
+      wrap.appendChild(top);
+      wrap.appendChild(rich('p', 'jvd-prompt', [{ b: '¿Qué conjunto de vistas diédricas corresponde a esta pieza?' }, ' Haz clic en la opción correcta.']));
+
+      var board = el('div', 'jvd-board');
+      var p1 = el('div', 'jvd-panel');
+      p1.appendChild(el('div', 'jvd-panel-head', 'Pieza en vista axonométrica'));
+      var area = el('div', 'jvd-model-area'); area.appendChild(isoSvg(sh.h)); p1.appendChild(area);
+      p1.appendChild(el('div', 'jvd-small-note', 'La etiqueta «ALZADO» identifica la dirección de observación. Observa la altura, los entrantes y la forma de la base.'));
+      var p2 = el('div', 'jvd-panel');
+      var ph = el('div', 'jvd-panel-head jvd-answers-head', 'Elige una opción ');
+      ph.appendChild(el('span', '', '9 opciones sin vistas repetidas'));
+      p2.appendChild(ph);
+      var grid = el('div', 'jvd-options'), opts = [];
+      for (k = 0; k !== choices.length; k++) { opts.push(makeOption(choices[k], k)); grid.appendChild(opts[k]); }
+      p2.appendChild(grid);
+      p2.appendChild(el('div', 'jvd-answer-foot', 'Las tres vistas deben representar la misma pieza.'));
+      board.appendChild(p1); board.appendChild(p2); wrap.appendChild(board);
+
+      var bottom = el('div', 'jvd-bottomline');
+      bottom.appendChild(el('span', '', 'Desbloquea las cinco piezas para descubrir la contraseña.'));
+      var rs = el('button', 'jvd-secondary', 'Volver al inicio'); rs.type = 'button';
+      rs.addEventListener('click', function () { level = 0; intro(); });
+      bottom.appendChild(rs); wrap.appendChild(bottom);
+      var slot = el('div', 'jvd-slot'); wrap.appendChild(slot);
+      scr.appendChild(wrap);
+
+      function makePick(btn) {
+        return function () {
+          if (chosen) { return; }
+          chosen = true;
+          var j, good = btn.getAttribute('data-correct') === '1', isLast = (level === shapes.length - 1), fb;
+          for (j = 0; j !== opts.length; j++) {
+            opts[j].disabled = true;
+            if (opts[j] !== btn) { opts[j].className += ' is-dim'; }
+          }
+          btn.className += good ? ' is-good' : ' is-bad';
+          fb = feedback(good, isLast);
+          slot.appendChild(fb);
+          if (fb.scrollIntoView) { try { fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) { } }
+        };
+      }
+      for (k = 0; k !== opts.length; k++) { opts[k].addEventListener('click', makePick(opts[k])); }
+    }
+
+    function confetti(parent) {
+      var layer = el('div', 'jvd-confetti'), colors = ['#8e1732', '#e29b35', '#2f7359', '#1f6f78', '#aa364b', '#f6cf8a'], j, s;
+      layer.setAttribute('aria-hidden', 'true');
+      for (j = 0; j !== 36; j++) {
+        s = document.createElement('span');
+        s.setAttribute('style', 'left:' + Math.floor(Math.random() * 100) + '%;background:' + colors[j % colors.length] + ';animation-delay:' + (Math.random() * 1.2).toFixed(2) + 's;animation-duration:' + (2.4 + Math.random() * 1.6).toFixed(2) + 's');
+        layer.appendChild(s);
+      }
+      parent.appendChild(layer);
+      setTimeout(function () { if (layer.parentNode) { layer.parentNode.removeChild(layer); } }, 5000);
+    }
+
+    function finish() {
+      clear(scr);
+      var sec = el('div', 'jvd-finish jvd-fade');
+      var mark = el('div', 'jvd-finish-mark');
+      var s = sv('svg', { viewBox: '0 0 80 80', width: '72', height: '72', role: 'img', 'aria-label': 'Dibujo lineal de un poliedro' });
+      var g = sv('g', { fill: 'none', stroke: '#8e1732', 'stroke-width': '2.1', 'stroke-linejoin': 'round' }, s);
+      sv('path', { d: 'M40 7 65 24 57 55 40 72 17 55 10 24Z' }, g);
+      sv('path', { d: 'M40 7 40 38 65 24 M40 38 57 55 M40 38 17 55 M40 38 10 24 M40 38 40 72 M10 24 40 7 65 24 57 55 40 72 17 55 10 24' }, g);
+      sv('path', { d: 'M10 24 57 55 M65 24 17 55', 'stroke-dasharray': '3 3', opacity: '.6' }, g);
+      mark.appendChild(s); sec.appendChild(mark);
+      sec.appendChild(el('p', 'jvd-kicker', 'Misión completada'));
+      sec.appendChild(el('h3', 'jvd-h2', '¡Has desbloqueado las cinco piezas!'));
+      sec.appendChild(el('p', '', 'Has demostrado que sabes relacionar una representación axonométrica con sus vistas diédricas.'));
+      sec.appendChild(el('p', '', 'Guarda la contraseña secreta:'));
+      var tk = el('div', 'jvd-ticket'), ti = el('div', 'jvd-ticket-in');
+      ti.appendChild(el('p', 'jvd-ticket-label', 'Contraseña secreta'));
+      ti.appendChild(el('div', 'jvd-password', 'El segundo código es: 30. ¡Enhorabuena!'));
+      tk.appendChild(ti); sec.appendChild(tk);
+      sec.appendChild(el('p', '', '¡Buen trabajo! Sigue entrenando tu visión espacial.'));
+      var again = el('button', 'jvd-primary', 'Jugar de nuevo \u21BB'); again.type = 'button';
+      again.addEventListener('click', function () { level = 0; intro(); });
+      sec.appendChild(again);
+      scr.appendChild(sec);
+      confetti(sec);
+    }
+
+    intro();
+  }
+
+  /* ---------- arranque tolerante a eXeLearning ---------- */
+  function boot() {
+    var roots = document.querySelectorAll('.jvd-root'), i;
+    for (i = 0; i !== roots.length; i++) {
+      try { build(roots[i]); } catch (err) {
+        roots[i].appendChild(el('p', 'jvd-loading', 'Error al cargar la actividad: ' + err.message));
+      }
+    }
+  }
+  boot();
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', boot);
+    window.addEventListener('load', boot);
+  }
+  setTimeout(boot, 400);
+  setTimeout(boot, 1500);
+})();
+</script>
+</div>
+</div>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detective de piezas</title>
+<style>
+html,body{margin:0;padding:0;background:transparent}
+body{padding:12px 10px 28px}
+</style>
+</head>
+<body>
+<div class="dp-embed-wrap" style="display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div id="dp-activity" class="dp-root">
+<style>
+#dp-activity{--ink:#eaf0ff;--muted:#aab6e8;--cyan:#22d3ee;--pink:#ff4fa3;--lime:#a3e635;--amber:#fbbf24;--violet:#8b5cf6;font-family:"Trebuchet MS",Verdana,Arial,sans-serif;color:var(--ink);width:100%;min-width:0;max-width:1180px;margin:0 auto;font-size:16px;line-height:1.45;box-sizing:border-box}
+#dp-activity *{box-sizing:border-box}
+#dp-activity [hidden]{display:none!important}
+#dp-activity button{font:inherit;cursor:pointer}
+#dp-activity .dp-loading{margin:0;padding:18px;text-align:center;color:#555;font-size:14px}
+
+/* Marco con fondo espacial */
+#dp-activity .dp-shell{position:relative;overflow:hidden;border-radius:26px;border:2px solid #2c3a8c;box-shadow:0 14px 40px rgba(10,15,44,.55),0 0 0 4px rgba(34,211,238,.12);background-color:#0a0f2c;background-image:radial-gradient(circle at 12% 0%,rgba(139,92,246,.5),transparent 42%),radial-gradient(circle at 100% 28%,rgba(34,211,238,.3),transparent 38%),radial-gradient(circle at 50% 125%,rgba(255,79,163,.28),transparent 46%),radial-gradient(1.4px 1.4px at 20px 30px,#fff,transparent 60%),radial-gradient(1px 1px at 90px 80px,#cfe3ff,transparent 60%),radial-gradient(1.2px 1.2px at 150px 20px,#ffe9b0,transparent 60%),radial-gradient(1px 1px at 210px 120px,#fff,transparent 60%),radial-gradient(1.3px 1.3px at 60px 160px,#bfe9ff,transparent 60%),radial-gradient(1px 1px at 260px 200px,#fff,transparent 60%);background-size:100% 100%,100% 100%,100% 100%,300px 240px,300px 240px,300px 240px,300px 240px,300px 240px,300px 240px;background-repeat:no-repeat,no-repeat,no-repeat,repeat,repeat,repeat,repeat,repeat,repeat}
+#dp-activity .dp-header{display:flex;align-items:center;gap:16px;padding:16px 24px;background:linear-gradient(90deg,rgba(255,255,255,.1),rgba(255,255,255,.02));border-bottom:1px solid rgba(255,255,255,.16)}
+#dp-activity .dp-logo{width:54px;height:54px;border-radius:16px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff4fa3,#8b5cf6);box-shadow:0 0 18px rgba(255,79,163,.6)}
+#dp-activity .dp-head-text{flex:1;min-width:0}
+#dp-activity .dp-title{margin:0;font-size:28px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;color:#fff;background:linear-gradient(90deg,#22d3ee,#a3e635 55%,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#dp-activity .dp-subtitle{margin-top:4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#dp-activity .dp-badge{white-space:nowrap;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:900;letter-spacing:.08em;color:#2b1700;background:linear-gradient(180deg,#ffe08a,#fbbf24);box-shadow:0 3px 0 #b97a07,0 0 16px rgba(251,191,36,.5)}
+#dp-activity .dp-main{padding:22px 24px 18px}
+
+/* Animaciones */
+@keyframes dpFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes dpFloat{0%{transform:translateY(0)}50%{transform:translateY(-9px)}100%{transform:translateY(0)}}
+@keyframes dpSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes dpShake{0%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}}
+@keyframes dpPop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes dpGlow{0%{box-shadow:0 6px 0 #4a2a9e,0 0 0 0 rgba(255,79,163,.6)}70%{box-shadow:0 6px 0 #4a2a9e,0 0 0 16px rgba(255,79,163,0)}100%{box-shadow:0 6px 0 #4a2a9e,0 0 0 0 rgba(255,79,163,0)}}
+@keyframes dpPulse{0%{opacity:.55}50%{opacity:1}100%{opacity:.55}}
+@keyframes dpBob{0%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}100%{transform:translateY(0) rotate(-2deg)}}
+@keyframes dpRise{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-34px);opacity:0}}
+@keyframes dpFall{0%{transform:translateY(-30px) rotate(0deg);opacity:1}100%{transform:translateY(640px) rotate(600deg);opacity:0}}
+#dp-activity .dp-fade{animation:dpFade .5s ease both}
+
+/* Botones */
+#dp-activity .dp-primary{border:0;border-radius:999px;padding:14px 28px;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(135deg,#ff4fa3,#8b5cf6);box-shadow:0 6px 0 #4a2a9e,0 10px 24px rgba(255,79,163,.4);transition:transform .12s,filter .12s}
+#dp-activity .dp-primary:hover{filter:brightness(1.12);transform:translateY(-2px)}
+#dp-activity .dp-primary:active{transform:translateY(4px);box-shadow:0 2px 0 #4a2a9e}
+#dp-activity .dp-launch{margin-top:20px;animation:dpGlow 2.2s infinite}
+#dp-activity .dp-ghost{border:1px solid #fbbf24;border-radius:999px;padding:9px 16px;font-size:14px;font-weight:800;color:#ffe08a;background:rgba(251,191,36,.14);transition:background .12s,transform .12s}
+#dp-activity .dp-ghost:hover{background:rgba(251,191,36,.3);transform:translateY(-1px)}
+#dp-activity button:focus-visible{outline:3px solid #fbbf24;outline-offset:3px}
+
+/* Portada */
+#dp-activity .dp-hero{display:grid;grid-template-columns:minmax(270px,.9fr) minmax(0,1.3fr);gap:28px;align-items:center;min-height:390px}
+#dp-activity .dp-art{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;border-radius:24px;overflow:hidden;background:radial-gradient(circle,rgba(34,211,238,.2),rgba(10,15,44,.1) 70%);border:1px solid rgba(255,255,255,.14)}
+#dp-activity .dp-ring{position:absolute;left:50%;top:50%;border-radius:50%}
+#dp-activity .dp-ring1{width:300px;height:300px;margin:-150px 0 0 -150px;border:2px dashed rgba(34,211,238,.45);animation:dpSpin 28s linear infinite}
+#dp-activity .dp-ring2{width:220px;height:220px;margin:-110px 0 0 -110px;border:2px dotted rgba(255,79,163,.6);animation:dpSpin 18s linear infinite reverse}
+#dp-activity .dp-art svg{position:relative;z-index:2;width:100%;max-width:290px;height:auto;animation:dpFloat 5s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(34,211,238,.55))}
+#dp-activity .dp-kicker{display:inline-block;margin:0 0 10px;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#10250a;background:linear-gradient(90deg,#a3e635,#22d3ee)}
+#dp-activity .dp-h2{margin:0 0 12px;font-size:34px;line-height:1.12;font-weight:900;color:#fff;text-shadow:0 0 18px rgba(139,92,246,.7)}
+#dp-activity .dp-copy p{margin:8px 0;color:#d6defa;max-width:680px}
+#dp-activity .dp-steps{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px;max-width:660px}
+#dp-activity .dp-steps li{display:flex;align-items:center;gap:12px;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-size:15px}
+#dp-activity .dp-steps li,#dp-activity .dp-steps li .dp-steptext{color:#fff!important;opacity:1!important}
+#dp-activity .dp-steps li .dp-num{color:#0a0f2c!important;opacity:1!important}
+#dp-activity .dp-num{flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a0f2c;background:linear-gradient(135deg,#22d3ee,#a3e635)}
+#dp-activity .dp-rules{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0}
+#dp-activity .dp-rule{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.03em;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#e9eeff}
+#dp-activity .dp-legend{margin-top:14px;padding:11px 14px;border-left:5px solid #22d3ee;border-radius:0 12px 12px 0;background:rgba(34,211,238,.1);font-size:13px;color:#cfeaf3;max-width:680px}
+
+/* HUD */
+#dp-activity .dp-hud{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+#dp-activity .dp-level{padding:8px 16px;border-radius:999px;font-size:14px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#8b5cf6,#ff4fa3);box-shadow:0 3px 0 #4a2a9e}
+#dp-activity .dp-track{flex:1;min-width:150px;display:flex;gap:6px}
+#dp-activity .dp-seg{flex:1;height:12px;border-radius:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14)}
+#dp-activity .dp-seg.done{background:linear-gradient(90deg,#a3e635,#22d3ee);border-color:transparent;box-shadow:0 0 10px rgba(163,230,53,.7)}
+#dp-activity .dp-seg.current{background:#22d3ee;border-color:transparent;animation:dpPulse 1.4s infinite;box-shadow:0 0 12px rgba(34,211,238,.9)}
+#dp-activity .dp-chip{position:relative;padding:7px 14px;border-radius:999px;font-size:14px;font-weight:900;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);white-space:nowrap}
+#dp-activity .dp-chip-xp{color:#ffe08a;border-color:rgba(251,191,36,.6)}
+#dp-activity .dp-chip-streak{color:#ffb3da;border-color:rgba(255,79,163,.6)}
+#dp-activity .dp-float{position:absolute;right:6px;top:-8px;font-weight:900;color:#a3e635;text-shadow:0 0 8px rgba(163,230,53,.8);animation:dpRise 1.3s ease-out forwards;pointer-events:none}
+
+/* Tablero */
+#dp-activity .dp-qtitle{margin:0 0 4px;font-size:22px;font-weight:900;color:#fff}
+#dp-activity .dp-qsub{margin:0 0 14px;font-size:14px;color:var(--muted)}
+#dp-activity .dp-board{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.2fr);gap:18px;align-items:stretch}
+#dp-activity .dp-card{min-width:0;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1)}
+#dp-activity .dp-card-head{padding:11px 16px;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#bfe9ff;border-bottom:1px solid rgba(255,255,255,.12);background:linear-gradient(90deg,rgba(34,211,238,.18),rgba(255,255,255,0))}
+#dp-activity .dp-plan{display:flex;flex-direction:column}
+#dp-activity .dp-plan-body{flex:1;display:flex;align-items:center;justify-content:center;padding:12px;background-image:linear-gradient(rgba(34,211,238,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.09) 1px,transparent 1px);background-size:22px 22px}
+#dp-activity .dp-views-svg{width:100%;max-width:390px;height:auto;display:block;filter:drop-shadow(0 0 7px rgba(34,211,238,.35))}
+#dp-activity .dp-plan-note{padding:0 16px 12px;font-size:12px;color:var(--muted);text-align:center}
+#dp-activity .dp-plan-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#dp-activity .dp-pill{padding:3px 11px;border-radius:999px;font-size:11px;letter-spacing:.08em;color:#0a0f2c;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.4)}
+#dp-activity .dp-plan-note p{margin:0 0 6px}
+#dp-activity .dp-linekey{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 6px;font-size:11.5px;color:#cbd5f5}
+#dp-activity .dp-lki{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+#dp-activity .dp-lk{display:inline-block;width:28px;height:0;vertical-align:middle;border-top:1px solid rgba(255,255,255,.65)}
+#dp-activity .dp-lk-thick{border-top:3px solid #fff;border-radius:2px}
+#dp-activity .dp-lk-dash{border-top:2px dashed #fff}
+#dp-activity .dp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:14px}
+#dp-activity .dp-option{position:relative;display:block;width:100%;min-width:0;padding:10px 8px 8px;border-radius:20px;color:var(--ink);text-align:center;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.16);transition:transform .15s,border-color .15s,box-shadow .15s,opacity .25s,background .15s}
+#dp-activity .dp-option svg{width:100%;height:auto;max-width:230px;display:block;margin:0 auto}
+#dp-activity .dp-option:not(:disabled):not(.is-good):not(.is-bad):not(.is-focus):hover{transform:translateY(-4px) scale(1.02);border-color:#22d3ee;box-shadow:0 0 22px rgba(34,211,238,.5)}
+#dp-activity .dp-option:disabled{cursor:default}
+#dp-activity .dp-letter{position:absolute;left:10px;top:10px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a0f2c;box-shadow:0 0 12px rgba(255,255,255,.35)}
+#dp-activity .dp-mark{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff}
+#dp-activity .dp-option.is-bad{border-color:#ff4fa3;background:rgba(255,79,163,.14);box-shadow:0 0 22px rgba(255,79,163,.45);animation:dpShake .45s ease both}
+#dp-activity .dp-option.is-bad .dp-mark{display:flex;background:#ff4fa3}
+#dp-activity .dp-option.is-good{border-color:#a3e635;background:rgba(163,230,53,.16);box-shadow:0 0 26px rgba(163,230,53,.6);animation:dpPop .45s ease both}
+#dp-activity .dp-option.is-good .dp-mark{display:flex;background:#65a30d}
+#dp-activity .dp-option.is-dim{opacity:.55}
+#dp-activity .dp-option.is-focus{opacity:1;border-color:#fbbf24;box-shadow:0 0 22px rgba(251,191,36,.55)}
+#dp-activity .dp-review{margin:0;padding:0 16px 14px;font-size:12px;color:var(--muted);text-align:center}
+
+/* Mascota y mensajes */
+#dp-activity .dp-coach{display:flex;gap:14px;align-items:flex-start;margin-top:18px}
+#dp-activity .dp-mascot{flex:none;width:92px;animation:dpBob 3.6s ease-in-out infinite}
+#dp-activity .dp-mascot svg{width:92px;height:92px;display:block;filter:drop-shadow(0 0 10px rgba(34,211,238,.6))}
+#dp-activity .dp-bubble{position:relative;flex:1;min-width:0;padding:14px 18px;border-radius:20px;background:rgba(255,255,255,.08);border:2px solid #22d3ee;box-shadow:0 0 18px rgba(34,211,238,.25)}
+#dp-activity .dp-bubble:before{content:"";position:absolute;left:-10px;top:30px;width:16px;height:16px;transform:rotate(45deg);background:#13204f;border-left:2px solid #22d3ee;border-bottom:2px solid #22d3ee}
+#dp-activity .dp-bubble.dp-hint{border-color:#fbbf24;box-shadow:0 0 18px rgba(251,191,36,.3)}
+#dp-activity .dp-bubble.dp-hint:before{border-color:#fbbf24}
+#dp-activity .dp-bubble.dp-good{border-color:#a3e635;box-shadow:0 0 20px rgba(163,230,53,.35)}
+#dp-activity .dp-bubble.dp-good:before{border-color:#a3e635}
+#dp-activity .dp-bubble.dp-bad{border-color:#ff4fa3;box-shadow:0 0 20px rgba(255,79,163,.35)}
+#dp-activity .dp-bubble.dp-bad:before{border-color:#ff4fa3}
+#dp-activity .dp-bt{margin:0 0 4px;font-size:18px;font-weight:900;color:#fff}
+#dp-activity .dp-bubble.dp-good .dp-bt{color:#c8f26b}
+#dp-activity .dp-bubble.dp-bad .dp-bt{color:#ff9fd0}
+#dp-activity .dp-bubble.dp-hint .dp-bt{color:#ffe08a}
+#dp-activity .dp-bx{margin:0;font-size:14.5px;color:#dbe4ff}
+#dp-activity .dp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+#dp-activity .dp-next{padding:11px 22px;font-size:15px}
+
+/* Pantalla final */
+#dp-activity .dp-end{position:relative;max-width:820px;margin:0 auto;text-align:center;padding:10px 12px 22px}
+#dp-activity .dp-trophy{width:118px;height:118px;margin:0 auto 10px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:58px;background:radial-gradient(circle,#ffe08a,#fbbf24 70%);box-shadow:0 0 36px rgba(251,191,36,.8);animation:dpPop .6s ease both}
+#dp-activity .dp-stars{display:flex;justify-content:center;gap:8px;margin:6px 0 4px}
+#dp-activity .dp-star{font-size:50px;line-height:1;color:rgba(255,255,255,.2);animation:dpPop .5s ease both}
+#dp-activity .dp-star.on{color:#fbbf24;text-shadow:0 0 20px rgba(251,191,36,.9)}
+#dp-activity .dp-rank{margin:2px 0 6px;font-size:32px;font-weight:900;background:linear-gradient(90deg,#22d3ee,#a3e635,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#a3e635}
+#dp-activity .dp-bigscore{font-size:46px;font-weight:900;color:#ffe08a;text-shadow:0 0 22px rgba(251,191,36,.7)}
+#dp-activity .dp-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+#dp-activity .dp-stat{padding:12px 8px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16)}
+#dp-activity .dp-stat b{display:block;font-size:26px;color:#fff}
+#dp-activity .dp-stat span{font-size:12px;color:var(--muted)}
+#dp-activity .dp-end p{margin:8px 0;color:#d6defa}
+#dp-activity .dp-confetti{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:6}
+#dp-activity .dp-confetti span{position:absolute;top:0;width:10px;height:16px;border-radius:2px;opacity:0;animation:dpFall 3s ease-in forwards}
+
+/* Pie */
+#dp-activity .dp-footnote{padding:12px 16px 16px;text-align:center;font-size:12px;color:#97a4d8;border-top:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18)}
+#dp-activity .dp-footnote a{color:#22d3ee;font-weight:800}
+
+/* Adaptación al ancho real del contenedor (data-size lo calcula el script) */
+#dp-activity[data-size="m"] .dp-main{padding:18px}
+#dp-activity[data-size="m"] .dp-header{padding:14px 18px;gap:12px}
+#dp-activity[data-size="m"] .dp-logo{width:46px;height:46px}
+#dp-activity[data-size="m"] .dp-title{font-size:23px}
+#dp-activity[data-size="m"] .dp-hero{grid-template-columns:minmax(230px,.85fr) minmax(0,1.3fr);gap:20px}
+#dp-activity[data-size="m"] .dp-h2{font-size:27px}
+#dp-activity[data-size="m"] .dp-board{grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:14px}
+#dp-activity[data-size="m"] .dp-grid{gap:10px;padding:10px}
+#dp-activity[data-size="m"] .dp-mascot,#dp-activity[data-size="m"] .dp-mascot svg{width:76px;height:76px}
+
+#dp-activity[data-size="s"] .dp-main,#dp-activity[data-size="xs"] .dp-main{padding:14px}
+#dp-activity[data-size="s"] .dp-header,#dp-activity[data-size="xs"] .dp-header{padding:12px 14px;gap:10px}
+#dp-activity[data-size="s"] .dp-logo,#dp-activity[data-size="xs"] .dp-logo{width:42px;height:42px}
+#dp-activity[data-size="s"] .dp-title{font-size:21px}
+#dp-activity[data-size="s"] .dp-badge,#dp-activity[data-size="xs"] .dp-badge{font-size:10px;padding:5px 9px}
+#dp-activity[data-size="s"] .dp-hero,#dp-activity[data-size="xs"] .dp-hero{grid-template-columns:1fr;gap:14px;min-height:0}
+#dp-activity[data-size="s"] .dp-art,#dp-activity[data-size="xs"] .dp-art{min-height:250px}
+#dp-activity[data-size="s"] .dp-art svg,#dp-activity[data-size="xs"] .dp-art svg{max-width:230px}
+#dp-activity[data-size="s"] .dp-ring1,#dp-activity[data-size="xs"] .dp-ring1{width:230px;height:230px;margin:-115px 0 0 -115px}
+#dp-activity[data-size="s"] .dp-ring2,#dp-activity[data-size="xs"] .dp-ring2{width:170px;height:170px;margin:-85px 0 0 -85px}
+#dp-activity[data-size="s"] .dp-h2,#dp-activity[data-size="xs"] .dp-h2{font-size:25px}
+#dp-activity[data-size="s"] .dp-board,#dp-activity[data-size="xs"] .dp-board{grid-template-columns:1fr;gap:14px}
+#dp-activity[data-size="s"] .dp-grid,#dp-activity[data-size="xs"] .dp-grid{gap:9px;padding:9px}
+#dp-activity[data-size="s"] .dp-stats,#dp-activity[data-size="xs"] .dp-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+#dp-activity[data-size="s"] .dp-mascot,#dp-activity[data-size="s"] .dp-mascot svg,#dp-activity[data-size="xs"] .dp-mascot,#dp-activity[data-size="xs"] .dp-mascot svg{width:64px;height:64px}
+
+#dp-activity[data-size="xs"] .dp-title{font-size:17px}
+#dp-activity[data-size="xs"] .dp-subtitle{font-size:10px}
+#dp-activity[data-size="xs"] .dp-badge{display:none}
+#dp-activity[data-size="xs"] .dp-qtitle{font-size:18px}
+#dp-activity[data-size="xs"] .dp-letter,#dp-activity[data-size="xs"] .dp-mark{width:26px;height:26px;font-size:14px}
+#dp-activity[data-size="xs"] .dp-coach{flex-direction:column;align-items:stretch}
+#dp-activity[data-size="xs"] .dp-bubble:before{display:none}
+#dp-activity[data-size="xs"] .dp-bigscore{font-size:36px}
+#dp-activity[data-size="xs"] .dp-rank{font-size:25px}
+
+@media (prefers-reduced-motion:reduce){#dp-activity *{animation:none!important;transition:none!important}}
+</style>
+<p class="dp-loading">Cargando la actividad… Si este mensaje no desaparece, abre la Vista previa de eXeLearning o exporta el contenido: los scripts no se ejecutan en todas las vistas del editor.</p>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var LINK = 'https://claude.ai/login';
+  var LETTERS = 'ABCD';
+  var PIECES = [
+    { name: 'La escalera', h: [[3,0,0],[2,2,0],[1,1,1]],
+      opts: [[[0,0,3],[0,2,2],[1,1,1]], [[3,0,0],[2,2,0],[1,2,1]], [[3,0,0],[2,2,0],[0,1,1]]],
+      hint: 'Alzado y perfil son iguales (3, 2 y 1 cubos de altura). Busca la pieza cuya planta es un triángulo y cuya parte más alta queda a la izquierda y al fondo.',
+      tip: 'Truco: alzado y perfil son iguales (3, 2, 1); es la planta la que te dice hacia dónde baja la escalera.' },
+    { name: 'Las gradas', h: [[1,2,3],[1,2,3],[1,2,3]],
+      opts: [[[1,1,1],[2,2,2],[3,3,3]], [[1,2,3],[1,2,3],[1,0,3]], [[1,2,3],[2,2,3],[1,2,3]]],
+      hint: 'El perfil es un rectángulo de altura 3: la pieza es igual de alta de atrás hacia delante. Fíjate en el alzado: los escalones suben de izquierda a derecha.',
+      tip: 'Truco: el perfil es un rectángulo de altura 3, así que la pieza es igual de alta de atrás hacia delante; solo el alzado muestra los tres escalones.' },
+    { name: 'El trono', h: [[3,3,3],[1,1,1],[1,1,1]],
+      opts: [[[1,1,1],[1,1,1],[3,3,3]], [[3,3,3],[1,0,1],[1,1,1]], [[3,1,3],[1,1,1],[1,1,1]]],
+      hint: 'En el perfil, la parte alta (3 cubos) está a la izquierda, es decir, detrás. Busca una pieza con un respaldo alto en el fondo y el resto bajo (1 cubo), sin huecos.',
+      tip: 'Truco: el alzado parece un bloque macizo, pero el perfil delata el respaldo alto (3) detrás y el asiento bajo (1) delante.' },
+    { name: 'La L', h: [[2,0,0],[2,0,0],[2,2,2]],
+      opts: [[[2,2,2],[2,0,0],[2,0,0]], [[2,0,0],[1,0,0],[2,2,2]], [[2,0,0],[2,0,0],[2,2,1]]],
+      hint: 'Alzado y perfil son rectángulos de altura 2, así que manda la planta: dibuja una L de 5 cuadrados con una pared a la izquierda y otra en el frente (la parte de abajo de la planta).',
+      tip: 'Truco: alzado y perfil son rectángulos idénticos; la planta revela la L y las líneas discontinuas delatan la esquina interior escondida.' },
+    { name: 'La cruz', h: [[0,2,0],[2,3,2],[0,2,0]],
+      opts: [[[0,2,0],[1,3,2],[0,2,0]], [[0,2,0],[2,3,2],[0,2,2]], [[0,2,0],[2,1,2],[0,2,0]]],
+      hint: 'Alzado y perfil coinciden: alturas 2, 3 y 2. Un solo punto es el más alto. ¿Qué pieza tiene brazos de altura 2 y un centro de altura 3, sin cubos en las esquinas?',
+      tip: 'Truco: alzado y perfil son iguales (2, 3, 2); la planta con forma de cruz confirma que solo el centro llega a 3.' },
+    { name: 'La herradura', h: [[3,0,3],[1,0,1],[1,1,1]],
+      opts: [[[1,1,1],[1,0,1],[3,0,3]], [[2,0,3],[1,0,1],[1,1,1]], [[3,1,3],[1,0,1],[1,1,1]]],
+      hint: 'El alzado tiene dos picos de 3 cubos en los extremos. El perfil te dice que esos picos están en la parte trasera (a la izquierda del perfil). Revisa también si hay hueco en el centro de la planta.',
+      tip: 'Truco: los dos picos del alzado están en la parte trasera (perfil: 3, 1, 1) y la planta dibuja una U abierta por el fondo.' },
+    { name: 'El anillo', h: [[2,2,2],[2,0,2],[2,2,2]],
+      opts: [[[2,2,2],[2,0,2],[2,0,2]], [[2,2,0],[2,0,2],[2,2,2]], [[2,2,3],[2,0,1],[2,2,2]]],
+      hint: 'Observa la planta: ¿hay algún hueco? Un hueco en la planta es un cráter: desde el alzado y el perfil no se ve, pero lo delatan las líneas discontinuas (aristas ocultas).',
+      tip: 'Truco: alzado y perfil son rectángulos, pero sus líneas discontinuas y la planta enseñan el hueco del centro: lo que no se ve de frente se descubre desde arriba.' },
+    { name: 'La serpiente', h: [[3,3,0],[0,2,2],[0,0,1]],
+      opts: [[[0,0,1],[0,2,2],[3,3,0]], [[3,1,0],[0,2,2],[0,0,1]], [[3,3,1],[0,2,2],[0,0,1]]],
+      hint: 'Sigue la planta como un camino de 5 cuadrados que empieza en el fondo, a la izquierda, y acaba en el frente, a la derecha. El perfil baja de 3 a 1 de atrás hacia delante: lo más alto está al fondo.',
+      tip: 'Truco: la planta es un camino de 5 cuadrados en diagonal y el perfil (3, 2, 1) muestra que la pieza baja de atrás hacia delante, como una escalera.' }
+  ];
+  var N = PIECES.length;
+  var PAL = [
+    { top: '#d9ccff', left: '#9b7bff', right: '#5b3bd0', glow: '#8b5cf6' },
+    { top: '#93f2cc', left: '#22c58b', right: '#0b7a55', glow: '#10b981' },
+    { top: '#f4f7fb', left: '#c7d2e2', right: '#7f90a8', glow: '#e2e8f0' },
+    { top: '#ffcbae', left: '#ff7d4d', right: '#c2410c', glow: '#fb7a4a' }
+  ];
+  var CELL = [
+    ['la esquina izquierda del fondo', 'el centro del fondo', 'la esquina derecha del fondo'],
+    ['el lado izquierdo', 'el centro', 'el lado derecho'],
+    ['la esquina izquierda del frente', 'el centro del frente', 'la esquina derecha del frente']
+  ];
+  var TIPS = [
+    'Observa el plano con calma: ¿dónde están los cubos más altos?',
+    'Consejo: empieza por la planta, que te dice dónde hay cubos.',
+    'Compara alzado y perfil: ¿qué altura tiene cada columna?',
+    'Recuerda: cada cuadrado del plano es la cara de un cubo.'
+  ];
+  var CONF_COLORS = ['#22d3ee', '#ff4fa3', '#a3e635', '#fbbf24', '#8b5cf6', '#ffffff'];
+
+  /* ---------- utilidades DOM (sin cadenas HTML) ---------- */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text !== undefined) { e.textContent = text; }
+    return e;
+  }
+  function sv(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag), k;
+    for (k in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, k)) { e.setAttribute(k, attrs[k]); }
+    }
+    if (parent) { parent.appendChild(e); }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function shuffled(arr) {
+    var i, j, t;
+    for (i = arr.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  function maxH(h) {
+    var m = 0, r, c;
+    for (r = 0; r !== h.length; r++) { for (c = 0; c !== h[r].length; c++) { if (h[r][c] > m) { m = h[r][c]; } } }
+    return m;
+  }
+
+  /* ---------- geometría ---------- */
+  function colH(h) {
+    var out = [], x, y, m;
+    for (x = 0; x !== 3; x++) { m = 0; for (y = 0; y !== 3; y++) { if (h[y][x] > m) { m = h[y][x]; } } out.push(m); }
+    return out;
+  }
+  function rowH(h) {
+    var out = [], x, y, m;
+    for (y = 0; y !== 3; y++) { m = 0; for (x = 0; x !== 3; x++) { if (h[y][x] > m) { m = h[y][x]; } } out.push(m); }
+    return out;
+  }
+  function occ(h) {
+    var out = [], x, y;
+    for (y = 0; y !== 3; y++) { for (x = 0; x !== 3; x++) { out.push(h[y][x] > 0 ? 1 : 0); } }
+    return out;
+  }
+  function count(a) { var n = 0, i; for (i = 0; i !== a.length; i++) { n += a[i]; } return n; }
+  function nums(a) {
+    var s = a.slice(0, a.length - 1).join(', ');
+    return s + ' y ' + a[a.length - 1];
+  }
+  function exists(h, x, y, z) {
+    if (z > -1) { if (x > -1) { if (y > -1) { if (3 > y) { if (3 > x) { return h[y][x] > z; } } } } }
+    return false;
+  }
+  function poly(parent, pts, fill) {
+    var s = '', i;
+    for (i = 0; i !== pts.length; i++) { s += pts[i][0].toFixed(2) + ',' + pts[i][1].toFixed(2) + ' '; }
+    return sv('polygon', { points: s, fill: fill, stroke: fill, 'stroke-width': '0.8', 'stroke-linejoin': 'round' }, parent);
+  }
+  var FACES = [
+    { c: 'left', n: [0, 1, 0], v: [[0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]], d: [[0, 0, -1], [1, 0, 0], [0, 0, 1], [-1, 0, 0]] },
+    { c: 'right', n: [1, 0, 0], v: [[1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 0, 1]], d: [[0, 0, -1], [0, 1, 0], [0, 0, 1], [0, -1, 0]] },
+    { c: 'top', n: [0, 0, 1], v: [[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]], d: [[0, -1, 0], [1, 0, 0], [0, 1, 0], [-1, 0, 0]] }
+  ];
+  /* una arista es vista (trazo grueso) salvo que continúe en el mismo plano con otro cubo */
+  function isThick(h, x, y, z, f, i) {
+    var d = f.d[i], nx = x + d[0], ny = y + d[1], nz = z + d[2];
+    if (!exists(h, nx, ny, nz)) { return true; }
+    if (exists(h, nx + f.n[0], ny + f.n[1], nz + f.n[2])) { return true; }
+    return false;
+  }
+
+  /* ---------- dibujo de la pieza en perspectiva (aristas vistas en trazo grueso) ---------- */
+  function isoSvg(h, pal, label) {
+    var U = 27, V = 15, Z = 27, OX = 130, OY = 120;
+    function pt(x, y, z) { return [OX + (x - y) * U, OY + (x + y) * V - z * Z]; }
+    var svg = sv('svg', { viewBox: '0 0 260 235', role: 'img', 'aria-label': label });
+    var a = pt(0, 0, 0), b = pt(3, 0, 0), c = pt(3, 3, 0), d = pt(0, 3, 0);
+    sv('polygon', { points: a.join(',') + ' ' + b.join(',') + ' ' + c.join(',') + ' ' + d.join(','), fill: 'rgba(255,255,255,.06)', stroke: 'rgba(255,255,255,.16)', 'stroke-width': '1', 'stroke-dasharray': '3 4' }, svg);
+    var cubes = [], x, y, z, i, j, k, f, pts, vis, p1, p2, th;
+    for (y = 0; y !== 3; y++) { for (x = 0; x !== 3; x++) { for (z = 0; z !== h[y][x]; z++) { cubes.push({ x: x, y: y, z: z }); } } }
+    cubes.sort(function (p, q) { return ((p.x + p.y) - (q.x + q.y)) || (p.z - q.z); });
+    var g = sv('g', {}, svg);
+    for (i = 0; i !== cubes.length; i++) {
+      x = cubes[i].x; y = cubes[i].y; z = cubes[i].z;
+      vis = [];
+      for (j = 0; j !== 3; j++) {
+        f = FACES[j];
+        if (!exists(h, x + f.n[0], y + f.n[1], z + f.n[2])) {
+          pts = [];
+          for (k = 0; k !== 4; k++) { pts.push(pt(x + f.v[k][0], y + f.v[k][1], z + f.v[k][2])); }
+          poly(g, pts, pal[f.c]);
+          vis.push({ f: f, pts: pts });
+        }
+      }
+      for (j = 0; j !== vis.length; j++) {
+        for (k = 0; k !== 4; k++) {
+          p1 = vis[j].pts[k]; p2 = vis[j].pts[(k + 1) % 4];
+          th = isThick(h, x, y, z, vis[j].f, k);
+          sv('line', { x1: p1[0].toFixed(2), y1: p1[1].toFixed(2), x2: p2[0].toFixed(2), y2: p2[1].toFixed(2),
+            stroke: th ? '#05081f' : 'rgba(5,8,31,.4)', 'stroke-width': th ? '3.2' : '1', 'stroke-linecap': 'round' }, g);
+        }
+      }
+    }
+    var lab = sv('g', { 'aria-hidden': 'true' }, svg);
+    sv('path', { d: 'M 30 214 L 57 175', fill: 'none', stroke: '#22d3ee', 'stroke-width': '1.8', 'stroke-linecap': 'round' }, lab);
+    sv('path', { d: 'M 57 175 L 51.6 177.6 L 55.4 181.6 Z', fill: '#22d3ee' }, lab);
+    var tx = sv('text', { x: '8', y: '228', 'font-size': '9', 'font-weight': '800', fill: '#22d3ee', 'letter-spacing': '.6' }, lab);
+    tx.textContent = 'ALZADO';
+    return svg;
+  }
+
+  /* ---------- dibujo del plano con las tres vistas ---------- */
+  function depthMaps(h) {
+    var mx = maxH(h), A = [], P = [], T = [], r, x, y, z, d;
+    for (r = 0; r !== mx; r++) {
+      z = mx - 1 - r; A.push([]); P.push([]);
+      for (x = 0; x !== 3; x++) { d = null; for (y = 0; y !== 3; y++) { if (h[y][x] > z) { d = y; } } A[r].push(d); }
+      for (y = 0; y !== 3; y++) { d = null; for (x = 2; x !== -1; x--) { if (h[y][x] > z) { d = x; } } P[r].push(d); }
+    }
+    for (y = 0; y !== 3; y++) { T.push([]); for (x = 0; x !== 3; x++) { T[y].push(h[y][x] > 0 ? h[y][x] : null); } }
+    return { front: A, side: P, top: T };
+  }
+  function edgeKind(a, b) {
+    if (a === null) { if (b === null) { return 0; } return 2; }
+    if (b === null) { return 2; }
+    return a === b ? 1 : 2;
+  }
+  /* aristas ocultas: aristas reales del sólido que quedan detrás de otra parte de la pieza en esa vista */
+  function realEdge(a, b, c, d) {
+    var n = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0) + (d ? 1 : 0);
+    if (n === 0) { return false; }
+    if (n === 4) { return false; }
+    if (n === 2) {
+      if (a) { if (d) { return true; } }
+      if (b) { if (c) { return true; } }
+      return false;
+    }
+    return true;
+  }
+  function hiddenMap(h, kind, rows) {
+    var mx = maxH(h), hid = {}, vis = {}, i, j, k, key, r1, r2, out = {};
+    function filled(u, r, c) {
+      var x, y, z;
+      if (u > -1) { if (3 > u) { if (r > -1) { if (rows > r) { if (c > -1) { if (3 > c) {
+        if (kind === 'front') { x = u; y = c; z = mx - 1 - r; }
+        else if (kind === 'side') { y = u; x = 2 - c; z = mx - 1 - r; }
+        else { x = u; y = r; z = c; }
+        return h[y][x] > z;
+      } } } } } }
+      return false;
+    }
+    function frontPlane(u, r) {
+      var c;
+      for (c = 2; c !== -1; c--) { if (filled(u, r, c)) { return c + 1; } }
+      return -1;
+    }
+    for (i = 0; i !== 3; i++) {
+      for (j = 0; j !== rows + 1; j++) {
+        for (k = 0; k !== 4; k++) {
+          if (realEdge(filled(i, j - 1, k - 1), filled(i, j, k - 1), filled(i, j - 1, k), filled(i, j, k))) {
+            key = 'H' + i + ',' + j;
+            if (frontPlane(i, j - 1) === k) { vis[key] = true; }
+            else if (frontPlane(i, j) === k) { vis[key] = true; }
+            else { hid[key] = true; }
+          }
+        }
+      }
+    }
+    for (i = 0; i !== 4; i++) {
+      for (j = 0; j !== rows; j++) {
+        for (k = 0; k !== 4; k++) {
+          if (realEdge(filled(i - 1, j, k - 1), filled(i, j, k - 1), filled(i - 1, j, k), filled(i, j, k))) {
+            key = 'V' + i + ',' + j;
+            if (frontPlane(i - 1, j) === k) { vis[key] = true; }
+            else if (frontPlane(i, j) === k) { vis[key] = true; }
+            else { hid[key] = true; }
+          }
+        }
+      }
+    }
+    for (key in hid) {
+      if (Object.prototype.hasOwnProperty.call(hid, key)) { if (!vis[key]) { out[key] = true; } }
+    }
+    return out;
+  }
+  function drawGrid(svg, D, ox, oy, cs, color, fill, hmap) {
+    var rows = D.length, cols = D[0].length, r, c, kind, thin = [], thick = [], dash = [], seg;
+    function cellAt(rr, cc) {
+      if (rr > -1) { if (rr !== rows) { if (cc > -1) { if (cc !== cols) { return D[rr][cc]; } } } }
+      return null;
+    }
+    for (r = 0; r !== rows; r++) {
+      for (c = 0; c !== cols; c++) {
+        if (D[r][c] !== null) { sv('rect', { x: ox + c * cs, y: oy + r * cs, width: cs, height: cs, fill: fill }, svg); }
+      }
+    }
+    for (r = 0; r !== rows + 1; r++) {
+      for (c = 0; c !== cols; c++) {
+        kind = edgeKind(cellAt(r - 1, c), cellAt(r, c));
+        seg = 'M ' + (ox + c * cs) + ' ' + (oy + r * cs) + ' L ' + (ox + (c + 1) * cs) + ' ' + (oy + r * cs) + ' ';
+        if (kind === 1) { thin.push(seg); }
+        if (kind === 2) { thick.push(seg); }
+        if (kind !== 2) { if (hmap['H' + c + ',' + r]) { dash.push(seg); } }
+      }
+    }
+    for (r = 0; r !== rows; r++) {
+      for (c = 0; c !== cols + 1; c++) {
+        kind = edgeKind(cellAt(r, c - 1), cellAt(r, c));
+        seg = 'M ' + (ox + c * cs) + ' ' + (oy + r * cs) + ' L ' + (ox + c * cs) + ' ' + (oy + (r + 1) * cs) + ' ';
+        if (kind === 1) { thin.push(seg); }
+        if (kind === 2) { thick.push(seg); }
+        if (kind !== 2) { if (hmap['V' + c + ',' + r]) { dash.push(seg); } }
+      }
+    }
+    if (thin.length !== 0) { sv('path', { d: thin.join(''), fill: 'none', stroke: color, 'stroke-width': '1', opacity: '.35' }, svg); }
+    if (dash.length !== 0) { sv('path', { d: dash.join(''), fill: 'none', stroke: color, 'stroke-width': '2', 'stroke-dasharray': '5 3.5', opacity: '.95' }, svg); }
+    if (thick.length !== 0) { sv('path', { d: thick.join(''), fill: 'none', stroke: color, 'stroke-width': '3.4', 'stroke-linecap': 'round' }, svg); }
+  }
+  function viewsSvg(h) {
+    var cs = 26, f = colH(h), s = rowH(h), mx = maxH(h), D = depthMaps(h);
+    var axo = 24, pxo = 158, baseY = 112, ptop = 142, z, k;
+    var CA = '#22d3ee', CP = '#ff6bb5', CL = '#fbbf24';
+    var svg = sv('svg', { 'class': 'dp-views-svg', viewBox: '0 0 260 236', role: 'img',
+      'aria-label': 'Plano en sistema europeo con las tres vistas. Alzado: columnas de ' + nums(f) + ' cubos de altura. Perfil izquierdo: ' + nums(s) + ' cubos de altura. Planta: ' + count(occ(h)) + ' cuadrados.' });
+    var guide = sv('g', { fill: 'none', stroke: 'rgba(255,255,255,.22)', 'stroke-width': '1', 'stroke-dasharray': '1.5 5' }, svg);
+    for (k = 0; k !== 4; k++) { sv('path', { d: 'M ' + (axo + k * cs) + ' ' + baseY + ' L ' + (axo + k * cs) + ' ' + ptop }, guide); }
+    for (z = 1; z !== mx + 1; z++) { sv('path', { d: 'M ' + (axo + 3 * cs) + ' ' + (baseY - z * cs) + ' L ' + pxo + ' ' + (baseY - z * cs) }, guide); }
+    sv('path', { d: 'M 8 ' + (baseY + 15) + ' L 252 ' + (baseY + 15), stroke: 'rgba(255,255,255,.5)', 'stroke-width': '1.2', fill: 'none' }, svg);
+    var lt = sv('text', { x: '236', y: String(baseY + 11), 'font-size': '8', fill: 'rgba(255,255,255,.65)', 'font-weight': '700' }, svg);
+    lt.textContent = 'LT';
+    drawGrid(svg, D.front, axo, baseY - mx * cs, cs, CA, 'rgba(34,211,238,.2)', hiddenMap(h, 'front', mx));
+    drawGrid(svg, D.side, pxo, baseY - mx * cs, cs, CP, 'rgba(255,107,181,.2)', hiddenMap(h, 'side', mx));
+    drawGrid(svg, D.top, axo, ptop, cs, CL, 'rgba(251,191,36,.2)', hiddenMap(h, 'top', 3));
+    function label(xx, yy, main, sub, col) {
+      var t = sv('text', { x: xx, y: yy, 'text-anchor': 'middle', 'font-size': '11', 'font-weight': '900', fill: col, 'letter-spacing': '1' }, svg);
+      t.textContent = main;
+      var t2 = sv('text', { x: xx, y: yy + 11, 'text-anchor': 'middle', 'font-size': '7.5', fill: 'rgba(255,255,255,.65)' }, svg);
+      t2.textContent = sub;
+    }
+    label(63, 14, 'ALZADO', 'de frente', CA);
+    label(197, 14, 'PERFIL', 'desde la izquierda', CP);
+    label(197, 178, 'PLANTA', 'desde arriba', CL);
+    return svg;
+  }
+
+  function logoSvg() {
+    var s = sv('svg', { viewBox: '0 0 40 40', width: '34', height: '34', 'aria-hidden': 'true' });
+    sv('polygon', { points: '20,5 34,13 20,21 6,13', fill: '#fff', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    sv('polygon', { points: '6,13 20,21 20,36 6,28', fill: '#ffd0e8', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    sv('polygon', { points: '34,13 20,21 20,36 34,28', fill: '#c4a8ff', stroke: '#fff', 'stroke-width': '1.2', 'stroke-linejoin': 'round' }, s);
+    return s;
+  }
+
+  /* ---------- mascota ---------- */
+  function mascot(mood) {
+    var s = sv('svg', { viewBox: '0 0 100 100', 'aria-hidden': 'true' });
+    sv('line', { x1: '50', y1: '9', x2: '50', y2: '21', stroke: '#7dd3fc', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+    sv('circle', { cx: '50', cy: '8', r: '5.5', fill: mood === 'oops' ? '#ff4fa3' : '#fbbf24' }, s);
+    sv('rect', { x: '12', y: '34', width: '7', height: '16', rx: '3', fill: '#7dd3fc' }, s);
+    sv('rect', { x: '81', y: '34', width: '7', height: '16', rx: '3', fill: '#7dd3fc' }, s);
+    sv('rect', { x: '18', y: '20', width: '64', height: '52', rx: '17', fill: '#eaf3ff', stroke: '#7dd3fc', 'stroke-width': '3' }, s);
+    sv('rect', { x: '26', y: '29', width: '48', height: '34', rx: '11', fill: '#0b1230' }, s);
+    sv('rect', { x: '30', y: '74', width: '40', height: '20', rx: '8', fill: '#8b5cf6' }, s);
+    sv('circle', { cx: '50', cy: '84', r: '4', fill: '#fbbf24' }, s);
+    if (mood === 'happy') {
+      sv('path', { d: 'M34 47 Q40 38 46 47', fill: 'none', stroke: '#a3e635', 'stroke-width': '3.2', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M54 47 Q60 38 66 47', fill: 'none', stroke: '#a3e635', 'stroke-width': '3.2', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M41 54 Q50 63 59 54', fill: 'none', stroke: '#a3e635', 'stroke-width': '3.2', 'stroke-linecap': 'round' }, s);
+      sv('circle', { cx: '31', cy: '55', r: '3', fill: '#ff4fa3', opacity: '.7' }, s);
+      sv('circle', { cx: '69', cy: '55', r: '3', fill: '#ff4fa3', opacity: '.7' }, s);
+    } else if (mood === 'oops') {
+      sv('path', { d: 'M35 40 L45 46 M35 46 L45 40', fill: 'none', stroke: '#ff9fd0', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M55 40 L65 46 M55 46 L65 40', fill: 'none', stroke: '#ff9fd0', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+      sv('path', { d: 'M42 57 Q50 51 58 57', fill: 'none', stroke: '#ff9fd0', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+    } else if (mood === 'think') {
+      sv('circle', { cx: '42', cy: '43', r: '5', fill: '#22d3ee' }, s);
+      sv('circle', { cx: '62', cy: '43', r: '5', fill: '#22d3ee' }, s);
+      sv('circle', { cx: '44', cy: '41.5', r: '1.8', fill: '#fff' }, s);
+      sv('circle', { cx: '64', cy: '41.5', r: '1.8', fill: '#fff' }, s);
+      sv('path', { d: 'M44 55 L58 55', fill: 'none', stroke: '#22d3ee', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+    } else {
+      sv('circle', { cx: '40', cy: '45', r: '5', fill: '#22d3ee' }, s);
+      sv('circle', { cx: '60', cy: '45', r: '5', fill: '#22d3ee' }, s);
+      sv('circle', { cx: '41.5', cy: '43.5', r: '1.8', fill: '#fff' }, s);
+      sv('circle', { cx: '61.5', cy: '43.5', r: '1.8', fill: '#fff' }, s);
+      sv('path', { d: 'M43 55 Q50 60 57 55', fill: 'none', stroke: '#22d3ee', 'stroke-width': '3', 'stroke-linecap': 'round' }, s);
+    }
+    return s;
+  }
+
+  /* ---------- retroalimentación (calculada a partir de las vistas) ---------- */
+  function feedbackWrong(h, t) {
+    var fO = colH(h), fT = colH(t), sO = rowH(h), sT = rowH(t), pO = occ(h), pT = occ(t);
+    var bad = [], det = [], i, nO, nT, miss = [], extra = [];
+    if (fO.join() !== fT.join()) {
+      bad.push('alzado');
+      det.push('Su alzado tendría columnas de ' + nums(fO) + ' cubos de altura (de izquierda a derecha) y el plano pide ' + nums(fT) + '.');
+    }
+    if (sO.join() !== sT.join()) {
+      bad.push('perfil');
+      det.push('Su perfil izquierdo tendría alturas de ' + nums(sO) + ' cubos (de izquierda a derecha) y el plano pide ' + nums(sT) + '.');
+    }
+    if (pO.join() !== pT.join()) {
+      bad.push('planta');
+      nO = count(pO); nT = count(pT);
+      for (i = 0; i !== 9; i++) {
+        if (pT[i] === 1) { if (pO[i] === 0) { miss.push(i); } }
+        if (pO[i] === 1) { if (pT[i] === 0) { extra.push(i); } }
+      }
+      if (nO !== nT) {
+        det.push('Su planta dibujaría ' + nO + ' cuadrados y la del plano tiene ' + nT + '.');
+      } else if (miss.length === 1) {
+        det.push('En la planta del plano hay un cuadrado en ' + CELL[Math.floor(miss[0] / 3)][miss[0] % 3] + ' y aquí no; en cambio, esta pieza tiene uno en ' + CELL[Math.floor(extra[0] / 3)][extra[0] % 3] + ', donde el plano deja un hueco.');
+      } else {
+        det.push('Su planta tiene los mismos cuadrados que el plano, pero colocados de otra manera: parece una versión girada o reflejada de la pieza correcta.');
+      }
+    }
+    var intro;
+    if (bad.length === 1) { intro = 'Coincide con dos de las tres vistas, pero falla el ' + bad[0] + '.'; }
+    else if (bad.length === 2) { intro = 'Solo coincide con una de las vistas: fallan el ' + bad[0] + ' y el ' + bad[1] + '.'; }
+    else { intro = 'No coincide con ninguna de las vistas.'; }
+    return { title: bad.length === 1 ? '¡Casi, casi!' : 'Esta no es', text: intro + ' ' + det.join(' ') + ' Compara de nuevo y prueba con otra opción.' };
+  }
+  function feedbackRight(p) {
+    var h = p.h;
+    return { title: '¡Exacto! Es «' + p.name + '»',
+      text: 'Alzado: columnas de ' + nums(colH(h)) + ' cubos. Perfil: ' + nums(rowH(h)) + ' cubos. Planta: ' + count(occ(h)) + ' cuadrados. ' + p.tip };
+  }
+
+  /* ---------- construcción de la actividad ---------- */
+  function build(root) {
+    if (root.dpReady) { return; }
+    root.dpReady = true;
+    var kids = root.childNodes, n, i;
+    for (i = kids.length - 1; i !== -1; i--) {
+      n = kids[i];
+      if (n.nodeName !== 'STYLE') { if (n.nodeName !== 'SCRIPT') { root.removeChild(n); } }
+    }
+    var q = 0, score = 0, streak = 0, best = 0, hints = 0, errors = 0, firstTry = 0;
+    var scoreEl = null, streakEl = null, scoreChip = null, segs = [];
+
+    var shell = el('div', 'dp-shell');
+    var head = el('div', 'dp-header');
+    var logo = el('div', 'dp-logo'); logo.appendChild(logoSvg());
+    var ht = el('div', 'dp-head-text');
+    ht.appendChild(el('h2', 'dp-title', 'Detective de piezas'));
+    ht.appendChild(el('div', 'dp-subtitle', 'Descifra el plano y encuentra la pieza'));
+    head.appendChild(logo); head.appendChild(ht); head.appendChild(el('div', 'dp-badge', N + ' RETOS'));
+    var scr = el('div', 'dp-main'); scr.setAttribute('aria-live', 'polite');
+    var foot = el('div', 'dp-footnote');
+    foot.appendChild(document.createTextNode('Actividad de creación propia generada con '));
+    var a = el('a', '', 'Claude'); a.setAttribute('href', LINK); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener noreferrer');
+    foot.appendChild(a); foot.appendChild(document.createTextNode('.'));
+    shell.appendChild(head); shell.appendChild(scr); shell.appendChild(foot);
+    root.appendChild(shell);
+
+    function fit() {
+      var w = root.clientWidth, s = 'l';
+      if (w !== 0) {
+        if (900 > w) { s = 'm'; }
+        if (680 > w) { s = 's'; }
+        if (480 > w) { s = 'xs'; }
+      }
+      if (root.getAttribute('data-size') !== s) { root.setAttribute('data-size', s); }
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (window.ResizeObserver) { new ResizeObserver(fit).observe(root); }
+    else { setInterval(fit, 1000); }
+    setTimeout(fit, 300);
+    setTimeout(fit, 1500);
+
+    function confetti(total) {
+      var layer = el('div', 'dp-confetti'), j, s;
+      layer.setAttribute('aria-hidden', 'true');
+      for (j = 0; j !== total; j++) {
+        s = document.createElement('span');
+        s.setAttribute('style', 'left:' + Math.floor(Math.random() * 100) + '%;background:' + CONF_COLORS[j % CONF_COLORS.length] + ';animation-delay:' + (Math.random() * 0.9).toFixed(2) + 's;animation-duration:' + (2.2 + Math.random() * 1.6).toFixed(2) + 's');
+        layer.appendChild(s);
+      }
+      shell.appendChild(layer);
+      setTimeout(function () { if (layer.parentNode) { layer.parentNode.removeChild(layer); } }, 5000);
+    }
+    function hudUpdate() {
+      if (scoreEl) { scoreEl.textContent = '\u26A1 ' + score + ' XP'; }
+      if (streakEl) { streakEl.textContent = '\uD83D\uDD25 Racha ' + streak; }
+    }
+
+    function intro() {
+      clear(scr);
+      var sec = el('div', 'dp-hero dp-fade');
+      var art = el('div', 'dp-art');
+      art.appendChild(el('div', 'dp-ring dp-ring1')); art.appendChild(el('div', 'dp-ring dp-ring2'));
+      art.appendChild(isoSvg(PIECES[4].h, PAL[0], 'Pieza en forma de cruz en perspectiva'));
+      var copy = el('div', 'dp-copy');
+      copy.appendChild(el('p', 'dp-kicker', 'Misión de visión espacial'));
+      copy.appendChild(el('h3', 'dp-h2', '¿Puedes ver la pieza escondida en el plano?'));
+      copy.appendChild(el('p', '', 'Te damos las vistas de una pieza: el alzado, el perfil izquierdo y la planta. Tu misión es imaginarla en 3D y encontrar su dibujo en perspectiva entre cuatro candidatas.'));
+      var ol = el('ol', 'dp-steps'), steps = ['Observa el plano: cada cuadrado es la cara de un cubo.', 'Imagina la pieza y compárala con las cuatro opciones.', 'Elige una. Si fallas, te explico por qué y puedes probar otra.'], k, li;
+      for (k = 0; k !== steps.length; k++) { li = el('li'); li.appendChild(el('span', 'dp-num', String(k + 1))); li.appendChild(el('span', 'dp-steptext', steps[k])); ol.appendChild(li); }
+      copy.appendChild(ol);
+      var rules = el('div', 'dp-rules'), rt = ['\u26A1 Hasta 100 XP por reto', '\uD83D\uDD25 Las rachas dan XP extra', '\uD83D\uDCA1 Una pista cuesta 15 XP', '\u274C Cada fallo resta 25 XP'];
+      for (k = 0; k !== rt.length; k++) { rules.appendChild(el('span', 'dp-rule', rt[k])); }
+      copy.appendChild(rules);
+      copy.appendChild(el('div', 'dp-legend', 'Sistema europeo (primer diedro): el perfil izquierdo se dibuja a la derecha del alzado y la planta, debajo. En las vistas, el trazo grueso marca las aristas vistas, el discontinuo las aristas ocultas y el fino la división entre cubos; en las perspectivas, el trazo grueso marca las aristas vistas. En las perspectivas, el alzado es la cara inferior izquierda, la que señala la flecha.'));
+      var go = el('button', 'dp-primary dp-launch', '¡Despegar! \uD83D\uDE80'); go.type = 'button';
+      go.addEventListener('click', function () { q = 0; score = 0; streak = 0; best = 0; hints = 0; errors = 0; firstTry = 0; game(); });
+      copy.appendChild(go);
+      sec.appendChild(art); sec.appendChild(copy); scr.appendChild(sec);
+    }
+
+    function game() {
+      clear(scr);
+      var piece = PIECES[q], items = shuffled([{ h: piece.h, ok: true }, { h: piece.opts[0], ok: false }, { h: piece.opts[1], ok: false }, { h: piece.opts[2], ok: false }]);
+      var st = { wrong: 0, hint: false, solved: false }, k, btns = [];
+      var wrap = el('div', 'dp-fade');
+
+      var hud = el('div', 'dp-hud');
+      hud.appendChild(el('div', 'dp-level', 'Reto ' + (q + 1) + ' / ' + N));
+      var track = el('div', 'dp-track'); segs = [];
+      track.setAttribute('aria-label', 'Progreso: ' + q + ' de ' + N + ' retos superados');
+      for (k = 0; k !== N; k++) { segs.push(el('span', 'dp-seg' + (k === q ? ' current' : (k > q ? '' : ' done')))); track.appendChild(segs[k]); }
+      hud.appendChild(track);
+      scoreChip = el('div', 'dp-chip dp-chip-xp'); scoreEl = el('span'); scoreChip.appendChild(scoreEl);
+      var stChip = el('div', 'dp-chip dp-chip-streak'); streakEl = el('span'); stChip.appendChild(streakEl);
+      hud.appendChild(scoreChip); hud.appendChild(stChip);
+      hudUpdate();
+      wrap.appendChild(hud);
+
+      wrap.appendChild(el('h3', 'dp-qtitle', '¿Qué pieza produce estas tres vistas?'));
+      wrap.appendChild(el('p', 'dp-qsub', 'Reto ' + (q + 1) + ': observa el plano y elige la pieza correcta entre las cuatro candidatas.'));
+
+      var board = el('div', 'dp-board');
+      var plan = el('div', 'dp-card dp-plan');
+      var phd = el('div', 'dp-card-head dp-plan-head');
+      phd.appendChild(el('span', '', 'Plano \u00B7 vistas diédricas'));
+      phd.appendChild(el('span', 'dp-pill', 'Sistema europeo'));
+      plan.appendChild(phd);
+      var pb = el('div', 'dp-plan-body'); pb.appendChild(viewsSvg(piece.h)); plan.appendChild(pb);
+      var pn = el('div', 'dp-plan-note');
+      pn.appendChild(el('p', '', 'Sistema europeo (primer diedro): el perfil izquierdo se dibuja a la derecha del alzado y la planta, debajo.'));
+      var lk = el('p', 'dp-linekey'), kinds = [['dp-lk-thick', 'Arista vista (trazo grueso)'], ['dp-lk-dash', 'Arista oculta (trazo discontinuo)'], ['dp-lk-thin', 'División entre cubos (trazo fino)']], kk, item;
+      for (kk = 0; kk !== kinds.length; kk++) {
+        item = el('span', 'dp-lki');
+        item.appendChild(el('span', 'dp-lk ' + kinds[kk][0]));
+        item.appendChild(document.createTextNode(kinds[kk][1]));
+        lk.appendChild(item);
+      }
+      pn.appendChild(lk);
+      plan.appendChild(pn);
+      var cand = el('div', 'dp-card');
+      cand.appendChild(el('div', 'dp-card-head', 'Elige la pieza'));
+      var grid = el('div', 'dp-grid');
+      cand.appendChild(grid);
+      var rv = el('p', 'dp-review', 'En cada pieza, el trazo grueso marca las aristas vistas.'); cand.appendChild(rv);
+      board.appendChild(plan); board.appendChild(cand); wrap.appendChild(board);
+
+      var coach = el('div', 'dp-coach');
+      var mbox = el('div', 'dp-mascot');
+      var bubble = el('div', 'dp-bubble'); bubble.setAttribute('aria-live', 'polite');
+      var bt = el('p', 'dp-bt'), bx = el('p', 'dp-bx');
+      var acts = el('div', 'dp-actions');
+      var hintBtn = el('button', 'dp-ghost', '\uD83D\uDCA1 Pedir pista (\u221215 XP)'); hintBtn.type = 'button';
+      var nextBtn = el('button', 'dp-primary dp-next', (q === N - 1 ? 'Ver resultados' : 'Siguiente reto') + ' \u2192'); nextBtn.type = 'button'; nextBtn.hidden = true;
+      acts.appendChild(hintBtn); acts.appendChild(nextBtn);
+      bubble.appendChild(bt); bubble.appendChild(bx); bubble.appendChild(acts);
+      coach.appendChild(mbox); coach.appendChild(bubble); wrap.appendChild(coach);
+      scr.appendChild(wrap);
+
+      function say(kind, mood, title, text) {
+        bubble.className = 'dp-bubble dp-' + kind;
+        bt.textContent = title; bx.textContent = text;
+        clear(mbox); mbox.appendChild(mascot(mood));
+      }
+      function focusCoach() {
+        if (coach.scrollIntoView) { try { coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) { } }
+      }
+      say('info', 'hi', q === 0 ? '¡Hola, detective! Soy Vecti' : 'Reto ' + (q + 1) + ': ¡a por él!', TIPS[q % TIPS.length] + ' Si te atascas, pídeme una pista.');
+
+      function makeOption(item, idx) {
+        var b = el('button', 'dp-option'); b.type = 'button';
+        b.setAttribute('aria-label', 'Opción ' + LETTERS.charAt(idx) + ': pieza en perspectiva');
+        var tag = el('span', 'dp-letter', LETTERS.charAt(idx)); tag.setAttribute('style', 'background:' + PAL[idx].glow);
+        b.appendChild(tag);
+        b.appendChild(isoSvg(item.h, PAL[idx], 'Opción ' + LETTERS.charAt(idx) + ', pieza en perspectiva'));
+        b.appendChild(el('span', 'dp-mark', item.ok ? '\u2713' : '\u2717'));
+        return b;
+      }
+      for (k = 0; k !== items.length; k++) { btns.push(makeOption(items[k], k)); grid.appendChild(btns[k]); }
+
+      function solve(idx) {
+        var base = 100 - 25 * st.wrong - (st.hint ? 15 : 0), bonus = 0, gained, j, fb = feedbackRight(piece);
+        if (25 > base) { base = 25; }
+        st.solved = true;
+        if (st.wrong === 0) { streak++; firstTry++; bonus = streak * 10; if (bonus > 50) { bonus = 50; } } else { streak = 0; }
+        if (streak > best) { best = streak; }
+        gained = base + bonus; score += gained;
+        hudUpdate();
+        var fl = el('span', 'dp-float', '+' + gained); scoreChip.appendChild(fl);
+        setTimeout(function () { if (fl.parentNode) { fl.parentNode.removeChild(fl); } }, 1400);
+        segs[q].className = 'dp-seg done';
+        for (j = 0; j !== btns.length; j++) {
+          btns[j].disabled = false;
+          if (j === idx) { btns[j].className += ' is-good'; }
+          else if (btns[j].className.indexOf('is-bad') === -1) { btns[j].className += ' is-dim'; }
+        }
+        rv.textContent = 'Pulsa cualquier otra opción para ver por qué no era la correcta.';
+        hintBtn.hidden = true; nextBtn.hidden = false;
+        say('good', 'happy', fb.title, fb.text + ' Has ganado ' + gained + ' XP' + (bonus ? ' (incluye +' + bonus + ' de racha).' : '.'));
+        confetti(22);
+        focusCoach();
+      }
+      function miss(idx) {
+        var fb = feedbackWrong(items[idx].h, piece.h);
+        st.wrong++; errors++;
+        btns[idx].disabled = true; btns[idx].className += ' is-bad';
+        say('bad', 'oops', fb.title, fb.text + ' (\u221225 XP en este reto)');
+        focusCoach();
+      }
+      function review(idx) {
+        var j, fb;
+        for (j = 0; j !== btns.length; j++) { btns[j].className = btns[j].className.replace(' is-focus', ''); }
+        btns[idx].className += ' is-focus';
+        if (items[idx].ok) { fb = feedbackRight(piece); say('good', 'happy', 'Repaso \u00B7 Opción ' + LETTERS.charAt(idx) + ': ' + fb.title, fb.text); }
+        else { fb = feedbackWrong(items[idx].h, piece.h); say('bad', 'think', 'Repaso \u00B7 Opción ' + LETTERS.charAt(idx) + ': ' + fb.title, fb.text); }
+        focusCoach();
+      }
+      function makePick(idx) {
+        return function () {
+          if (st.solved) { review(idx); return; }
+          if (items[idx].ok) { solve(idx); } else { miss(idx); }
+        };
+      }
+      for (k = 0; k !== btns.length; k++) { btns[k].addEventListener('click', makePick(k)); }
+
+      hintBtn.addEventListener('click', function () {
+        if (st.solved) { return; }
+        var first = !st.hint;
+        if (first) { st.hint = true; hints++; }
+        say('hint', 'think', 'Pista', piece.hint + (first ? ' (\u221215 XP en este reto)' : ''));
+        hintBtn.textContent = '\uD83D\uDCA1 Ver la pista otra vez';
+        focusCoach();
+      });
+      nextBtn.addEventListener('click', function () { if (q === N - 1) { finish(); } else { q++; game(); } });
+    }
+
+    function finish() {
+      clear(scr);
+      var stars = 1;
+      if (score > 599) { stars = 2; }
+      if (score > 899) { stars = 3; }
+      var rank = stars === 3 ? 'Maestro del diédrico' : (stars === 2 ? 'Detective experto' : 'Aprendiz valiente');
+      var msg = stars === 3 ? '¡Visión espacial de primer nivel! Has resuelto el plano casi sin fallar. ¿Te atreves a repetirlo y mejorar tu marca?'
+        : (stars === 2 ? '¡Muy buen trabajo! Ya sabes leer un plano. Repite la misión y consigue las tres estrellas.'
+        : '¡Has completado todos los retos! Cada fallo es entrenamiento: repite la misión y verás cómo mejora tu visión espacial.');
+      var sec = el('div', 'dp-end dp-fade');
+      sec.appendChild(el('div', 'dp-trophy', '\uD83C\uDFC6'));
+      sec.appendChild(el('p', 'dp-kicker', 'Misión completada'));
+      var sr = el('div', 'dp-stars'), k, s;
+      for (k = 0; k !== 3; k++) { s = el('span', 'dp-star' + (k + 1 > stars ? '' : ' on'), '\u2605'); s.setAttribute('style', 'animation-delay:' + (0.3 + k * 0.25) + 's'); sr.appendChild(s); }
+      sr.setAttribute('aria-label', stars + ' de 3 estrellas');
+      sec.appendChild(sr);
+      sec.appendChild(el('h3', 'dp-rank', rank));
+      sec.appendChild(el('div', 'dp-bigscore', '\u26A1 ' + score + ' XP'));
+      var grid = el('div', 'dp-stats'), data = [[firstTry + ' / ' + N, 'a la primera'], [String(errors), 'fallos'], [String(hints), 'pistas usadas'], [String(best), 'mejor racha']], b;
+      for (k = 0; k !== data.length; k++) { b = el('div', 'dp-stat'); b.appendChild(el('b', '', data[k][0])); b.appendChild(el('span', '', data[k][1])); grid.appendChild(b); }
+      sec.appendChild(grid);
+      sec.appendChild(el('p', '', msg));
+      var again = el('button', 'dp-primary', 'Jugar de nuevo \u21BB'); again.type = 'button';
+      again.addEventListener('click', function () { intro(); });
+      sec.appendChild(again);
+      scr.appendChild(sec);
+      confetti(70);
+    }
+
+    intro();
+  }
+
+  /* ---------- arranque tolerante a eXeLearning ---------- */
+  function boot() {
+    var roots = document.querySelectorAll('.dp-root'), i;
+    for (i = 0; i !== roots.length; i++) {
+      try { build(roots[i]); } catch (err) {
+        roots[i].appendChild(el('p', 'dp-loading', 'Error al cargar la actividad: ' + err.message));
+      }
+    }
+  }
+  boot();
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', boot);
+    window.addEventListener('load', boot);
+  }
+  setTimeout(boot, 400);
+  setTimeout(boot, 1500);
+})();
+</script>
+</div>
+</div>
+
+<script>
+/* Si esta página va dentro de un iframe, avisa a la página que la contiene de la altura que necesita
+   (solo tiene efecto si esa página tiene un receptor; si no, no hace nada). */
+(function () {
+  if (window.parent === window) { return; }
+  var ultimo = -1;
+  function enviar() {
+    var h = document.body.offsetHeight;
+    if (h && h !== ultimo) {
+      ultimo = h;
+      try { window.parent.postMessage({ tipo: "rd-alto", alto: h }, "*"); } catch (e) {}
+    }
+  }
+  window.addEventListener("load", enviar);
+  window.addEventListener("resize", enviar);
+  if (window.ResizeObserver) { new window.ResizeObserver(enviar).observe(document.body); }
+  else { window.setInterval(enviar, 500); }
+})();
+</script>
+</body>
+</html>
